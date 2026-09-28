@@ -1,0 +1,24 @@
+{
+  "name": "immo-burundi",
+  "version": "0.1.0",
+  "private": true,
+  "description": "IMMO BURUNDI — Real Estate Marketplace & Brokerage Platform",
+  "packageManager": "pnpm@12.5.1",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@immo/web",
+    "dev:api": "turbo run dev --filter=@immo/api",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:seed": "turbo run db:seed --filter=@immo/api"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.3",
+    "typescript": "^5.6.3"
+  }
+}

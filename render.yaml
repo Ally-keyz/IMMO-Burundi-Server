@@ -1,0 +1,141 @@
+# Render deployment for @immo/api (blueprint).
+#
+# Deploy with: Render → New → Blueprint → point at the repo root.
+# Every value marked `sync: false` is prompted for at deploy time so that no
+# secret is ever committed.
+#
+# ── MongoDB ──────────────────────────────────────────────────────────────
+# Render has no managed MongoDB, so MONGODB_URI must point at an external
+# cluster. The IMMO BURUNDI production cluster is MongoDB Atlas M0 at
+# cluster0.mw7avba.mongodb.net.
+#
+# IMPORTANT — the URI MUST end in a database name:
+#     mongodb+srv://USER:PASSWORD@cluster0.mw7avba.mongodb.net/immo-burundi
+# A `mongodb+srv://` URI with no path silently resolves to the database
+# literally named "test", so the app would boot and serve an empty database
+# with no error anywhere.
+#
+# Atlas also gates access by IP. In Network Access either allow Render's
+# outbound addresses or add 0.0.0.0/0 while you get the first deploy through.
+#
+# `sync: false` keeps the password out of this file — Render prompts for it.
+# Already seeded into the `immo-burundi` database on that cluster: 21 roles,
+# 77 permissions, 276 role grants, 15 provinces / 57 communes / 57 zones,
+# 3 users (1 MAIN_ADMIN + 2 demo agents), 28 published properties, 2 visit
+# sessions, 2 exchange rates.
+#
+# ── Persistent disk (uploads) ────────────────────────────────────────────
+# This service writes uploaded images to STORAGE_LOCAL_DIR. The default Render
+# filesystem is EPHEMERAL: every deploy, restart or spin-down wipes it, which
+# silently breaks profile photos and property media. Attach a disk before going
+# live — it requires a paid instance:
+#
+#   In this file, uncomment:
+#     disk:
+#       name: storage
+#       mountPath: /var/data
+#       sizeGB: 1
+#
+#   And set the prompted STORAGE_LOCAL_DIR to: /var/data/storage
+#
+# (files.service.ts resolves STORAGE_LOCAL_DIR against process.cwd(), which
+# accepts an absolute path, so /var/data/storage works unchanged.)
+#
+# The alternative is STORAGE_DRIVER=S3 plus the STORAGE_* keys and the S3
+# branch in files.service.ts.
+
+services:
+  - type: web
+    name: immo-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: main
+    autoDeployTrigger: commit
+    # Root of the monorepo — the API needs @immo/shared-types built first.
+    rootDir: .
+    buildCommand: >-
+      corepack enable &&
+      pnpm install --frozen-lockfile &&
+      pnpm --filter @immo/shared-types build &&
+      pnpm --filter @immo/api build
+    startCommand: node apps/api/dist/index.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+    envVars:
+      # ── Runtime ────────────────────────────────────────────────────────
+      - key: NODE_VERSION
+        value: "20.18.1"
+      - key: NODE_ENV
+        value: production
+      # PORT is injected by Render; env.ts coerces it. Do not hardcode 4000.
+      - key: IPV6
+        value: "off"
+
+      # ── Database ───────────────────────────────────────────────────────
+      - key: MONGODB_URI
+        sync: false
+
+      # ── Auth secrets — rotate before the first real deploy ─────────────
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REFRESH_TOKEN_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_TTL
+        value: "15m"
+      - key: JWT_REFRESH_TTL
+        value: "30d"
+
+      # ── CORS ───────────────────────────────────────────────────────────
+      # Comma-separated list of allowed web origins. Set this to your Netlify
+      # URL. It is only consulted for requests that are NOT same-origin, so it
+      # matters if you drop the netlify.toml /api proxy and call Render
+      # directly via VITE_API_BASE_URL.
+      - key: WEB_ORIGIN
+        sync: false
+
+      # ── Optional integrations ──────────────────────────────────────────
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: SMTP_FROM_NAME
+        value: IMMO BURUNDI
+      - key: SETUP_ACCOUNT_TTL_HOURS
+        value: "72"
+
+      # ── Storage ────────────────────────────────────────────────────────
+      - key: STORAGE_DRIVER
+        value: LOCAL
+      - key: STORAGE_LOCAL_DIR
+        value: ./data/storage
+
+      # ── Redis / queue (declared, not yet wired) ────────────────────────
+      - key: BULLMQ_ENABLED
+        value: "false"
+      - key: REDIS_URL
+        sync: false
+
+      # ── First admin ────────────────────────────────────────────────────
+      # Read by `pnpm db:seed`, which refuses to run when NODE_ENV=production.
+      # Seed from a machine pointed at MONGODB_URI rather than from a
+      # preDeployCommand — the seed script DROPS the database.
+      - key: SEED_MAIN_ADMIN_PHONE
+        sync: false
+      - key: SEED_MAIN_ADMIN_EMAIL
+        sync: false
+      - key: SEED_MAIN_ADMIN_PASSWORD
+        sync: false

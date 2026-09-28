@@ -1,0 +1,221 @@
+$ tsx --watch src/index.ts
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: This payment link was issued for a different account. Sign in with the account that received it.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: This payment link was issued for a different account. Sign in with the account that received it.
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:12
+import { VERIFICATION_DISCLAIMER_VERSION, shapeDocuments } from '../../helpers/dtoShapers.js';
+                                          ^
+
+SyntaxError: The requested module '../../helpers/dtoShapers.js' does not provide an export named 'shapeDocuments'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:12
+import { VERIFICATION_DISCLAIMER_VERSION, shapeDocuments } from '../../helpers/dtoShapers.js';
+                                          ^
+
+SyntaxError: The requested module '../../helpers/dtoShapers.js' does not provide an export named 'shapeDocuments'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:12
+import { VERIFICATION_DISCLAIMER_VERSION, shapeDocuments } from '../../helpers/dtoShapers.js';
+                                          ^
+
+SyntaxError: The requested module '../../helpers/dtoShapers.js' does not provide an export named 'shapeDocuments'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "identifier"
+    ],
+    "message": "Required"
+  }
+]
+[ERROR] AppError: Authentication required
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Invalid access token
+[ERROR] AppError: Authentication required
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:15
+import { OPEN_VERIFICATION_REQUEST_STATUSES, type VerificationStatus } from '@immo/shared-types';
+         ^
+
+SyntaxError: The requested module '@immo/shared-types' does not provide an export named 'OPEN_VERIFICATION_REQUEST_STATUSES'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:15
+import { OPEN_VERIFICATION_REQUEST_STATUSES, type VerificationStatus } from '@immo/shared-types';
+         ^
+
+SyntaxError: The requested module '@immo/shared-types' does not provide an export named 'OPEN_VERIFICATION_REQUEST_STATUSES'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\verification\verification.service.ts:15
+import { OPEN_VERIFICATION_REQUEST_STATUSES, type VerificationStatus } from '@immo/shared-types';
+         ^
+
+SyntaxError: The requested module '@immo/shared-types' does not provide an export named 'OPEN_VERIFICATION_REQUEST_STATUSES'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\properties\properties.service.ts:4
+import { OPEN_VERIFICATION_REQUEST_STATUSES } from '@immo/shared-types';
+         ^
+
+SyntaxError: The requested module '@immo/shared-types' does not provide an export named 'OPEN_VERIFICATION_REQUEST_STATUSES'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+C:\Users\user\Documents\projects\IMMO\apps\api\src\modules\properties\properties.service.ts:4
+import { OPEN_VERIFICATION_REQUEST_STATUSES } from '@immo/shared-types';
+         ^
+
+SyntaxError: The requested module '@immo/shared-types' does not provide an export named 'OPEN_VERIFICATION_REQUEST_STATUSES'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:213:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:320:5)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:606:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v20.20.2
+[ERROR] AppError: Access token expired
+[ERROR] AppError: A verification request is already in progress (PENDING_PAYMENT).
+[ERROR] AppError: Cannot submit a property in status SUBMITTED.
+[ERROR] AppError: This property must be verified before it can be published.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[ERROR] AppError: Access token expired
+[MAIL] SMTP is not configured. Agent setup link: http://localhost:5173/setup-account/d2d4dee1208416f17c2e7e1066f9cd2155f9c1254ebb5888a104d94306e0656c
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ERROR] AppError: Agents cannot access public marketplace pages.
+[ELIFECYCLE] Command failed with exit code -1.

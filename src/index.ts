@@ -33,9 +33,11 @@ import adminRoutes from './modules/admin/admin.routes.js';
 /* ── Socket.io helpers ────────────────────────────────────── */
 import { initSocket } from './config/socket.js';
 import { disconnectDB } from './config/db.js';
+import { startKeepWarm, type KeepWarmHandle } from './config/keepWarm.js';
 
 let io: SocketIOServer;
 let httpServer: ReturnType<typeof createServer>;
+let keepWarm: KeepWarmHandle | null = null;
 
 async function bootstrap(): Promise<void> {
   await connectDB();
@@ -107,6 +109,9 @@ async function bootstrap(): Promise<void> {
 
   httpServer.listen(env.PORT, () => {
     console.log(`[API] Running on http://localhost:${env.PORT} (${env.NODE_ENV})`);
+    // Started only once the socket is actually accepting connections, so the
+    // first scheduled ping cannot race the listen.
+    keepWarm = startKeepWarm();
   });
 }
 
@@ -123,6 +128,10 @@ bootstrap().catch((err) => {
 for (const signal of ['SIGTERM', 'SIGINT'] as const) {
   process.on(signal, () => {
     console.log(`[API] ${signal} received — draining connections`);
+    // Stop pinging before closing, otherwise a ping can be in flight against
+    // this instance while it is tearing down.
+    keepWarm?.stop();
+    keepWarm = null;
     const force = setTimeout(() => {
       console.warn('[API] Drain timed out — forcing exit');
       process.exit(1);

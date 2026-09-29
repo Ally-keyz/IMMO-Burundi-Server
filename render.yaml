@@ -65,6 +65,24 @@ services:
       - key: IPV6
         value: "off"
 
+      # ── Keep-warm (Render free plan) ───────────────────────────────────────
+      # The plan suspends the service after ~15 min of no traffic, so the next
+      # visitor pays a ~1 min boot. The API then pings its own /api/health on a
+      # timer (see src/config/keepWarm.ts).
+      #
+      # This URL MUST be the public origin below. Render resets the idle timer
+      # only for requests that reach its router, so pinging localhost would
+      # never keep the instance awake -- a loopback value is refused at boot.
+      #
+      # Cost: free plans meter 750 instance-hours/month, and an always-on
+      # instance bills the full month (~744h).
+      - key: KEEP_WARM_ENABLED
+        value: "true"
+      - key: KEEP_WARM_URL
+        value: "https://immo-burundi-server.onrender.com/api/health"
+      - key: KEEP_WARM_INTERVAL_MS
+        value: "20000"
+
       # ── Database ───────────────────────────────────────────────────────
       - key: MONGODB_URI
         sync: false

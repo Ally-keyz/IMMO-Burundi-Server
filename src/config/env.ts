@@ -51,6 +51,22 @@ const envSchema = z.object({
    * backend-relative, which is what a separate web origin needs.
    */
   PUBLIC_BASE_URL: z.string().optional(),
+  /**
+   * Keep-warm for Render's free plan, which suspends the service after ~15
+   * minutes of no traffic and then charges the next visitor ~1 minute of boot
+   * time. When enabled the API pings itself on a timer; see config/keepWarm.ts.
+   *
+   * Must be the PUBLIC origin -- a loopback target is refused, because Render
+   * only resets the idle timer for requests that reach its router.
+   */
+  KEEP_WARM_ENABLED: z
+    .string()
+    .optional()
+    .transform((v) => v === 'true')
+    .default('false'),
+  /** Full URL to ping, e.g. https://immo-api.onrender.com/api/health. */
+  KEEP_WARM_URL: z.string().optional(),
+  KEEP_WARM_INTERVAL_MS: z.coerce.number().int().min(5_000).default(20_000),
   SEED_MAIN_ADMIN_PHONE: z.string().optional(),
   SEED_MAIN_ADMIN_EMAIL: z.string().optional(),
   SEED_MAIN_ADMIN_PASSWORD: z.string().optional(),

@@ -28,24 +28,9 @@
 # sessions, 2 exchange rates.
 #
 # ── Persistent disk (uploads) ────────────────────────────────────────────
-# This service writes uploaded images to STORAGE_LOCAL_DIR. The default Render
-# filesystem is EPHEMERAL: every deploy, restart or spin-down wipes it, which
-# silently breaks profile photos and property media. Attach a disk before going
-# live — it requires a paid instance:
-#
-#   In this file, uncomment:
-#     disk:
-#       name: storage
-#       mountPath: /var/data
-#       sizeGB: 1
-#
-#   And set the prompted STORAGE_LOCAL_DIR to: /var/data/storage
-#
-# (files.service.ts resolves STORAGE_LOCAL_DIR against process.cwd(), which
-# accepts an absolute path, so /var/data/storage works unchanged.)
-#
-# The alternative is STORAGE_DRIVER=S3 plus the STORAGE_* keys and the S3
-# branch in files.service.ts.
+# No longer needed. Images live in Cloudinary (STORAGE_DRIVER=CLOUDINARY
+# below), so nothing under STORAGE_LOCAL_DIR survives a deploy and a paid disk
+# is pure cost. Keep this note if a future driver needs local space again.
 
 services:
   - type: web
@@ -125,10 +110,22 @@ services:
         value: "72"
 
       # ── Storage ────────────────────────────────────────────────────────
+      # Cloudinary holds every uploaded image. Render's filesystem is
+      # EPHEMERAL, so the previous LOCAL driver lost profile photos and
+      # property media on each deploy while the database kept pointing at
+      # /uploads/<file>. `pnpm media:to-cloudinary` moved the existing assets
+      # across; nothing is written to disk any more.
       - key: STORAGE_DRIVER
-        value: LOCAL
-      - key: STORAGE_LOCAL_DIR
-        value: ./data/storage
+        value: CLOUDINARY
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      # Folder that receives uploads. Assets land in <folder>/uploads/<uuid>.
+      - key: CLOUDINARY_FOLDER
+        value: immo
 
       # ── Redis / queue (declared, not yet wired) ────────────────────────
       - key: BULLMQ_ENABLED

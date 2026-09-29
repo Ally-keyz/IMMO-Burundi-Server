@@ -56,9 +56,14 @@ async function bootstrap(): Promise<void> {
   app.use(requestId);
 
   /* ── Local file storage (profile photos etc.) ──────────── */
-  const storageDir = path.resolve(process.cwd(), env.STORAGE_LOCAL_DIR);
-  mkdirSync(storageDir, { recursive: true });
-  app.use('/uploads', express.static(storageDir));
+  // Only meaningful for STORAGE_DRIVER=LOCAL. Under CLOUDINARY every image has
+  // an absolute res.cloudinary.com URL, so this mount would serve nothing and
+  // would 404 with a 200 for missing files if it stayed.
+  if (env.STORAGE_DRIVER === 'LOCAL') {
+    const storageDir = path.resolve(process.cwd(), env.STORAGE_LOCAL_DIR);
+    mkdirSync(storageDir, { recursive: true });
+    app.use('/uploads', express.static(storageDir));
+  }
 
   /* ── Health check ─────────────────────────────────────── */
   app.get('/api/health', (_req, res) => {

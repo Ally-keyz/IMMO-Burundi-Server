@@ -14,6 +14,7 @@
     "start": "node dist/index.js",
     "typecheck": "pnpm --filter @immo/shared-types build && tsc --noEmit",
     "db:seed": "tsx src/scripts/seed.ts",
+    "media:to-cloudinary": "tsx src/scripts/migrateMediaToCloudinary.ts",
     "check:shared-types": "node scripts/check-shared-types.mjs"
   },
   "dependencies": {

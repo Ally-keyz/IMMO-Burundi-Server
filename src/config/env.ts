@@ -28,13 +28,23 @@ const envSchema = z.object({
     .optional()
     .transform((v) => v === 'true')
     .default('false'),
-  STORAGE_DRIVER: z.enum(['LOCAL', 'S3']).default('LOCAL'),
+  STORAGE_DRIVER: z.enum(['LOCAL', 'S3', 'CLOUDINARY']).default('LOCAL'),
   STORAGE_LOCAL_DIR: z.string().default('./data/storage'),
   STORAGE_ACCESS_KEY: z.string().optional(),
   STORAGE_SECRET_KEY: z.string().optional(),
   STORAGE_BUCKET: z.string().optional(),
   STORAGE_ENDPOINT: z.string().optional(),
   STORAGE_REGION: z.string().optional(),
+  /**
+   * Cloudinary holds every uploaded image. Render's filesystem is ephemeral,
+   * so LOCAL loses profile photos and property media on each deploy; S3 was
+   * never implemented. These three are required when the driver is CLOUDINARY.
+   */
+  CLOUDINARY_CLOUD_NAME: z.string().optional(),
+  CLOUDINARY_API_KEY: z.string().optional(),
+  CLOUDINARY_API_SECRET: z.string().optional(),
+  /** Folder in the Cloudinary cloud that receives uploads. */
+  CLOUDINARY_FOLDER: z.string().default('immo'),
   /**
    * Public origin of this API, e.g. https://immo-api.onrender.com.
    * When set, uploaded-file URLs are returned absolute instead of
@@ -69,6 +79,19 @@ function assertProductionSafe(): void {
     const value = process.env[key];
     if (!value) problems.push(`${key} is not set`);
     else if (PLACEHOLDER_SECRETS.has(value)) problems.push(`${key} still holds its placeholder value`);
+  }
+
+  // Falling back to local disk here is the failure this project already hit:
+  // uploads are accepted, returned as /uploads/<file>, and 404 from the second
+  // deploy onwards. Fail loudly at boot instead.
+  if (parsed.STORAGE_DRIVER === 'CLOUDINARY') {
+    for (const key of [
+      'CLOUDINARY_CLOUD_NAME',
+      'CLOUDINARY_API_KEY',
+      'CLOUDINARY_API_SECRET',
+    ] as const) {
+      if (!process.env[key]) problems.push(`${key} is not set but STORAGE_DRIVER=CLOUDINARY`);
+    }
   }
 
   if (problems.length > 0) {

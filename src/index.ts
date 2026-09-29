@@ -5,7 +5,7 @@ import { mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
-import { env } from './config/env.js';
+import { env, databaseFromUri } from './config/env.js';
 import { connectDB } from './config/db.js';
 import { requestId } from './middleware/requestId.js';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
@@ -66,8 +66,19 @@ async function bootstrap(): Promise<void> {
   }
 
   /* ── Health check ─────────────────────────────────────── */
+  // The database name is in the payload on purpose: a site showing zero
+  // listings is nearly always a MONGODB_URI pointing at the wrong database,
+  // and "test" is otherwise invisible from outside.
   app.get('/api/health', (_req, res) => {
-    res.json({ success: true, data: { status: 'ok', uptime: process.uptime() } });
+    res.json({
+      success: true,
+      data: {
+        status: 'ok',
+        uptime: process.uptime(),
+        database: databaseFromUri(env.MONGODB_URI),
+        storage: env.STORAGE_DRIVER,
+      },
+    });
   });
 
   /* ── Mount routes ─────────────────────────────────────── */

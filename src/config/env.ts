@@ -58,6 +58,25 @@ const envSchema = z.object({
 
 const PLACEHOLDER_SECRETS = new Set(['change-me-access-secret', 'change-me-refresh-secret']);
 
+/**
+ * The database name in a connection URI, or `''` when it carries none.
+ *
+ * This one has already cost a production deploy: a `mongodb+srv://` URI with no
+ * path is legal and resolves to the database literally named "test". The API
+ * boots, /api/health is green, every collection is created on connect — and the
+ * whole site reads as "0 announcements, 0 provinces, 0 agents" while the real
+ * data sits one path segment away in another database.
+ */
+export function databaseFromUri(uri: string): string {
+  const schemeEnd = uri.indexOf('://');
+  if (schemeEnd === -1) return '';
+  const afterScheme = uri.slice(schemeEnd + 3);
+  const slash = afterScheme.indexOf('/');
+  if (slash === -1) return '';
+  const withoutQuery = afterScheme.slice(slash + 1).split('?')[0] ?? '';
+  return decodeURIComponent(withoutQuery);
+}
+
 const parsed = envSchema.parse(process.env);
 
 /**
@@ -73,6 +92,10 @@ function assertProductionSafe(): void {
 
   if (!process.env.MONGODB_URI) {
     problems.push('MONGODB_URI is not set (it would default to mongodb://127.0.0.1:27017/immo-burundi)');
+  } else if (!databaseFromUri(parsed.MONGODB_URI)) {
+    problems.push(
+      'MONGODB_URI names no database, so MongoDB would use "test". Append /immo-burundi to the URI.',
+    );
   }
 
   for (const key of ['JWT_SECRET', 'REFRESH_TOKEN_SECRET'] as const) {

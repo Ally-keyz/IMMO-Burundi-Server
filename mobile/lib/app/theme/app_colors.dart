@@ -57,3 +57,69 @@ abstract final class AppColors {
   static const Color ecocash = Color(0xFFFFCC00);
   static const Color ihela = Color(0xFF0F766E);
 }
+
+/// The palette resolved for the active brightness.
+///
+/// `AppColors` holds raw hex values because that is what the design system is
+/// specified in; this is what widgets read, so no widget has to branch on
+/// `Theme.of(context).brightness` and risk pairing a light surface with dark
+/// body text.
+@immutable
+class AppPalette {
+  const AppPalette({
+    required this.bg,
+    required this.surface,
+    required this.text,
+    required this.textSecondary,
+    required this.textTertiary,
+    required this.placeholder,
+    required this.field,
+    required this.border,
+    required this.subtle,
+    required this.ink,
+    required this.inkOn,
+  });
+
+  final Color bg;
+  final Color surface;
+  final Color text;
+  final Color textSecondary;
+  final Color textTertiary;
+  final Color placeholder;
+  final Color field;
+  final Color border;
+  final Color subtle;
+  final Color ink;
+  final Color inkOn;
+
+  static AppPalette of(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark ? dark : light;
+
+  static const AppPalette light = AppPalette(
+    bg: AppColors.lightBg,
+    surface: AppColors.lightSurface,
+    text: AppColors.lightText,
+    textSecondary: AppColors.lightText2,
+    textTertiary: AppColors.lightText3,
+    placeholder: AppColors.lightPlaceholder,
+    field: AppColors.lightField,
+    border: AppColors.lightBorder,
+    subtle: AppColors.lightSubtle,
+    ink: AppColors.lightInk,
+    inkOn: AppColors.lightInkOn,
+  );
+
+  static const AppPalette dark = AppPalette(
+    bg: AppColors.darkBg,
+    surface: AppColors.darkSurface,
+    text: AppColors.darkText,
+    textSecondary: AppColors.darkText2,
+    textTertiary: AppColors.darkText3,
+    placeholder: AppColors.darkPlaceholder,
+    field: AppColors.darkField,
+    border: AppColors.darkBorder,
+    subtle: AppColors.darkSubtle,
+    ink: AppColors.darkInk,
+    inkOn: AppColors.darkInkOn,
+  );
+}

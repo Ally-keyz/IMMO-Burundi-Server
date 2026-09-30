@@ -77,6 +77,21 @@ String _unsplash(String url, int width, int quality, {bool stripOnly = false}) {
   return uri.replace(queryParameters: params).toString();
 }
 
+/// Convenience wrapper for the common case: a nullable URL straight off a DTO,
+/// resized for the surface it is about to be painted on.
+abstract final class ImageUrl {
+  /// Returns null for a missing or blank URL so the widget can pick its
+  /// placeholder without a null check of its own.
+  static String? resolve(
+    String? url, {
+    int width = ImageWidth.feed,
+    int quality = 80,
+  }) {
+    if (url == null || url.trim().isEmpty) return null;
+    return sizedImageUrl(url.trim(), width: width, quality: quality);
+  }
+}
+
 /// Returns a URL that will serve approximately [width] logical pixels at
 /// [quality] (an image-quality percentage, not a file-size target).
 String sizedImageUrl(

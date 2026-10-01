@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/widgets/app_image.dart';
 import '../../features/agent/views/agent_detail_screen.dart';
+import '../../features/legal/views/about_screen.dart';
 import '../../l10n/generated/app_localizations.dart';
 
 import '../../features/auth/data/auth_controller.dart';
@@ -139,12 +140,38 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
                         path: 'language',
                         builder: (_, _) => const LanguageScreen(),
                       ),
-                      GoRoute(
-                        path: 'notifications',
-                        builder: (_, _) => const NotificationsScreen(),
-                      ),
-                    ],
+GoRoute(
+                    path: 'notifications',
+                    builder: (_, _) => const NotificationsScreen(),
                   ),
+                  // Legal and About sit under Settings so the pushed route keeps
+                  // its own stack, but they are public - a signed-out visitor
+                  // reading the terms from the landing screen must not be
+                  // bounced to sign-in.
+                  GoRoute(
+                    path: 'terms',
+                    builder: (_, _) => const LegalScreen(kind: LegalKind.terms),
+                  ),
+                  GoRoute(
+                    path: 'privacy',
+                    builder: (_, _) =>
+                        const LegalScreen(kind: LegalKind.privacy),
+                  ),
+                  GoRoute(
+                    path: 'cookies',
+                    builder: (_, _) => const LegalScreen(kind: LegalKind.cookies),
+                  ),
+                  GoRoute(
+                    path: 'verification',
+                    builder: (_, _) =>
+                        const LegalScreen(kind: LegalKind.verification),
+                  ),
+                  GoRoute(
+                    path: 'about',
+                    builder: (_, _) => const AboutScreen(),
+                  ),
+                ],
+              ),
                   GoRoute(
                     path: 'edit',
                     builder: (_, _) => const EditProfileScreen(),
@@ -187,6 +214,22 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
       GoRoute(
         path: '/legal/privacy',
         builder: (_, _) => const LegalScreen(kind: LegalKind.privacy),
+      ),
+      // The website exposes these as /cookies and /verification-disclaimer; the
+      // app groups them under /legal so the four documents stay siblings.
+      GoRoute(
+        path: '/legal/cookies',
+        builder: (_, _) => const LegalScreen(kind: LegalKind.cookies),
+      ),
+      GoRoute(
+        path: '/legal/verification',
+        builder: (_, _) => const LegalScreen(kind: LegalKind.verification),
+      ),
+      GoRoute(
+        path: '/about',
+        builder: (_, _) => const AboutScreen(),
+        redirect: (_, GoRouterState state) =>
+            _redirectAwayFromAuth(ref, state.matchedLocation),
       ),
     ],
     // A stale deep link or a typo used to land on Flutter's red error screen,

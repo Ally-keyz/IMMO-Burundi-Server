@@ -539,7 +539,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get legalPrivacyTitle => 'Sera ya Faragha';
 
   @override
-  String get legalUnavailable => 'Hati hii haipatikani mtandaoni.';
+  String get legalUnavailable => 'Hati hii haipatikani nje ya mtandao.';
 
   @override
   String get legalReadOnSite => 'Soma waraka kamili kwenye tovuti';
@@ -564,6 +564,56 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get tabYou => 'Wewe';
+
+  @override
+  String get aboutTitle => 'Kuhusu';
+
+  @override
+  String get aboutMissionBodyLong =>
+      'Kutoka Bujumbura hadi Muyinga, tunamsaidia wazinunuzi, wapangaji na wawekezaji kupata mali iliyothibitishwa, huku tukiwapa wamiliki na mawakala wa kadi zana za kukifikia hadithi inayofaa. Kila orodha inaonyesha hali ya uthibitisho kwa uwazi na bei halisi, na timu yetu inahakikisha soko halina utaputaji.';
+
+  @override
+  String get aboutContactTitle => 'Wasiliana nasi';
+
+  @override
+  String get aboutEmailSubject => 'Habari IMMO BURUNDI';
+
+  @override
+  String get aboutWebsite => 'Tovuti';
+
+  @override
+  String get aboutCopy => 'Nakili';
+
+  @override
+  String get aboutCopied => 'Imenakiliwa';
+
+  @override
+  String get contactAddressLabel => 'Ofisi kuu';
+
+  @override
+  String get errorNoAppForLink =>
+      'Hakuna programu kwenye kifaa hiki inayoweza kufungua kiungo hiki.';
+
+  @override
+  String get errorSomethingWrongTitle => 'Hitilafu imetokea';
+
+  @override
+  String get errorRetry => 'Jaribu tena';
+
+  @override
+  String get settingsStorage => 'Hifadhi';
+
+  @override
+  String get settingsClearCache => 'Futa picha zilizohifadhiwa';
+
+  @override
+  String get settingsCacheCleared => 'Kumbukumbu imefutwa';
+
+  @override
+  String get settingsHelp => 'Msaada';
+
+  @override
+  String get settingsCookiePolicy => 'Sera ya Vidakuzi';
 
   @override
   String get commonCurrency => 'Sarafu';
@@ -2322,9 +2372,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get errorTryAgain => 'Please try again';
 
   @override
-  String get errorRetry => 'Jaribu tena';
-
-  @override
   String get errorBackHome => 'Rudi nyumbani';
 
   @override
@@ -2533,49 +2580,49 @@ class AppLocalizationsSw extends AppLocalizations {
   String get heroAgentsLabel => 'Wataalamu wa mali';
 
   @override
-  String get aboutHeroTitle => 'About IMMO BURUNDI';
+  String get aboutHeroTitle => 'Kuhusu IMMO BURUNDI';
 
   @override
   String get aboutHeroSubtitle =>
-      'A modern, trustworthy real estate marketplace for Burundi.';
+      'Soko la kisasa na lenye uaminifu la mali isiyohamishika nchini Burundi.';
 
   @override
-  String get aboutMissionTitle => 'Our mission';
+  String get aboutMissionTitle => 'Dhima yetu';
 
   @override
   String get aboutMissionBody =>
-      'IMMO BURUNDI connects property owners, buyers, tenants, investors and professional agents on a single transparent platform. We make finding, verifying and transacting on property in Burundi simple and secure.';
+      'IMMO BURUNDI inaunganisha wamiliki wa mali, wanunuzi, wapangaji, wawekezaji na mawakala walioidhinishwa katika jukwaa moja la uwazi. Tunafanya kutafuta, kuthibitisha na kufanya biashara ya mali nchini Burundi kuwa rahisi na salama.';
 
   @override
-  String get aboutValuesTitle => 'Our values';
+  String get aboutValuesTitle => 'Thamani zetu';
 
   @override
-  String get aboutValuesTrust => 'Trust';
+  String get aboutValuesTrust => 'Uaminifu';
 
   @override
   String get aboutValuesTrustDesc =>
-      'Every listing is verified by a dedicated team before it is promoted.';
+      'Orodha zote zinathibitishwa na timu maalum kabla ya kuonyeshwa.';
 
   @override
-  String get aboutValuesTransparency => 'Transparency';
+  String get aboutValuesTransparency => 'Uwazi';
 
   @override
   String get aboutValuesTransparencyDesc =>
-      'Original prices, verification status and document checks are always shown.';
+      'Bei halisi, hali ya uthibitisho na ukaguzi wa nyaraka huonyeshwa kila mara.';
 
   @override
-  String get aboutValuesQuality => 'Quality';
+  String get aboutValuesQuality => 'Ubora';
 
   @override
   String get aboutValuesQualityDesc =>
-      'We work with verified agents and complete, accurate property descriptions.';
+      'Tunafanya kazi na mawakala walioidhinishwa na maelezo kamili na sahihi ya mali.';
 
   @override
-  String get aboutValuesAccessibility => 'Accessibility';
+  String get aboutValuesAccessibility => 'Upatikanaji';
 
   @override
   String get aboutValuesAccessibilityDesc =>
-      'Available in French, English and Swahili, built for every device.';
+      'Inapatikana kwa Kifaransa, Kiingereza na Kiswahili, imeundwa kwa kila kifaa.';
 
   @override
   String get contactTitle => 'Wasiliana nasi';
@@ -3114,10 +3161,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'Your rental application has been submitted to the agent.';
 
   @override
-  String get legalVerificationTitle => 'Onyo la Uthibitisho';
+  String get legalVerificationTitle => 'Taarifa ya Uthibitisho';
 
   @override
-  String get legalCookiesTitle => 'Sera ya Kuki';
+  String get legalCookiesTitle => 'Sera ya Vidakuzi';
 
   @override
   String get legalUpdated => 'Ilisasishwa mwisho';

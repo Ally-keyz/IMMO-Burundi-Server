@@ -137,6 +137,11 @@ class ProfileScreen extends ConsumerWidget {
             _Group(
               children: <_Row>[
                 _Row(
+                  icon: Icons.info_outline_rounded,
+                  label: l10n.aboutTitle,
+                  onTap: () => context.push('/about'),
+                ),
+                _Row(
                   icon: Icons.gavel_rounded,
                   label: l10n.settingsTerms,
                   onTap: () => context.push('/legal/terms'),
@@ -145,6 +150,16 @@ class ProfileScreen extends ConsumerWidget {
                   icon: Icons.privacy_tip_outlined,
                   label: l10n.settingsPrivacy,
                   onTap: () => context.push('/legal/privacy'),
+                ),
+                _Row(
+                  icon: Icons.cookie_outlined,
+                  label: l10n.legalCookiesTitle,
+                  onTap: () => context.push('/legal/cookies'),
+                ),
+                _Row(
+                  icon: Icons.verified_outlined,
+                  label: l10n.legalVerificationTitle,
+                  onTap: () => context.push('/legal/verification'),
                 ),
               ],
             ),

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 import '../../../app/config/app_config.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../core/models/enums.dart';
+import '../../../core/utils/app_cache.dart';
 import '../../../core/widgets/app_buttons.dart';
 import '../../../l10n/enum_labels.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -64,19 +67,60 @@ class SettingsScreen extends ConsumerWidget {
           ),
           _Header(l10n.settingsAbout),
           _Tile(
+            icon: Icons.info_outline_rounded,
+            label: l10n.aboutTitle,
+            onTap: () => context.push('/about'),
+          ),
+          _Tile(
             icon: Icons.gavel_rounded,
             label: l10n.settingsTerms,
-            onTap: () => context.push('/legal/terms'),
+onTap: () => context.push('/you/settings/terms'),
+                  ),
+                  _Tile(
+                    icon: Icons.privacy_tip_outlined,
+                    label: l10n.settingsPrivacy,
+                    onTap: () => context.push('/you/settings/privacy'),
+                  ),
+          _Tile(
+            icon: Icons.cookie_outlined,
+            label: l10n.legalCookiesTitle,
+            onTap: () => context.push('/you/settings/cookies'),
           ),
           _Tile(
-            icon: Icons.privacy_tip_outlined,
-            label: l10n.settingsPrivacy,
-            onTap: () => context.push('/legal/privacy'),
+            icon: Icons.verified_outlined,
+            label: l10n.legalVerificationTitle,
+            onTap: () => context.push('/you/settings/verification'),
+          ),
+          _Header(l10n.settingsStorage),
+          _Tile(
+            icon: Icons.cleaning_services_outlined,
+            label: l10n.settingsClearCache,
+            onTap: () => _clearCache(context, ref),
+          ),
+          _Header(l10n.settingsHelp),
+          _Tile(
+            icon: Icons.phone_outlined,
+            label: l10n.contactPhoneLabel,
+            value: AppConfig.contactPhone,
+            onTap: () => _launch(
+              context,
+              Uri(scheme: 'tel', path: AppConfig.contactPhone),
+            ),
           ),
           _Tile(
-            icon: Icons.info_outline_rounded,
-            label: l10n.settingsVersion,
-            value: AppConfig.appVersion,
+            icon: Icons.mail_outline_rounded,
+            label: l10n.contactEmailLabel,
+            value: AppConfig.contactEmail,
+            onTap: () => _launch(
+              context,
+              Uri(scheme: 'mailto', path: AppConfig.contactEmail),
+            ),
+          ),
+          _Tile(
+            icon: Icons.public_rounded,
+            label: l10n.aboutWebsite,
+            value: Uri.parse(AppConfig.siteUrl).host,
+            onTap: () => _launch(context, AppConfig.sitePath('')),
           ),
           if (signedIn) ...<Widget>[
             const SizedBox(height: AppSpacing.xl),
@@ -99,6 +143,29 @@ class SettingsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  /// Empties the on-device image cache and the stored recent searches.
+  ///
+  /// Neither is required for correctness — the cache refills itself and the
+  /// searches are the user's own history — so this is a courtesy action for
+  /// reclaiming storage, not a repair.
+  Future<void> _clearCache(BuildContext context, WidgetRef ref) async {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    await AppCache.clear();
+    await ref.read(preferencesProvider.notifier).clearSearchHistory();
+    if (!context.mounted) return;
+    AppSnack.show(context, l10n.settingsCacheCleared);
+  }
+
+  static Future<void> _launch(BuildContext context, Uri uri) async {
+    final AppLocalizations l10n = AppLocalizations.of(context);
+    final bool opened = await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+    if (opened || !context.mounted) return;
+    AppSnack.show(context, l10n.errorNoAppForLink, isError: true);
   }
 
   Future<void> _pickCurrency(BuildContext context, WidgetRef ref) async {

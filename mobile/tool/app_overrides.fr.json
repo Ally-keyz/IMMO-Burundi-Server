@@ -206,5 +206,23 @@
   "tabHome": "Accueil",
   "tabExplore": "Explorer",
   "tabSaved": "Enregistrés",
-  "tabYou": "Vous"
+  "tabYou": "Vous",
+
+  "aboutTitle": "À propos",
+  "aboutMissionBodyLong": "De Bujumbura à Muyinga, nous aidons les acheteurs, les locataires et les investisseurs à découvrir des propriétés vérifiées, tout en donnant aux propriétaires et aux agents professionnels les outils pour toucher le bon public. Chaque annonce affiche un statut de vérification transparent et un prix d'origine, et notre équipe veille à ce que la place de marché reste exempte de fraude.",
+  "aboutContactTitle": "Contactez-nous",
+  "aboutEmailSubject": "Bonjour IMMO BURUNDI",
+  "aboutWebsite": "Site web",
+  "aboutCopy": "Copier",
+  "aboutCopied": "Copié dans le presse-papiers",
+  "contactAddressLabel": "Siège",
+  "errorNoAppForLink": "Aucune application sur cet appareil ne peut ouvrir ce lien.",
+  "errorSomethingWrongTitle": "Une erreur est survenue",
+  "errorRetry": "Réessayer",
+
+  "settingsStorage": "Stockage",
+  "settingsClearCache": "Vider le cache des images",
+  "settingsCacheCleared": "Cache vidé",
+  "settingsHelp": "Aide",
+  "settingsCookiePolicy": "Politique de cookies"
 }

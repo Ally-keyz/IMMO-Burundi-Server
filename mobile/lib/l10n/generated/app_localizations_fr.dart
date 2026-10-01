@@ -576,6 +576,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tabYou => 'Vous';
 
   @override
+  String get aboutTitle => 'À propos';
+
+  @override
+  String get aboutMissionBodyLong =>
+      'De Bujumbura à Muyinga, nous aidons les acheteurs, les locataires et les investisseurs à découvrir des propriétés vérifiées, tout en donnant aux propriétaires et aux agents professionnels les outils pour toucher le bon public. Chaque annonce affiche un statut de vérification transparent et un prix d\'origine, et notre équipe veille à ce que la place de marché reste exempte de fraude.';
+
+  @override
+  String get aboutContactTitle => 'Contactez-nous';
+
+  @override
+  String get aboutEmailSubject => 'Bonjour IMMO BURUNDI';
+
+  @override
+  String get aboutWebsite => 'Site web';
+
+  @override
+  String get aboutCopy => 'Copier';
+
+  @override
+  String get aboutCopied => 'Copié dans le presse-papiers';
+
+  @override
+  String get contactAddressLabel => 'Siège';
+
+  @override
+  String get errorNoAppForLink =>
+      'Aucune application sur cet appareil ne peut ouvrir ce lien.';
+
+  @override
+  String get errorSomethingWrongTitle => 'Une erreur est survenue';
+
+  @override
+  String get errorRetry => 'Réessayer';
+
+  @override
+  String get settingsStorage => 'Stockage';
+
+  @override
+  String get settingsClearCache => 'Vider le cache des images';
+
+  @override
+  String get settingsCacheCleared => 'Cache vidé';
+
+  @override
+  String get settingsHelp => 'Aide';
+
+  @override
+  String get settingsCookiePolicy => 'Politique de cookies';
+
+  @override
   String get commonCurrency => 'Devise';
 
   @override
@@ -2334,9 +2384,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get errorTryAgain => 'Please try again';
 
   @override
-  String get errorRetry => 'Réessayer';
-
-  @override
   String get errorBackHome => 'Retour à l\'accueil';
 
   @override
@@ -2562,32 +2609,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutValuesTitle => 'Nos valeurs';
 
   @override
-  String get aboutValuesTrust => 'Trust';
+  String get aboutValuesTrust => 'Confiance';
 
   @override
   String get aboutValuesTrustDesc =>
-      'Every listing is verified by a dedicated team before it is promoted.';
+      'Chaque annonce est vérifiée par une équipe dédiée avant d\'être mise en avant.';
 
   @override
-  String get aboutValuesTransparency => 'Transparency';
+  String get aboutValuesTransparency => 'Transparence';
 
   @override
   String get aboutValuesTransparencyDesc =>
-      'Original prices, verification status and document checks are always shown.';
+      'Les prix d\'origine, le statut de vérification et la vérification des documents sont toujours affichés.';
 
   @override
-  String get aboutValuesQuality => 'Quality';
+  String get aboutValuesQuality => 'Qualité';
 
   @override
   String get aboutValuesQualityDesc =>
-      'We work with verified agents and complete, accurate property descriptions.';
+      'Nous travaillons avec des agents vérifiés et des descriptions de biens complètes et exactes.';
 
   @override
-  String get aboutValuesAccessibility => 'Accessibility';
+  String get aboutValuesAccessibility => 'Accessibilité';
 
   @override
   String get aboutValuesAccessibilityDesc =>
-      'Available in French, English and Swahili, built for every device.';
+      'Disponible en français, anglais et swahili, conçu pour tous les appareils.';
 
   @override
   String get contactTitle => 'Contactez-nous';

@@ -58,6 +58,9 @@ class PrefsStore {
         terms.take(maxSearchHistory).toList(growable: false),
       );
 
+  Future<void> clearSearchHistory() =>
+      preferences.remove(_searchHistoryKey);
+
   /// Mirrors the website's `immo_searched` gate on the Recommended feed
   /// section: it stays hidden until the user has searched at least once.
   static const String _searchedKey = 'immo_searched';

@@ -61,4 +61,40 @@ abstract final class AppConfig {
   /// Standard immersive-mode flags. The app is portrait-first, like every
   /// property app in this category and like YouTube's browse experience.
   static const bool allowLandscape = false;
+
+  /// Company contact details, mirrored from the website's SEO layer
+  /// (`apps/web/src/lib/seo/config.ts`). They live here rather than in a widget
+  /// because they are configuration, not content, and because the same three
+  /// values are reused by the About screen, the Help group and the share sheet.
+  ///
+  /// Note: `hello@immoburundi.bi` is the address the legal pages and the About
+  /// page use; `contact@immoburundi.bi` is the one in the structured data.
+  /// Both are published on the site, so both are offered here.
+  static const String contactEmail = 'hello@immoburundi.bi';
+  static const String contactEmailAlt = 'contact@immoburundi.bi';
+
+  /// `+257` country code plus the national number, which is what `tel:` wants.
+  static const String contactPhone = '+25779000000';
+
+  /// Postal address used for the structured data on the website. Shown as a
+  /// plain string, so the office is not presented as a map pin the app cannot
+  /// verify.
+  static const String contactAddress =
+      'Avenue de la Révolution, Bujumbura Mairie, BP 2270, Burundi';
+
+  /// Real handles, from the same file. The website's own footer links point at
+  /// bare `facebook.com`/`instagram.com` placeholders, so these are taken from
+  /// the only place the real accounts exist.
+  static const String socialFacebook =
+      'https://www.facebook.com/immoburundi';
+  static const String socialInstagram =
+      'https://www.instagram.com/immoburundi';
+
+  /// `https://www.immoburundi.bi/<path>`, for the "read on site" links and
+  /// share targets.
+  static Uri sitePath(String path) => Uri.parse('$siteUrl/$path');
+
+  /// Deep link for a shared property: the web URL, which both platforms resolve
+  /// through App Links / Universal Links.
+  static Uri propertyLink(String id) => Uri.parse('$siteUrl/property/$id');
 }

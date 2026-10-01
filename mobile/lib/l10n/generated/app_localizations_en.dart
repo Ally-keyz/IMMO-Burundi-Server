@@ -567,6 +567,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabYou => 'You';
 
   @override
+  String get aboutTitle => 'About';
+
+  @override
+  String get aboutMissionBodyLong =>
+      'From Bujumbura to Muyinga, we help buyers, tenants and investors discover verified properties while giving owners and professional agents the tools to reach the right audience. Every listing carries a transparent verification status and an original price, and our team works to keep the marketplace free of fraud.';
+
+  @override
+  String get aboutContactTitle => 'Contact us';
+
+  @override
+  String get aboutEmailSubject => 'Hello IMMO BURUNDI';
+
+  @override
+  String get aboutWebsite => 'Website';
+
+  @override
+  String get aboutCopy => 'Copy';
+
+  @override
+  String get aboutCopied => 'Copied to clipboard';
+
+  @override
+  String get contactAddressLabel => 'Head office';
+
+  @override
+  String get errorNoAppForLink => 'No app on this device can open that link.';
+
+  @override
+  String get errorSomethingWrongTitle => 'Something went wrong';
+
+  @override
+  String get errorRetry => 'Retry';
+
+  @override
+  String get settingsStorage => 'Storage';
+
+  @override
+  String get settingsClearCache => 'Clear cached images';
+
+  @override
+  String get settingsCacheCleared => 'Cache cleared';
+
+  @override
+  String get settingsHelp => 'Help';
+
+  @override
+  String get settingsCookiePolicy => 'Cookie Policy';
+
+  @override
   String get commonCurrency => 'Currency';
 
   @override
@@ -2319,9 +2368,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTryAgain => 'Please try again';
-
-  @override
-  String get errorRetry => 'Retry';
 
   @override
   String get errorBackHome => 'Back to home';

@@ -1,0 +1,15 @@
+{
+  "_comment": "Values the app must override when the site's translation is missing or English-only.",
+  "aboutValuesTrust": "Confiance",
+  "aboutValuesTransparency": "Transparence",
+  "aboutValuesQuality": "Qualité",
+  "aboutValuesAccessibility": "Accessibilité",
+  "aboutValuesTrustDesc": "Chaque annonce est vérifiée par une équipe dédiée avant d'être mise en avant.",
+  "aboutValuesTransparencyDesc": "Les prix d'origine, le statut de vérification et la vérification des documents sont toujours affichés.",
+  "aboutValuesQualityDesc": "Nous travaillons avec des agents vérifiés et des descriptions de biens complètes et exactes.",
+  "aboutValuesAccessibilityDesc": "Disponible en français, anglais et swahili, conçu pour tous les appareils.",
+  "legalUpdated": "Dernière mise à jour",
+  "legalUnavailable": "Ce document n'est pas disponible hors ligne.",
+  "legalCookiesTitle": "Politique de cookies",
+  "legalVerificationTitle": "Avis de vérification"
+}

@@ -206,5 +206,23 @@
   "tabHome": "Nyumbani",
   "tabExplore": "Chunguza",
   "tabSaved": "Zilizohifadhiwa",
-  "tabYou": "Wewe"
+  "tabYou": "Wewe",
+
+  "aboutTitle": "Kuhusu",
+  "aboutMissionBodyLong": "Kutoka Bujumbura hadi Muyinga, tunamsaidia wazinunuzi, wapangaji na wawekezaji kupata mali iliyothibitishwa, huku tukiwapa wamiliki na mawakala wa kadi zana za kukifikia hadithi inayofaa. Kila orodha inaonyesha hali ya uthibitisho kwa uwazi na bei halisi, na timu yetu inahakikisha soko halina utaputaji.",
+  "aboutContactTitle": "Wasiliana nasi",
+  "aboutEmailSubject": "Habari IMMO BURUNDI",
+  "aboutWebsite": "Tovuti",
+  "aboutCopy": "Nakili",
+  "aboutCopied": "Imenakiliwa",
+  "contactAddressLabel": "Ofisi kuu",
+  "errorNoAppForLink": "Hakuna programu kwenye kifaa hiki inayoweza kufungua kiungo hiki.",
+  "errorSomethingWrongTitle": "Hitilafu imetokea",
+  "errorRetry": "Jaribu tena",
+
+  "settingsStorage": "Hifadhi",
+  "settingsClearCache": "Futa picha zilizohifadhiwa",
+  "settingsCacheCleared": "Kumbukumbu imefutwa",
+  "settingsHelp": "Msaada",
+  "settingsCookiePolicy": "Sera ya Vidakuzi"
 }

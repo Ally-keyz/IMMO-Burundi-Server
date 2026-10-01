@@ -1186,6 +1186,102 @@ abstract class AppLocalizations {
   /// **'You'**
   String get tabYou;
 
+  /// No description provided for @aboutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutMissionBodyLong.
+  ///
+  /// In en, this message translates to:
+  /// **'From Bujumbura to Muyinga, we help buyers, tenants and investors discover verified properties while giving owners and professional agents the tools to reach the right audience. Every listing carries a transparent verification status and an original price, and our team works to keep the marketplace free of fraud.'**
+  String get aboutMissionBodyLong;
+
+  /// No description provided for @aboutContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us'**
+  String get aboutContactTitle;
+
+  /// No description provided for @aboutEmailSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello IMMO BURUNDI'**
+  String get aboutEmailSubject;
+
+  /// No description provided for @aboutWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get aboutWebsite;
+
+  /// No description provided for @aboutCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get aboutCopy;
+
+  /// No description provided for @aboutCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get aboutCopied;
+
+  /// No description provided for @contactAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Head office'**
+  String get contactAddressLabel;
+
+  /// No description provided for @errorNoAppForLink.
+  ///
+  /// In en, this message translates to:
+  /// **'No app on this device can open that link.'**
+  String get errorNoAppForLink;
+
+  /// No description provided for @errorSomethingWrongTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorSomethingWrongTitle;
+
+  /// No description provided for @errorRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get errorRetry;
+
+  /// No description provided for @settingsStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get settingsStorage;
+
+  /// No description provided for @settingsClearCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear cached images'**
+  String get settingsClearCache;
+
+  /// No description provided for @settingsCacheCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared'**
+  String get settingsCacheCleared;
+
+  /// No description provided for @settingsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get settingsHelp;
+
+  /// No description provided for @settingsCookiePolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie Policy'**
+  String get settingsCookiePolicy;
+
   /// No description provided for @commonCurrency.
   ///
   /// In en, this message translates to:
@@ -4515,12 +4611,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please try again'**
   String get errorTryAgain;
-
-  /// No description provided for @errorRetry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get errorRetry;
 
   /// No description provided for @errorBackHome.
   ///

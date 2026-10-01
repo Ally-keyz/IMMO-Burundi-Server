@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Universal Links: lets https://www.immoburundi.bi/pay/<token> open the app
+	     instead of Safari. iOS only honours this once the site serves a matching
+	     apple-app-site-association file at /.well-known/, so the entitlement is
+	     necessary but not sufficient - without the file on the site, iOS opens
+	     Safari and the link still works, just on the web. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.immoburundi.bi</string>
+		<string>applinks:immoburundi.bi</string>
+	</array>
+</dict>
+</plist>

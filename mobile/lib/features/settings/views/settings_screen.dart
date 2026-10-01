@@ -74,13 +74,13 @@ class SettingsScreen extends ConsumerWidget {
           _Tile(
             icon: Icons.gavel_rounded,
             label: l10n.settingsTerms,
-onTap: () => context.push('/you/settings/terms'),
-                  ),
-                  _Tile(
-                    icon: Icons.privacy_tip_outlined,
-                    label: l10n.settingsPrivacy,
-                    onTap: () => context.push('/you/settings/privacy'),
-                  ),
+            onTap: () => context.push('/you/settings/terms'),
+          ),
+          _Tile(
+            icon: Icons.privacy_tip_outlined,
+            label: l10n.settingsPrivacy,
+            onTap: () => context.push('/you/settings/privacy'),
+          ),
           _Tile(
             icon: Icons.cookie_outlined,
             label: l10n.legalCookiesTitle,
@@ -131,7 +131,7 @@ onTap: () => context.push('/you/settings/terms'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.danger,
                   side: const BorderSide(color: AppColors.danger),
-                  minimumSize: const Size.fromHeight(AppSpacing.tapTarget),
+                  minimumSize: const Size(0, AppSpacing.tapTarget),
                   shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.brMd,
                   ),

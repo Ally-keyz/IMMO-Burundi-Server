@@ -107,7 +107,9 @@ class AboutScreen extends StatelessWidget {
             value: AppConfig.contactPhone,
             onTap: () => _launch(
               context,
-              Uri.parse('https://wa.me/${AppConfig.contactPhone.replaceAll('+', '')}'),
+              Uri.parse(
+                'https://wa.me/${AppConfig.contactPhone.replaceAll('+', '')}',
+              ),
             ),
           ),
           _ContactRow(
@@ -171,19 +173,12 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: AppSpacing.xl, bottom: AppSpacing.sm),
-    child: Text(
-      title,
-      style: Theme.of(context).textTheme.titleMedium,
-    ),
+    child: Text(title, style: Theme.of(context).textTheme.titleMedium),
   );
 }
 
 class _Value extends StatelessWidget {
-  const _Value({
-    required this.icon,
-    required this.title,
-    required this.body,
-  });
+  const _Value({required this.icon, required this.title, required this.body});
 
   final IconData icon;
   final String title;
@@ -206,10 +201,7 @@ class _Value extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+                Text(title, style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: 2),
                 Text(
                   body,
@@ -262,15 +254,12 @@ class _ContactRow extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       label,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: p.textTertiary,
-                      ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelMedium?.copyWith(color: p.textTertiary),
                     ),
                     const SizedBox(height: 1),
-                    Text(
-                      value,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    Text(value, style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
               ),
@@ -310,10 +299,7 @@ class _VersionBlock extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: p.field,
-        borderRadius: AppRadii.brMd,
-      ),
+      decoration: BoxDecoration(color: p.field, borderRadius: AppRadii.brMd),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -321,9 +307,9 @@ class _VersionBlock extends ConsumerWidget {
             children: <Widget>[
               Text(
                 l10n.settingsVersion,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: p.textSecondary,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelMedium?.copyWith(color: p.textSecondary),
               ),
               const SizedBox(width: AppSpacing.xs),
               Text(
@@ -368,11 +354,7 @@ class _VersionBlock extends ConsumerWidget {
 }
 
 class _Link extends ConsumerWidget {
-  const _Link({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+  const _Link({required this.icon, required this.label, required this.onTap});
 
   final IconData icon;
   final String label;
@@ -393,11 +375,7 @@ class _Link extends ConsumerWidget {
             Expanded(
               child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
             ),
-            Icon(
-              Icons.chevron_right_rounded,
-              size: 20,
-              color: p.textTertiary,
-            ),
+            Icon(Icons.chevron_right_rounded, size: 20, color: p.textTertiary),
           ],
         ),
       ),

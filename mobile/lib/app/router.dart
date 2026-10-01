@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/deep_links/deep_link_resolver.dart';
 import '../../core/widgets/app_image.dart';
 import '../../features/agent/views/agent_detail_screen.dart';
 import '../../features/legal/views/about_screen.dart';
@@ -42,6 +43,59 @@ String? _redirectAwayFromAuth(Ref ref, String location) {
   final bool isAuthRoute = location.startsWith('/auth');
   if (isAuthRoute && auth.isSignedIn) return '/home';
   return null;
+}
+
+/// Browsing routes an agent must not land on.
+///
+/// The website wraps every one of these in `NonAgentRoute`, which bounces an
+/// agent to `/dashboard`. The app has no agent dashboard — that surface is out of
+/// scope — so they land on their own profile instead, which is the closest
+/// equivalent that exists here.
+///
+/// `/property/:id` and `/agent/:id` are included because the site guards them
+/// too, even though they are reachable while signed out.
+const List<String> _browsePrefixes = <String>[
+  '/home',
+  '/explore',
+  '/saved',
+  '/property',
+  '/agent',
+];
+
+/// Keeps agents off the browse surface.
+///
+/// This is [AuthState.canBrowse] applied at the router rather than in each
+/// screen: one guard covers every route, including ones added later, which is
+/// the failure mode a per-screen check invites.
+///
+/// Returns null while the session is still unknown. Redirecting before the token
+/// store has been read would bounce a returning user to `/you` on a cold start
+/// and then move them again once the session resolved.
+String? _redirectAgentsAwayFromBrowse(Ref ref, String location) {
+  final AuthState auth = ref.read(authControllerProvider);
+  if (!auth.isResolved || auth.canBrowse) return null;
+  if (location == '/you' || location.startsWith('/you/')) return null;
+  if (!_browsePrefixes.any(location.startsWith)) return null;
+  return '/you';
+}
+
+/// Normalises an inbound deep link onto a route the router serves.
+///
+/// `go_router` hands the raw URI to this redirect, and the two families of link
+/// do not match its routes on their own:
+///
+/// * `immo://pay/abc` puts the resource in the *host*, so it matches nothing and
+///   would land on the 404 screen - the link an agent sends over WhatsApp would
+///   silently do nothing.
+/// * `https://www.immoburundi.bi/setup-account/<token>` has a real path, but the
+///   app calls that route `/auth/setup/<token>`.
+///
+/// An in-app location like `/pay/abc` has no scheme, which is what tells the two
+/// apart. Returning null keeps the 404 for genuinely unknown links.
+String? _redirectDeepLink(_, GoRouterState state) {
+  final Uri uri = state.uri;
+  if (uri.scheme.isEmpty) return null;
+  return deepLinkLocation(uri);
 }
 
 final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
@@ -140,38 +194,40 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
                         path: 'language',
                         builder: (_, _) => const LanguageScreen(),
                       ),
-GoRoute(
-                    path: 'notifications',
-                    builder: (_, _) => const NotificationsScreen(),
+                      GoRoute(
+                        path: 'notifications',
+                        builder: (_, _) => const NotificationsScreen(),
+                      ),
+                      // Legal and About sit under Settings so the pushed route keeps
+                      // its own stack, but they are public - a signed-out visitor
+                      // reading the terms from the landing screen must not be
+                      // bounced to sign-in.
+                      GoRoute(
+                        path: 'terms',
+                        builder: (_, _) =>
+                            const LegalScreen(kind: LegalKind.terms),
+                      ),
+                      GoRoute(
+                        path: 'privacy',
+                        builder: (_, _) =>
+                            const LegalScreen(kind: LegalKind.privacy),
+                      ),
+                      GoRoute(
+                        path: 'cookies',
+                        builder: (_, _) =>
+                            const LegalScreen(kind: LegalKind.cookies),
+                      ),
+                      GoRoute(
+                        path: 'verification',
+                        builder: (_, _) =>
+                            const LegalScreen(kind: LegalKind.verification),
+                      ),
+                      GoRoute(
+                        path: 'about',
+                        builder: (_, _) => const AboutScreen(),
+                      ),
+                    ],
                   ),
-                  // Legal and About sit under Settings so the pushed route keeps
-                  // its own stack, but they are public - a signed-out visitor
-                  // reading the terms from the landing screen must not be
-                  // bounced to sign-in.
-                  GoRoute(
-                    path: 'terms',
-                    builder: (_, _) => const LegalScreen(kind: LegalKind.terms),
-                  ),
-                  GoRoute(
-                    path: 'privacy',
-                    builder: (_, _) =>
-                        const LegalScreen(kind: LegalKind.privacy),
-                  ),
-                  GoRoute(
-                    path: 'cookies',
-                    builder: (_, _) => const LegalScreen(kind: LegalKind.cookies),
-                  ),
-                  GoRoute(
-                    path: 'verification',
-                    builder: (_, _) =>
-                        const LegalScreen(kind: LegalKind.verification),
-                  ),
-                  GoRoute(
-                    path: 'about',
-                    builder: (_, _) => const AboutScreen(),
-                  ),
-                ],
-              ),
                   GoRoute(
                     path: 'edit',
                     builder: (_, _) => const EditProfileScreen(),
@@ -237,6 +293,13 @@ GoRoute(
     // gets one too.
     errorBuilder: (BuildContext context, GoRouterState state) =>
         const NotFoundScreen(),
+    redirect: (BuildContext context, GoRouterState state) =>
+        // Deep links resolve first: a link that spells a route the website uses
+        // differently has to become a real location before the agent guard can
+        // judge it, otherwise `https://www.immoburundi.bi/property/p1` would be
+        // compared as a raw URL and never match `/property`.
+        _redirectDeepLink(context, state) ??
+        _redirectAgentsAwayFromBrowse(ref, state.matchedLocation),
   );
 });
 

@@ -50,6 +50,17 @@
                 <data android:scheme="https" android:host="www.immoburundi.bi"/>
                 <data android:scheme="https" android:host="immoburundi.bi"/>
             </intent-filter>
+            <!-- Custom scheme. This one needs no association file: Android offers
+                 the app directly for a scheme nobody else claims, which is what
+                 makes it the fallback when a recipient has not installed the app.
+                 Deliberately no autoVerify - verification only means something
+                 for http/https. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="immo"/>
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

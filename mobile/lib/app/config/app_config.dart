@@ -85,10 +85,8 @@ abstract final class AppConfig {
   /// Real handles, from the same file. The website's own footer links point at
   /// bare `facebook.com`/`instagram.com` placeholders, so these are taken from
   /// the only place the real accounts exist.
-  static const String socialFacebook =
-      'https://www.facebook.com/immoburundi';
-  static const String socialInstagram =
-      'https://www.instagram.com/immoburundi';
+  static const String socialFacebook = 'https://www.facebook.com/immoburundi';
+  static const String socialInstagram = 'https://www.instagram.com/immoburundi';
 
   /// `https://www.immoburundi.bi/<path>`, for the "read on site" links and
   /// share targets.

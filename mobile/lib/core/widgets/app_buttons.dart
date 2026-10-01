@@ -87,8 +87,14 @@ class AppButton extends StatelessWidget {
             : foreground,
       ),
       side: side,
+      // `Size(0, tapTarget)`, not `Size.fromHeight(tapTarget)`: the latter is
+      // `Size(double.infinity, ...)`, so it sets a *minimum* width of infinity.
+      // A button in a `Row` is a non-flex child and is laid out with an unbounded
+      // max width, and min == max == infinity is not a legal constraint - the
+      // layout threw "BoxConstraints forces an infinite width" and took the home
+      // screen down with it. Only the height is a minimum we want.
       minimumSize: const WidgetStatePropertyAll<Size>(
-        Size.fromHeight(AppSpacing.tapTarget),
+        Size(0, AppSpacing.tapTarget),
       ),
       padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
         EdgeInsets.symmetric(horizontal: AppSpacing.lg),

@@ -58,6 +58,22 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- Custom scheme for links an agent sends over SMS or WhatsApp. iOS hands an
+	     unregistered scheme to Safari and shows nothing useful, so without this
+	     every `immo://pay/<token>` link silently fails to open the app. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>bi.immoburundi.immoburundi</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>immo</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

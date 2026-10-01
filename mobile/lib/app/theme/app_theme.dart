@@ -177,7 +177,9 @@ abstract final class AppTheme {
           foregroundColor: Colors.white,
           disabledBackgroundColor: border,
           disabledForegroundColor: text2,
-          minimumSize: const Size.fromHeight(AppSpacing.tapTarget),
+          // Width 0, not `Size.fromHeight` (which is `double.infinity` wide and
+          // crashes any button laid out with unbounded width, e.g. in a `Row`).
+          minimumSize: const Size(0, AppSpacing.tapTarget),
           textStyle: AppTypography.w(15, weight: 700),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.brPill),
         ),
@@ -187,7 +189,7 @@ abstract final class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: text,
           side: BorderSide(color: border),
-          minimumSize: const Size.fromHeight(AppSpacing.tapTarget),
+          minimumSize: const Size(0, AppSpacing.tapTarget),
           textStyle: AppTypography.w(15, weight: 500),
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.brPill),
         ),

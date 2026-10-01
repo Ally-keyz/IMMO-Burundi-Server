@@ -6,9 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:immoburundi/app/app.dart';
 import 'package:immoburundi/app/router.dart';
 import 'package:immoburundi/core/widgets/app_image.dart';
+import 'package:immoburundi/features/home/views/home_screen.dart';
 import 'package:immoburundi/features/legal/views/about_screen.dart';
 import 'package:immoburundi/features/legal/views/legal_screen.dart';
 import 'package:immoburundi/features/payment/views/payment_screen.dart';
+import 'package:immoburundi/features/profile/views/profile_screen.dart';
+import 'package:immoburundi/features/property/views/property_detail_screen.dart';
 import 'package:immoburundi/l10n/generated/app_localizations.dart';
 
 import '../support/fake_dio.dart';
@@ -27,13 +30,14 @@ void main() {
     WidgetTester tester, {
     FakeAdapter? adapter,
     required String location,
+    Map<String, String>? stored,
   }) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
     final container = ProviderContainer(
-      overrides: await appOverrides(adapter: adapter),
+      overrides: await appOverrides(adapter: adapter, stored: stored),
     );
     addTearDown(container.dispose);
     addTearDown(container.read(routerProvider).dispose);
@@ -188,6 +192,132 @@ void main() {
     expect(find.text('Page not found'), findsOneWidget);
     expect(find.text('Back to home'), findsOneWidget);
     expect(tester.takeException(), isNull);
+  });
+
+  group('deep links', () {
+    // The resolver itself is covered in `core/deep_link_resolver_test.dart`.
+    // These check the half that only shows up in a running app: that go_router
+    // actually calls the redirect with the raw custom-scheme URI and lands on a
+    // real screen instead of the 404.
+    testWidgets('immo://pay/<token> opens the payment screen', (
+      WidgetTester tester,
+    ) async {
+      await pumpAt(
+        tester,
+        adapter: linkWith('tok_deeplink', 'OPEN'),
+        location: 'immo://pay/tok_deeplink',
+      );
+
+      expect(find.byType(PaymentScreen), findsOneWidget);
+      expect(find.text('Page not found'), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('immo://property/<id> opens the property screen', (
+      WidgetTester tester,
+    ) async {
+      await pumpAt(tester, location: 'immo://property/p1');
+
+      expect(find.text('Page not found'), findsNothing);
+      expect(find.byType(PropertyDetailScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('an unknown deep link falls through to the not-found screen', (
+      WidgetTester tester,
+    ) async {
+      await pumpAt(tester, location: 'immo://nonsense/1');
+
+      expect(find.text('Page not found'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+  });
+
+  group('agent guard', () {
+    /// The website wraps every browse route in `NonAgentRoute`, which bounces an
+    /// agent to `/dashboard`. The app has no agent dashboard, so they land on
+    /// their own profile.
+    Future<FakeAdapter> agentSession() async {
+      final FakeAdapter fake = FakeAdapter()
+        ..reply(
+          'POST',
+          '/auth/refresh',
+          FakeReply.json(<String, dynamic>{
+            'accessToken': 'access-2',
+            'refreshToken': 'refresh-2',
+            'user': userJson(role: 'AGENT'),
+          }),
+        );
+      return fake;
+    }
+
+    const Map<String, String> storedSession = <String, String>{
+      'immo_access_token': 'access-1',
+      'immo_refresh_token': 'refresh-1',
+    };
+
+    testWidgets('an agent cannot open Home and lands on their profile', (
+      WidgetTester tester,
+    ) async {
+      final FakeAdapter fake = await agentSession();
+      await pumpAt(
+        tester,
+        adapter: fake,
+        stored: storedSession,
+        location: '/home',
+      );
+
+      expect(find.byType(HomeScreen), findsNothing);
+      expect(find.byType(ProfileScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('an agent cannot open Explore from a deep link', (
+      WidgetTester tester,
+    ) async {
+      final FakeAdapter fake = await agentSession();
+      await pumpAt(
+        tester,
+        adapter: fake,
+        stored: storedSession,
+        location: 'immo://property/p1',
+      );
+
+      expect(find.byType(PropertyDetailScreen), findsNothing);
+      expect(find.byType(ProfileScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a customer still reaches Home', (WidgetTester tester) async {
+      final FakeAdapter fake = FakeAdapter()
+        ..reply(
+          'POST',
+          '/auth/refresh',
+          FakeReply.json(<String, dynamic>{
+            'accessToken': 'access-2',
+            'refreshToken': 'refresh-2',
+            'user': userJson(role: 'CLIENT'),
+          }),
+        );
+      await pumpAt(
+        tester,
+        adapter: fake,
+        stored: storedSession,
+        location: '/home',
+      );
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a signed-out visitor still browses', (
+      WidgetTester tester,
+    ) async {
+      await pumpAt(tester, location: '/home');
+
+      expect(find.byType(HomeScreen), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    });
   });
 
   group('legal documents', () {

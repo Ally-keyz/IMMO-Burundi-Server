@@ -67,16 +67,14 @@ class LandingScreen extends StatelessWidget {
                             Expanded(
                               child: AppButton.secondary(
                                 label: l10n.navLogin,
-                                onPressed: () =>
-                                    context.push('/auth/sign-in'),
+                                onPressed: () => context.push('/auth/sign-in'),
                               ),
                             ),
                             const SizedBox(width: AppSpacing.md),
                             Expanded(
                               child: AppButton.secondary(
                                 label: l10n.navRegister,
-                                onPressed: () =>
-                                    context.push('/auth/sign-up'),
+                                onPressed: () => context.push('/auth/sign-up'),
                               ),
                             ),
                           ],
@@ -113,7 +111,10 @@ class _LegalStrip extends StatelessWidget {
       children: <Widget>[
         _LegalLink(l10n.settingsTerms, () => context.push('/legal/terms')),
         _LegalLink(l10n.settingsPrivacy, () => context.push('/legal/privacy')),
-        _LegalLink(l10n.legalCookiesTitle, () => context.push('/legal/cookies')),
+        _LegalLink(
+          l10n.legalCookiesTitle,
+          () => context.push('/legal/cookies'),
+        ),
         _LegalLink(
           l10n.legalVerificationTitle,
           () => context.push('/legal/verification'),

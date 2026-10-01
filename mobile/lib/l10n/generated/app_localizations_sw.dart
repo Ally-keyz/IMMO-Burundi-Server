@@ -9,6 +9,563 @@ class AppLocalizationsSw extends AppLocalizations {
   AppLocalizationsSw([String locale = 'sw']) : super(locale);
 
   @override
+  String get sortNewest => 'Zilizojipya';
+
+  @override
+  String get sortPriceAsc => 'Bei: ya chini hadi ya juu';
+
+  @override
+  String get sortPriceDesc => 'Bei: ya juu hadi ya chini';
+
+  @override
+  String get sortViews => 'Zilizotazwa zaidi';
+
+  @override
+  String get sortFeatured => 'Maalumu kwanza';
+
+  @override
+  String get filterTitle => 'Vichujio';
+
+  @override
+  String get filterApply => 'Tumia vichujio';
+
+  @override
+  String get filterClearAll => 'Ondoa zote';
+
+  @override
+  String get filterListingType => 'Aina ya tangazo';
+
+  @override
+  String get filterPropertyType => 'Aina ya mali';
+
+  @override
+  String get filterVerification => 'Uthibitishaji';
+
+  @override
+  String get filterProvince => 'Mkoa';
+
+  @override
+  String get filterCommune => 'Jimbo';
+
+  @override
+  String get filterMinBedrooms => 'Vyumba';
+
+  @override
+  String get filterPriceRange => 'Bei kati ya';
+
+  @override
+  String get filterMinPrice => 'Bei ya chini';
+
+  @override
+  String get filterMaxPrice => 'Bei ya juu';
+
+  @override
+  String filterActiveCount(num count) {
+    return '{count, plural, =0{Hakuna vichujio} =1{Kichujio 1} other{Vichujio $count}\'}';
+  }
+
+  @override
+  String get searchPlaceholder => 'Tafuta kwa mji, mtaa au namba ya nyumba…';
+
+  @override
+  String get searchNoResults => 'Hakuna mali inayolingana na utafutaji wako';
+
+  @override
+  String get searchNoResultsHint =>
+      'Jaribu kuondoa kichujio au kutafuta jimbo lingine.';
+
+  @override
+  String get searchRecent => 'Utafutaji wa hivi karibuni';
+
+  @override
+  String get searchClearHistory => 'Futa';
+
+  @override
+  String searchResultsCount(num count) {
+    return '{count, plural, =0{Hakuna matokeo} =1{Matokeo 1} other{Matokeo $count}\'}';
+  }
+
+  @override
+  String get listingForSale => 'Kwa sale';
+
+  @override
+  String get listingForRent => 'Kwa kulaza';
+
+  @override
+  String get listingForLease => 'Kwa kukodisha';
+
+  @override
+  String get listingAuction => 'Mnaganu';
+
+  @override
+  String get listingInvestment => 'Uwekezaji';
+
+  @override
+  String get typeHouse => 'Nyumba';
+
+  @override
+  String get typeApartment => 'Apartamenti';
+
+  @override
+  String get typeVilla => 'Villa';
+
+  @override
+  String get typeLand => 'Ardhi';
+
+  @override
+  String get typeShop => 'Duka';
+
+  @override
+  String get typeOffice => 'Ofisi';
+
+  @override
+  String get typeWarehouse => 'Hifadhi';
+
+  @override
+  String get typeCommercial => 'Biashara';
+
+  @override
+  String get typeIndustrial => 'Viwanda';
+
+  @override
+  String get typeFarm => 'Shamba';
+
+  @override
+  String get typeHotel => 'Hoteli';
+
+  @override
+  String get typeGuestHouse => 'Nyumba ya wageni';
+
+  @override
+  String get typeOther => 'Nyingine';
+
+  @override
+  String get verificationNotVerified => 'Haijathibitishwa';
+
+  @override
+  String get verificationPartial => 'Sehemu';
+
+  @override
+  String get verificationVerified => 'Imethibitishwa';
+
+  @override
+  String get verificationFullyVerified => 'Imethibitishwa kamili';
+
+  @override
+  String get badgeFeatured => 'Maalumu';
+
+  @override
+  String get badgeNew => 'Mpya';
+
+  @override
+  String get badgePromoted => 'Imepromovwa';
+
+  @override
+  String get savedEmptyTitle => 'Hakuna kilichohifadhiwa';
+
+  @override
+  String get savedEmptyBody => 'Bofya moyo kwenye mali ili kuihifadhi hapa.';
+
+  @override
+  String get savedRequiresSignIn => 'Ingia ili kuhifadhi mali';
+
+  @override
+  String get savedUpdateFailed =>
+      'Imesasishwa hawezi kusasisha mali uliyohifadhi';
+
+  @override
+  String get propertyOverview => 'Muhtasari';
+
+  @override
+  String get propertyFeatures => 'Vipengele';
+
+  @override
+  String get propertyLocation => 'Eneo';
+
+  @override
+  String get propertyAgent => 'Aliyeitangaza';
+
+  @override
+  String get propertySimilar => 'Similar';
+
+  @override
+  String get propertyEnquire => 'Tuma hoja';
+
+  @override
+  String get propertyBookVisit => 'Weka utembeleo';
+
+  @override
+  String get propertyApplyRental => 'omba';
+
+  @override
+  String get propertyShareTitle => 'Shiriki mali hii';
+
+  @override
+  String get propertyDescriptionEmpty => 'Mwakala hakuongeza maelezo.';
+
+  @override
+  String get propertyNotFound => 'Property not found';
+
+  @override
+  String get propertyShare => 'Shiriki';
+
+  @override
+  String get propertySave => 'Hifadhi';
+
+  @override
+  String get propertySold => 'Imeuzwa';
+
+  @override
+  String get propertyCall => 'Piga simu';
+
+  @override
+  String get propertyNegotiable => 'Negotiable';
+
+  @override
+  String get propertyVerificationNote =>
+      'Timu yetu imethibitisha nyaraka za mali hii.';
+
+  @override
+  String propertyCoordinates(String coordinates) {
+    return 'Viwakilishi: $coordinates';
+  }
+
+  @override
+  String get propertyCoordinatesHidden => 'Mahali halisi yamefichwa';
+
+  @override
+  String get enquiryTitle => 'Tuma hoja';
+
+  @override
+  String get enquirySubject => 'Mada';
+
+  @override
+  String get enquiryMessage => 'Ujumbe';
+
+  @override
+  String get enquirySend => 'Tuma hoja';
+
+  @override
+  String get enquirySent => 'Hoja yako imetumwa kwa wakala';
+
+  @override
+  String get enquirySignInRequired => 'Ingia ili kutuma hoja';
+
+  @override
+  String get enquiryLabelOpen => 'Imetumwa';
+
+  @override
+  String get enquiryLabelInProgress => 'Wakala anashughulika';
+
+  @override
+  String get enquiryLabelResponded => 'Wakala amejibu';
+
+  @override
+  String get enquiryLabelDealAgreed => 'Makubaliano yamekubaliwa';
+
+  @override
+  String get enquiryLabelClosed => 'Imefungwa';
+
+  @override
+  String get enquiryAgentReply => 'Jibu la wakala';
+
+  @override
+  String get bookingNumberOfPeople => 'Ni watu wangapi?';
+
+  @override
+  String get bookingNotes => 'Kuna chochote wakala anachopenda kujua?';
+
+  @override
+  String get bookingConfirm => 'Thibitisha utaratibu';
+
+  @override
+  String get bookingNoSessions => 'Hakuna muda wa kutembelea mali hii.';
+
+  @override
+  String get bookingSignInRequired => 'Ingia ili kupanga kutembelea';
+
+  @override
+  String get agentProperties => 'Mali';
+
+  @override
+  String get agentSold => 'Yaliyouzwa';
+
+  @override
+  String get agentContact => 'Mawasiliano';
+
+  @override
+  String get agentCall => 'Mpigie mwakala';
+
+  @override
+  String get agentWhatsapp => 'WhatsApp mwakala';
+
+  @override
+  String get agentAbout => 'Kuhusu';
+
+  @override
+  String get agentLicense => 'Leseni';
+
+  @override
+  String get bookingTitle => 'Weka utembeleo';
+
+  @override
+  String get bookingAnyTime => 'Tarehe yoyote inayopatikana';
+
+  @override
+  String get bookingPickDate => 'Chagua tarehe';
+
+  @override
+  String get bookingSuccess => 'Utembeleo wako umewekwa';
+
+  @override
+  String get bookingReference => 'Kumbukumbu';
+
+  @override
+  String get bookingMyVisits => 'Vitembeleo vyangu';
+
+  @override
+  String get paymentTitle => 'Malipo';
+
+  @override
+  String get paymentMethod => 'Lipa kwa';
+
+  @override
+  String get paymentConfirm => 'Thibitisha na lipa';
+
+  @override
+  String get paymentSuccess => 'Malipo yamepokelewa';
+
+  @override
+  String get paymentPending => 'Malipo yanasitishwa';
+
+  @override
+  String get paymentAmountDue => 'Kiasi cha kulipa';
+
+  @override
+  String get paymentPayee => 'Mlipaji';
+
+  @override
+  String get paymentExpires => 'Inaisha';
+
+  @override
+  String get paymentCancelled => 'Kiungo hiki cha malipo kimefutwa';
+
+  @override
+  String get paymentPayerPhone => 'Namba yako ya pesa ya simu';
+
+  @override
+  String get paymentPhoneInvalid =>
+      'Weka namba halali ya pesa ya simu ya Burundi';
+
+  @override
+  String get paymentReference => 'Kumbukumbu';
+
+  @override
+  String get paymentRecordedNote =>
+      'Hakuna mtoaji wa malipo aliounganishwa bado, hivyo hatua hii inarekodi malipo yako na kuweka mali kuwa zimeuzwa. Si uthibitisho wa benki.';
+
+  @override
+  String get youTitle => 'Wewe';
+
+  @override
+  String get youSignedOutTitle => 'Unaingia kama mgeni';
+
+  @override
+  String get youSignedOutBody =>
+      'Ingia ili kuhifadhi mali, kuwasiliana na wawakala na kuweka vitembeleo.';
+
+  @override
+  String get youMyPayments => 'Malipo';
+
+  @override
+  String get youMyVisits => 'Vitembeleo';
+
+  @override
+  String get youEditProfile => 'Hariri wasifu';
+
+  @override
+  String get youAccountActivity => 'Shughuli yako';
+
+  @override
+  String get accountViews => 'Mionekano';
+
+  @override
+  String get accountEnquiries => 'Hoja';
+
+  @override
+  String get accountSaved => 'Zilizohifadhiwa';
+
+  @override
+  String get authSetupRemaining => 'Kamilisha kusanidi akaunti yako';
+
+  @override
+  String get profilePhotoSection => 'Picha ya wasifu';
+
+  @override
+  String get profilePhotoHint =>
+      'Inaonyeshwa karibu na jina lako kwenye tovuti nzima. JPEG, PNG, WEBP au GIF, hadi 5 MB.';
+
+  @override
+  String get profilePhotoChoose => 'Chagua picha';
+
+  @override
+  String get profilePhotoRemove => 'Ondoa picha';
+
+  @override
+  String get profilePhotoUploading => 'Inapakia picha...';
+
+  @override
+  String get profilePhotoUpdated => 'Picha ya wasifu imesasishwa.';
+
+  @override
+  String get profilePhotoRemoved => 'Picha ya wasifu imeondolewa.';
+
+  @override
+  String get profilePhotoInvalid => 'Chagua picha ya JPEG, PNG, WEBP au GIF.';
+
+  @override
+  String get profilePhotoTooLarge => 'Picha lazima iwe 5 MB au kidogo.';
+
+  @override
+  String get profilePhotoFailed => 'Impossible kusoma picha hii.';
+
+  @override
+  String get profilePersonalSection => 'Taarifa za binafsi';
+
+  @override
+  String get profilePersonalHint =>
+      'Sasisha jina lako, namba ya simu na barua pepe.';
+
+  @override
+  String get profilePersonalSaved => 'Taarifa zako za binafsi zimehifadhiwa.';
+
+  @override
+  String get profileSecuritySection => 'Usalama';
+
+  @override
+  String get profileSecurityHint => 'Badilisha nenosiri unalotumia kuingia.';
+
+  @override
+  String get profileCurrentPassword => 'Nenosiri la sasa';
+
+  @override
+  String get profileNewPassword => 'Nenosiri jipya';
+
+  @override
+  String get profilePasswordHint => 'Angalau herufi 8';
+
+  @override
+  String get profilePasswordTooShort => 'Tumia angalau herufi 8.';
+
+  @override
+  String get profileEmailInvalid => 'Weka barua pepe halali.';
+
+  @override
+  String get profileWrongPassword => 'Nenosiri la sasa si sahihi.';
+
+  @override
+  String get settingsTitle => 'Mipangilio';
+
+  @override
+  String get settingsAccount => 'Akaunti';
+
+  @override
+  String get settingsGeneral => 'Jumla';
+
+  @override
+  String get settingsAppearance => 'Mwonekano';
+
+  @override
+  String get settingsThemeSystem => 'Mfumo';
+
+  @override
+  String get settingsThemeLight => 'Nyepesi';
+
+  @override
+  String get settingsThemeDark => 'Giza';
+
+  @override
+  String get settingsLanguage => 'Lugha';
+
+  @override
+  String get settingsCurrency => 'Safi';
+
+  @override
+  String get settingsNotifications => 'Arifa';
+
+  @override
+  String get settingsAbout => 'Kuhusu';
+
+  @override
+  String get settingsTerms => 'Sheria na Mashartiano';
+
+  @override
+  String get settingsPrivacy => 'Sera ya Faragha';
+
+  @override
+  String get settingsRateApp => 'Pima IMMO BURUNDI';
+
+  @override
+  String get settingsVersion => 'Toleo';
+
+  @override
+  String get settingsSignOut => 'Toka';
+
+  @override
+  String get settingsSignOutConfirm => 'Toka kwenye IMMO BURUNDI?';
+
+  @override
+  String get languageTitle => 'Lugha';
+
+  @override
+  String get languageChanged => 'Lugha imebadilishwa';
+
+  @override
+  String get currencyChanged => 'Safi imebadilishwa';
+
+  @override
+  String get notificationsEmpty => 'Hakuna arifa';
+
+  @override
+  String get notificationsMarkAllRead => 'Weka zote kuwa zilizosomwa';
+
+  @override
+  String get notificationsRequiresSignIn => 'Ingia ili kuona arifa zako';
+
+  @override
+  String get legalTermsTitle => 'Sheria na Masharti';
+
+  @override
+  String get legalPrivacyTitle => 'Sera ya Faragha';
+
+  @override
+  String get legalUnavailable => 'Hati hii haipatikani mtandaoni.';
+
+  @override
+  String get legalReadOnSite => 'Soma waraka kamili kwenye tovuti';
+
+  @override
+  String get offlineBanner => 'Hakuna mtandao - mambo mengine yatasaasishwa';
+
+  @override
+  String get errorGeneric => 'Tatizo limetokea';
+
+  @override
+  String get errorNetwork => 'Network error — check your connection.';
+
+  @override
+  String get tabHome => 'Nyumbani';
+
+  @override
+  String get tabExplore => 'Chunguza';
+
+  @override
+  String get tabSaved => 'Zilizohifadhiwa';
+
+  @override
+  String get tabYou => 'Wewe';
+
+  @override
   String get commonCurrency => 'Sarafu';
 
   @override
@@ -284,9 +841,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get searchPerson => 'Tafuta watu au majengo';
 
   @override
-  String get searchPlaceholder => 'Tafuta kwa mji, mtaa au namba ya nyumba…';
-
-  @override
   String get searchButton => 'Tafuta';
 
   @override
@@ -440,9 +994,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get propertyRooms => 'rooms';
 
   @override
-  String get propertyNegotiable => 'Negotiable';
-
-  @override
   String get propertyNotNegotiable => 'Not negotiable';
 
   @override
@@ -474,9 +1025,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get propertyWhatsapp => 'WhatsApp';
 
   @override
-  String get propertyCall => 'Piga simu';
-
-  @override
   String get propertyMessage => 'Ujumbe';
 
   @override
@@ -487,9 +1035,6 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get propertyReport => 'Ripoti';
-
-  @override
-  String get propertyShare => 'Shiriki';
 
   @override
   String get propertyRelatedProperties => 'Majengo yanayofanana';
@@ -541,9 +1086,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get propertyViewMore => 'Ona zaidi';
 
   @override
-  String get propertySimilar => 'Similar';
-
-  @override
   String get propertySameAgent => 'Same agent';
 
   @override
@@ -551,9 +1093,6 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get propertyNoRelated => 'No related properties found';
-
-  @override
-  String get propertyNotFound => 'Property not found';
 
   @override
   String get propertyAgentCard => 'Agent';
@@ -696,9 +1235,6 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get verificationFailed => 'Imeshindwa';
-
-  @override
-  String get verificationPartial => 'Sehemu';
 
   @override
   String get verificationNotApplicable => 'Haifai';
@@ -1783,16 +2319,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get errorNoPermission => 'Huna ruhusa ya kufikia sehemu hii.';
 
   @override
-  String get errorGeneric => 'Tatizo limetokea';
-
-  @override
   String get errorTryAgain => 'Please try again';
 
   @override
   String get errorRetry => 'Jaribu tena';
-
-  @override
-  String get errorNetwork => 'Network error — check your connection.';
 
   @override
   String get errorBackHome => 'Rudi nyumbani';
@@ -2217,12 +2747,6 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hatukupata mawakala wanaolingana na utafutaji wako.';
 
   @override
-  String get agentProperties => 'Mali';
-
-  @override
-  String get agentAbout => 'Kuhusu';
-
-  @override
   String get agentLatest => 'Za hivi karibuni';
 
   @override
@@ -2278,9 +2802,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get agentListings => 'Majengo';
 
   @override
-  String get agentSold => 'Yaliyouzwa';
-
-  @override
   String get agentReviews => 'Maoni';
 
   @override
@@ -2301,9 +2822,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String agentMoreLinks(num count) {
     return 'na $count zaidi';
   }
-
-  @override
-  String get agentLicense => 'Leseni';
 
   @override
   String get agentReviewsEmpty => 'Bado hakuna maoni yaliyoandikwa';
@@ -2594,12 +3112,6 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get applySubmitted =>
       'Your rental application has been submitted to the agent.';
-
-  @override
-  String get legalPrivacyTitle => 'Sera ya Faragha';
-
-  @override
-  String get legalTermsTitle => 'Sheria na Masharti';
 
   @override
   String get legalVerificationTitle => 'Onyo la Uthibitisho';

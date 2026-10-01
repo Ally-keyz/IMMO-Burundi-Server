@@ -9,6 +9,573 @@ class AppLocalizationsFr extends AppLocalizations {
   AppLocalizationsFr([String locale = 'fr']) : super(locale);
 
   @override
+  String get sortNewest => 'Plus récents';
+
+  @override
+  String get sortPriceAsc => 'Prix croissant';
+
+  @override
+  String get sortPriceDesc => 'Prix décroissant';
+
+  @override
+  String get sortViews => 'Plus consultés';
+
+  @override
+  String get sortFeatured => 'En vedette d\'abord';
+
+  @override
+  String get filterTitle => 'Filtres';
+
+  @override
+  String get filterApply => 'Appliquer les filtres';
+
+  @override
+  String get filterClearAll => 'Tout effacer';
+
+  @override
+  String get filterListingType => 'Type d\'annonce';
+
+  @override
+  String get filterPropertyType => 'Type de bien';
+
+  @override
+  String get filterVerification => 'Vérification';
+
+  @override
+  String get filterProvince => 'Province';
+
+  @override
+  String get filterCommune => 'Commune';
+
+  @override
+  String get filterMinBedrooms => 'Chambres';
+
+  @override
+  String get filterPriceRange => 'Fourchette de prix';
+
+  @override
+  String get filterMinPrice => 'Prix min';
+
+  @override
+  String get filterMaxPrice => 'Prix max';
+
+  @override
+  String filterActiveCount(num count) {
+    return '{count, plural, =0{Aucun filtre} =1{1 filtre} other{$count filtres}\'}';
+  }
+
+  @override
+  String get searchPlaceholder =>
+      'Rechercher par ville, quartier ou référence…';
+
+  @override
+  String get searchNoResults => 'Aucun bien ne correspond à votre recherche';
+
+  @override
+  String get searchNoResultsHint =>
+      'Essayez de retirer un filtre ou de chercher une autre commune.';
+
+  @override
+  String get searchRecent => 'Recherches récentes';
+
+  @override
+  String get searchClearHistory => 'Effacer';
+
+  @override
+  String searchResultsCount(num count) {
+    return '{count, plural, =0{Aucun résultat} =1{1 résultat} other{$count résultats}\'}';
+  }
+
+  @override
+  String get listingForSale => 'À vendre';
+
+  @override
+  String get listingForRent => 'À louer';
+
+  @override
+  String get listingForLease => 'À louer (bail)';
+
+  @override
+  String get listingAuction => 'Enchère';
+
+  @override
+  String get listingInvestment => 'Investissement';
+
+  @override
+  String get typeHouse => 'Maison';
+
+  @override
+  String get typeApartment => 'Appartement';
+
+  @override
+  String get typeVilla => 'Villa';
+
+  @override
+  String get typeLand => 'Terrain';
+
+  @override
+  String get typeShop => 'Boutique';
+
+  @override
+  String get typeOffice => 'Bureau';
+
+  @override
+  String get typeWarehouse => 'Entrepôt';
+
+  @override
+  String get typeCommercial => 'Local commercial';
+
+  @override
+  String get typeIndustrial => 'Local industriel';
+
+  @override
+  String get typeFarm => 'Ferme';
+
+  @override
+  String get typeHotel => 'Hôtel';
+
+  @override
+  String get typeGuestHouse => 'Maison d\'hôtes';
+
+  @override
+  String get typeOther => 'Autre';
+
+  @override
+  String get verificationNotVerified => 'Non vérifié';
+
+  @override
+  String get verificationPartial => 'Partiel';
+
+  @override
+  String get verificationVerified => 'Vérifié';
+
+  @override
+  String get verificationFullyVerified => 'Entièrement vérifié';
+
+  @override
+  String get badgeFeatured => 'En vedette';
+
+  @override
+  String get badgeNew => 'Nouveau';
+
+  @override
+  String get badgePromoted => 'Promu';
+
+  @override
+  String get savedEmptyTitle => 'Aucun bien enregistré';
+
+  @override
+  String get savedEmptyBody =>
+      'Touchez le cœur sur un bien pour le retrouver ici.';
+
+  @override
+  String get savedRequiresSignIn => 'Connectez-vous pour enregistrer des biens';
+
+  @override
+  String get savedUpdateFailed =>
+      'Impossible de mettre à jour vos biens enregistrés';
+
+  @override
+  String get propertyOverview => 'Aperçu';
+
+  @override
+  String get propertyFeatures => 'Caractéristiques';
+
+  @override
+  String get propertyLocation => 'Localisation';
+
+  @override
+  String get propertyAgent => 'Publié par';
+
+  @override
+  String get propertySimilar => 'Similaires';
+
+  @override
+  String get propertyEnquire => 'Envoyer une demande';
+
+  @override
+  String get propertyBookVisit => 'Réserver une visite';
+
+  @override
+  String get propertyApplyRental => 'Postuler';
+
+  @override
+  String get propertyShareTitle => 'Partager ce bien';
+
+  @override
+  String get propertyDescriptionEmpty =>
+      'L\'agent n\'a pas ajouté de description.';
+
+  @override
+  String get propertyNotFound => 'Bien introuvable';
+
+  @override
+  String get propertyShare => 'Partager';
+
+  @override
+  String get propertySave => 'Enregistrer';
+
+  @override
+  String get propertySold => 'Vendu';
+
+  @override
+  String get propertyCall => 'Appeler';
+
+  @override
+  String get propertyNegotiable => 'Négociable';
+
+  @override
+  String get propertyVerificationNote =>
+      'Notre équipe a vérifié les documents de ce bien.';
+
+  @override
+  String propertyCoordinates(String coordinates) {
+    return 'Coordonnées : $coordinates';
+  }
+
+  @override
+  String get propertyCoordinatesHidden => 'Position exacte masquée';
+
+  @override
+  String get enquiryTitle => 'Envoyer une demande';
+
+  @override
+  String get enquirySubject => 'Objet';
+
+  @override
+  String get enquiryMessage => 'Message';
+
+  @override
+  String get enquirySend => 'Envoyer la demande';
+
+  @override
+  String get enquirySent => 'Votre demande a été envoyée à l\'agent';
+
+  @override
+  String get enquirySignInRequired => 'Connectez-vous pour envoyer une demande';
+
+  @override
+  String get enquiryLabelOpen => 'Envoyée';
+
+  @override
+  String get enquiryLabelInProgress => 'Agent en cours';
+
+  @override
+  String get enquiryLabelResponded => 'Agent a répondu';
+
+  @override
+  String get enquiryLabelDealAgreed => 'Accord conclu';
+
+  @override
+  String get enquiryLabelClosed => 'Clôturée';
+
+  @override
+  String get enquiryAgentReply => 'Réponse de l\'agent';
+
+  @override
+  String get bookingNumberOfPeople => 'Combien de personnes ?';
+
+  @override
+  String get bookingNotes => 'Une information pour l\'agent ?';
+
+  @override
+  String get bookingConfirm => 'Confirmer la réservation';
+
+  @override
+  String get bookingNoSessions =>
+      'Aucun créneau de visite n\'est disponible pour ce bien.';
+
+  @override
+  String get bookingSignInRequired => 'Connectez-vous pour réserver une visite';
+
+  @override
+  String get agentProperties => 'Biens';
+
+  @override
+  String get agentSold => 'Vendus';
+
+  @override
+  String get agentContact => 'Contact';
+
+  @override
+  String get agentCall => 'Appeler l\'agent';
+
+  @override
+  String get agentWhatsapp => 'WhatsApp l\'agent';
+
+  @override
+  String get agentAbout => 'À propos';
+
+  @override
+  String get agentLicense => 'Licence';
+
+  @override
+  String get bookingTitle => 'Réserver une visite';
+
+  @override
+  String get bookingAnyTime => 'N\'importe quelle date disponible';
+
+  @override
+  String get bookingPickDate => 'Choisir une date';
+
+  @override
+  String get bookingSuccess => 'Votre visite est réservée';
+
+  @override
+  String get bookingReference => 'Référence';
+
+  @override
+  String get bookingMyVisits => 'Mes visites';
+
+  @override
+  String get paymentTitle => 'Paiement';
+
+  @override
+  String get paymentMethod => 'Payer avec';
+
+  @override
+  String get paymentConfirm => 'Confirmer et payer';
+
+  @override
+  String get paymentSuccess => 'Paiement reçu';
+
+  @override
+  String get paymentPending => 'Le paiement est en cours de traitement';
+
+  @override
+  String get paymentAmountDue => 'Montant dû';
+
+  @override
+  String get paymentPayee => 'Bénéficiaire';
+
+  @override
+  String get paymentExpires => 'Expire le';
+
+  @override
+  String get paymentCancelled => 'Ce lien de paiement a été annulé';
+
+  @override
+  String get paymentPayerPhone => 'Votre numéro mobile money';
+
+  @override
+  String get paymentPhoneInvalid =>
+      'Saisissez un numéro mobile money burundais valide';
+
+  @override
+  String get paymentReference => 'Référence';
+
+  @override
+  String get paymentRecordedNote =>
+      'Aucun prestataire de paiement n\'est encore connecté, cette action enregistre votre paiement et marque le bien comme vendu. Ce n\'est pas une confirmation bancaire.';
+
+  @override
+  String get youTitle => 'Vous';
+
+  @override
+  String get youSignedOutTitle => 'Vous naviguez en invité';
+
+  @override
+  String get youSignedOutBody =>
+      'Connectez-vous pour enregistrer des biens, contacter les agents et réserver des visites.';
+
+  @override
+  String get youMyPayments => 'Paiements';
+
+  @override
+  String get youMyVisits => 'Visites';
+
+  @override
+  String get youEditProfile => 'Modifier le profil';
+
+  @override
+  String get youAccountActivity => 'Votre activité';
+
+  @override
+  String get accountViews => 'Vues';
+
+  @override
+  String get accountEnquiries => 'Demandes';
+
+  @override
+  String get accountSaved => 'Enregistrés';
+
+  @override
+  String get authSetupRemaining => 'Terminez la création de votre compte';
+
+  @override
+  String get profilePhotoSection => 'Photo de profil';
+
+  @override
+  String get profilePhotoHint =>
+      'Affichée à côté de votre nom sur toute la plateforme. JPEG, PNG, WEBP ou GIF, 5 Mo maximum.';
+
+  @override
+  String get profilePhotoChoose => 'Choisir une photo';
+
+  @override
+  String get profilePhotoRemove => 'Supprimer la photo';
+
+  @override
+  String get profilePhotoUploading => 'Envoi de la photo...';
+
+  @override
+  String get profilePhotoUpdated => 'Photo de profil mise à jour.';
+
+  @override
+  String get profilePhotoRemoved => 'Photo de profil supprimée.';
+
+  @override
+  String get profilePhotoInvalid =>
+      'Choisissez une image JPEG, PNG, WEBP ou GIF.';
+
+  @override
+  String get profilePhotoTooLarge => 'L\'image doit faire 5 Mo ou moins.';
+
+  @override
+  String get profilePhotoFailed => 'Impossible de lire cette image.';
+
+  @override
+  String get profilePersonalSection => 'Informations personnelles';
+
+  @override
+  String get profilePersonalHint =>
+      'Mettez à jour votre nom, votre numéro et votre e-mail.';
+
+  @override
+  String get profilePersonalSaved =>
+      'Vos informations personnelles ont été enregistrées.';
+
+  @override
+  String get profileSecuritySection => 'Sécurité';
+
+  @override
+  String get profileSecurityHint =>
+      'Changez le mot de passe utilisé pour vous connecter.';
+
+  @override
+  String get profileCurrentPassword => 'Mot de passe actuel';
+
+  @override
+  String get profileNewPassword => 'Nouveau mot de passe';
+
+  @override
+  String get profilePasswordHint => 'Au moins 8 caractères';
+
+  @override
+  String get profilePasswordTooShort => 'Utilisez au moins 8 caractères.';
+
+  @override
+  String get profileEmailInvalid => 'Saisissez une adresse e-mail valide.';
+
+  @override
+  String get profileWrongPassword => 'Ce mot de passe actuel est incorrect.';
+
+  @override
+  String get settingsTitle => 'Réglages';
+
+  @override
+  String get settingsAccount => 'Compte';
+
+  @override
+  String get settingsGeneral => 'Général';
+
+  @override
+  String get settingsAppearance => 'Apparence';
+
+  @override
+  String get settingsThemeSystem => 'Système';
+
+  @override
+  String get settingsThemeLight => 'Clair';
+
+  @override
+  String get settingsThemeDark => 'Sombre';
+
+  @override
+  String get settingsLanguage => 'Langue';
+
+  @override
+  String get settingsCurrency => 'Devise';
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get settingsAbout => 'À propos';
+
+  @override
+  String get settingsTerms => 'Conditions d\'utilisation';
+
+  @override
+  String get settingsPrivacy => 'Politique de confidentialité';
+
+  @override
+  String get settingsRateApp => 'Noter IMMO BURUNDI';
+
+  @override
+  String get settingsVersion => 'Version';
+
+  @override
+  String get settingsSignOut => 'Se déconnecter';
+
+  @override
+  String get settingsSignOutConfirm => 'Se déconnecter d\'IMMO BURUNDI ?';
+
+  @override
+  String get languageTitle => 'Langue';
+
+  @override
+  String get languageChanged => 'Langue modifiée';
+
+  @override
+  String get currencyChanged => 'Devise modifiée';
+
+  @override
+  String get notificationsEmpty => 'Aucune notification';
+
+  @override
+  String get notificationsMarkAllRead => 'Tout marquer comme lu';
+
+  @override
+  String get notificationsRequiresSignIn =>
+      'Connectez-vous pour voir vos notifications';
+
+  @override
+  String get legalTermsTitle => 'Conditions générales';
+
+  @override
+  String get legalPrivacyTitle => 'Politique de confidentialité';
+
+  @override
+  String get legalUnavailable =>
+      'Ce document n\'est pas disponible hors ligne.';
+
+  @override
+  String get legalReadOnSite => 'Lire le document complet sur le site';
+
+  @override
+  String get offlineBanner =>
+      'Hors ligne - certaines informations ne se mettent pas à jour';
+
+  @override
+  String get errorGeneric => 'Une erreur est survenue';
+
+  @override
+  String get errorNetwork => 'Network error — check your connection.';
+
+  @override
+  String get tabHome => 'Accueil';
+
+  @override
+  String get tabExplore => 'Explorer';
+
+  @override
+  String get tabSaved => 'Enregistrés';
+
+  @override
+  String get tabYou => 'Vous';
+
+  @override
   String get commonCurrency => 'Devise';
 
   @override
@@ -284,10 +851,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get searchPerson => 'Rechercher des personnes ou des biens';
 
   @override
-  String get searchPlaceholder =>
-      'Rechercher par ville, quartier ou référence…';
-
-  @override
   String get searchButton => 'Rechercher';
 
   @override
@@ -442,9 +1005,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get propertyRooms => 'rooms';
 
   @override
-  String get propertyNegotiable => 'Négociable';
-
-  @override
   String get propertyNotNegotiable => 'Non négociable';
 
   @override
@@ -476,9 +1036,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get propertyWhatsapp => 'WhatsApp';
 
   @override
-  String get propertyCall => 'Appeler';
-
-  @override
   String get propertyMessage => 'Message';
 
   @override
@@ -489,9 +1046,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get propertyReport => 'Signaler';
-
-  @override
-  String get propertyShare => 'Partager';
 
   @override
   String get propertyRelatedProperties => 'Biens similaires';
@@ -543,9 +1097,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get propertyViewMore => 'Voir plus';
 
   @override
-  String get propertySimilar => 'Similaires';
-
-  @override
   String get propertySameAgent => 'Même agent';
 
   @override
@@ -553,9 +1104,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get propertyNoRelated => 'Aucun bien similaire';
-
-  @override
-  String get propertyNotFound => 'Bien introuvable';
 
   @override
   String get propertyAgentCard => 'Agent';
@@ -698,9 +1246,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get verificationFailed => 'Échoué';
-
-  @override
-  String get verificationPartial => 'Partiel';
 
   @override
   String get verificationNotApplicable => 'Non applicable';
@@ -1786,16 +2331,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Vous n’avez pas la permission d’accéder à cette section.';
 
   @override
-  String get errorGeneric => 'Une erreur est survenue';
-
-  @override
   String get errorTryAgain => 'Please try again';
 
   @override
   String get errorRetry => 'Réessayer';
-
-  @override
-  String get errorNetwork => 'Network error — check your connection.';
 
   @override
   String get errorBackHome => 'Retour à l\'accueil';
@@ -2220,12 +2759,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get agentsEmptyDesc => 'Aucun agent ne correspond à votre recherche.';
 
   @override
-  String get agentProperties => 'Biens';
-
-  @override
-  String get agentAbout => 'À propos';
-
-  @override
   String get agentLatest => 'Récentes';
 
   @override
@@ -2281,9 +2814,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get agentListings => 'Annonces';
 
   @override
-  String get agentSold => 'Vendus';
-
-  @override
   String get agentReviews => 'Avis';
 
   @override
@@ -2304,9 +2834,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String agentMoreLinks(num count) {
     return 'et $count autres';
   }
-
-  @override
-  String get agentLicense => 'Licence';
 
   @override
   String get agentReviewsEmpty => 'Pas encore d\'avis écrits';
@@ -2601,12 +3128,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get applySubmitted =>
       'Your rental application has been submitted to the agent.';
-
-  @override
-  String get legalPrivacyTitle => 'Politique de confidentialité';
-
-  @override
-  String get legalTermsTitle => 'Conditions générales';
 
   @override
   String get legalVerificationTitle => 'Avis de vérification';

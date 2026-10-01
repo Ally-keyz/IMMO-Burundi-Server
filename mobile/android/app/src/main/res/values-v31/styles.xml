@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12 (API 31) replaced the launch window with a system splash screen and
+  ignores windowBackground for the launcher's own splash. Without this file the
+  system falls back to the app icon on a white background, which is both the
+  wrong colour in dark mode and a different image from the one the app's own
+  Lottie splash continues with.
+
+  windowSplashScreenAnimatedIcon is the launcher foreground vector on the brand
+  colour, so the system splash and the adaptive launcher icon are the same mark.
+-->
+<resources>
+    <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowSplashScreenBackground">@color/launch_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>

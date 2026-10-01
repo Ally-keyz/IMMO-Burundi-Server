@@ -31,12 +31,16 @@ class AppUser {
     photoUrl: asStringOrNull(json is Map ? json['photoUrl'] : null),
     role: UserRole.parse(asStringOrNull(json is Map ? json['role'] : null)),
     status: asString(json is Map ? json['status'] : null, 'ACTIVE'),
-    preferredLanguage: asString(json is Map ? json['preferredLanguage'] : null, 'fr'),
-    preferredCurrency: asString(json is Map ? json['preferredCurrency'] : null, 'BIF'),
-    address: asStringOrNull(json is Map ? json['address'] : null),
-    needsAccountSetup: asBool(
-      json is Map ? json['needsAccountSetup'] : null,
+    preferredLanguage: asString(
+      json is Map ? json['preferredLanguage'] : null,
+      'fr',
     ),
+    preferredCurrency: asString(
+      json is Map ? json['preferredCurrency'] : null,
+      'BIF',
+    ),
+    address: asStringOrNull(json is Map ? json['address'] : null),
+    needsAccountSetup: asBool(json is Map ? json['needsAccountSetup'] : null),
     createdAt: asDate(json is Map ? json['createdAt'] : null),
   );
 
@@ -54,10 +58,10 @@ class AppUser {
   final bool needsAccountSetup;
   final DateTime? createdAt;
 
-  String get fullName => <String>[firstName, lastName]
-      .where((String p) => p.trim().isNotEmpty)
-      .join(' ')
-      .trim();
+  String get fullName => <String>[
+    firstName,
+    lastName,
+  ].where((String p) => p.trim().isNotEmpty).join(' ').trim();
 
   /// One-letter initial for the avatar fallback.
   String get initial {
@@ -110,9 +114,12 @@ class AuthResult {
   factory AuthResult.fromJson(Object? json) => AuthResult(
     accessToken: asString(json is Map ? json['accessToken'] : null),
     refreshToken: asString(json is Map ? json['refreshToken'] : null),
-    user: asMap(child(json, 'user')) == null
-        ? null
-        : AppUser.fromJson(child(json, 'user')),
+    // `child` never returns null, so reading the raw value is what makes a
+    // missing user genuinely null rather than an empty AppUser.
+    user: switch (asMap(json is Map ? json['user'] : null)) {
+      final Map<String, dynamic> raw => AppUser.fromJson(raw),
+      null => null,
+    },
   );
 
   final String accessToken;
@@ -124,7 +131,12 @@ class AuthResult {
 /// before asking for a new password.
 @immutable
 class SetupAccountInfo {
-  const SetupAccountInfo({this.email, this.phone, this.firstName, this.lastName});
+  const SetupAccountInfo({
+    this.email,
+    this.phone,
+    this.firstName,
+    this.lastName,
+  });
 
   factory SetupAccountInfo.fromJson(Object? json) => SetupAccountInfo(
     email: asStringOrNull(json is Map ? json['email'] : null),

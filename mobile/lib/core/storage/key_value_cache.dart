@@ -61,9 +61,9 @@ class KeyValueCache {
   }
 }
 
-final Provider<KeyValueCache> keyValueCacheProvider = Provider<KeyValueCache>((
-  Ref ref,
-) => KeyValueCache(ref.watch(prefsStoreProvider).preferences));
+final Provider<KeyValueCache> keyValueCacheProvider = Provider<KeyValueCache>(
+  (Ref ref) => KeyValueCache(ref.watch(prefsStoreProvider).preferences),
+);
 
 abstract final class CacheKeys {
   static const String provinces = 'provinces';

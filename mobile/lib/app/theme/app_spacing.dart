@@ -24,7 +24,10 @@ abstract final class AppSpacing {
   static const EdgeInsets page = EdgeInsets.symmetric(horizontal: pageMargin);
   static const EdgeInsets card = EdgeInsets.all(md);
   static const EdgeInsets sheet = EdgeInsets.fromLTRB(lg, sm, lg, lg);
-  static const EdgeInsets listTile = EdgeInsets.symmetric(horizontal: lg, vertical: md);
+  static const EdgeInsets listTile = EdgeInsets.symmetric(
+    horizontal: lg,
+    vertical: md,
+  );
 }
 
 /// Corner radii, from `apps/web/src/index.css` plus the YouTube values the brief
@@ -43,8 +46,9 @@ abstract final class AppRadii {
   static const BorderRadius brMd = BorderRadius.all(Radius.circular(md));
   static const BorderRadius brLg = BorderRadius.all(Radius.circular(lg));
   static const BorderRadius brXl = BorderRadius.all(Radius.circular(xl));
-  static const BorderRadius brSheet =
-      BorderRadius.vertical(top: Radius.circular(sheet));
+  static const BorderRadius brSheet = BorderRadius.vertical(
+    top: Radius.circular(sheet),
+  );
   static const BorderRadius brPill = BorderRadius.all(Radius.circular(pill));
 }
 

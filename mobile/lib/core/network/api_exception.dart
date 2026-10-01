@@ -42,7 +42,25 @@ class ApiException implements Exception {
   static const String invalidGoogleToken = 'INVALID_GOOGLE_TOKEN';
   static const String unverifiedEmail = 'UNVERIFIED_EMAIL';
   static const String forbidden = 'FORBIDDEN';
-  static const String selfRegistrationDisallowed = 'SELF_REGISTRATION_DISALLOWED';
+  static const String selfRegistrationDisallowed =
+      'SELF_REGISTRATION_DISALLOWED';
+
+  // ---- users ------------------------------------------------------------
+  static const String userNotFound = 'USER_NOT_FOUND';
+
+  /// A password change without the current one, and a wrong one, respectively.
+  /// Both are 400s from `users.service.ts`, not 401s, so they must not trigger
+  /// a sign-out.
+  static const String currentPasswordRequired = 'CURRENT_PASSWORD_REQUIRED';
+  static const String wrongPassword = 'WRONG_PASSWORD';
+
+  // ---- files ------------------------------------------------------------
+  static const String fileRequired = 'FILE_REQUIRED';
+  static const String unsupportedFileType = 'UNSUPPORTED_FILE_TYPE';
+  static const String emptyFile = 'EMPTY_FILE';
+
+  /// 413, raised by multer when the body beats the 5 MB limit.
+  static const String fileTooLarge = 'FILE_TOO_LARGE';
 
   // ---- properties -------------------------------------------------------
   static const String propertyNotFound = 'PROPERTY_NOT_FOUND';
@@ -69,8 +87,7 @@ class ApiException implements Exception {
   static const String invalidId = 'INVALID_ID';
   static const String internal = 'INTERNAL';
 
-  bool get isUnauthorized =>
-      code == unauthenticated || code == tokenExpired;
+  bool get isUnauthorized => code == unauthenticated || code == tokenExpired;
   bool get isNotFound =>
       code == notFound || code == propertyNotFound || code == linkNotFound;
   bool get isNetwork =>
@@ -121,10 +138,8 @@ class ApiException implements Exception {
   };
 
   /// Wraps a transport failure (DNS, socket, TLS) that never reached the API.
-  factory ApiException.transport(Object error) => ApiException(
-    code: networkError,
-    message: error.toString(),
-  );
+  factory ApiException.transport(Object error) =>
+      ApiException(code: networkError, message: error.toString());
 
   @override
   String toString() =>

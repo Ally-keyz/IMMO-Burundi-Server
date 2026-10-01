@@ -20,7 +20,9 @@ abstract final class AppTheme {
     final bool isDark = brightness == Brightness.dark;
 
     final Color bg = isDark ? AppColors.darkBg : AppColors.lightBg;
-    final Color surface = isDark ? AppColors.darkSurface : AppColors.lightSurface;
+    final Color surface = isDark
+        ? AppColors.darkSurface
+        : AppColors.lightSurface;
     final Color text = isDark ? AppColors.darkText : AppColors.lightText;
     final Color text2 = isDark ? AppColors.darkText2 : AppColors.lightText2;
     final Color field = isDark ? AppColors.darkField : AppColors.lightField;
@@ -139,7 +141,9 @@ abstract final class AppTheme {
         ),
         hintStyle: AppTypography.w(
           14,
-          color: isDark ? AppColors.darkPlaceholder : AppColors.lightPlaceholder,
+          color: isDark
+              ? AppColors.darkPlaceholder
+              : AppColors.lightPlaceholder,
         ),
         labelStyle: AppTypography.w(14, color: text2),
         floatingLabelStyle: AppTypography.w(14, weight: 500, color: text),

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      AppColors.darkBg (#000000) in dark mode. The app's own dark surface is
+      #181818, but the launch window sits behind the Flutter surface rather than
+      under it, and #000000 is the colour the shell is painted with first.
+    -->
+    <color name="launch_background">#000000</color>
+</resources>

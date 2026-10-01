@@ -19,6 +19,17 @@ enum ListingType {
     orElse: () => ListingType.sale,
   );
 
+  /// Null for an unknown value, for the screens that treat the value as a filter
+  /// and must be able to say "no filter" rather than silently defaulting to SALE.
+  static ListingType? tryParse(String? value) {
+    final String wanted = value?.toUpperCase() ?? '';
+    if (wanted.isEmpty) return null;
+    for (final ListingType t in ListingType.values) {
+      if (t.apiValue == wanted) return t;
+    }
+    return null;
+  }
+
   bool get isRental => this == ListingType.rent || this == ListingType.lease;
 }
 
@@ -44,6 +55,16 @@ enum PropertyType {
     (PropertyType t) => t.apiValue == value?.toUpperCase(),
     orElse: () => PropertyType.other,
   );
+
+  /// See [ListingType.tryParse].
+  static PropertyType? tryParse(String? value) {
+    final String wanted = value?.toUpperCase() ?? '';
+    if (wanted.isEmpty) return null;
+    for (final PropertyType t in PropertyType.values) {
+      if (t.apiValue == wanted) return t;
+    }
+    return null;
+  }
 }
 
 enum VerificationStatus {
@@ -97,10 +118,11 @@ enum PropertyStatus {
   const PropertyStatus(this.apiValue);
   final String apiValue;
 
-  static PropertyStatus parse(String? value) => PropertyStatus.values.firstWhere(
-    (PropertyStatus t) => t.apiValue == value?.toUpperCase(),
-    orElse: () => PropertyStatus.published,
-  );
+  static PropertyStatus parse(String? value) =>
+      PropertyStatus.values.firstWhere(
+        (PropertyStatus t) => t.apiValue == value?.toUpperCase(),
+        orElse: () => PropertyStatus.published,
+      );
 }
 
 enum SortOption {
@@ -263,6 +285,12 @@ enum UserRole {
   customer('CUSTOMER'),
   client('CLIENT'),
   agent('AGENT'),
+
+  /// A field agent is denied the same routes as an agent — the API pairs the two
+  /// in every `denyRoles(req, ['AGENT', 'FIELD_AGENT'])`
+  /// (`agents.routes.ts`, `properties.routes.ts`) — so it must be recognised as
+  /// one here too, or a field agent is shown a browse surface that 403s.
+  fieldAgent('FIELD_AGENT'),
   admin('ADMIN'),
   superAdmin('SUPER_ADMIN'),
   mainAdmin('MAIN_ADMIN');
@@ -275,7 +303,7 @@ enum UserRole {
     orElse: () => UserRole.customer,
   );
 
-  bool get isAgent => this == UserRole.agent;
+  bool get isAgent => this == UserRole.agent || this == UserRole.fieldAgent;
   bool get isStaff =>
       this == UserRole.admin ||
       this == UserRole.superAdmin ||

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Immoburundi</string>
+	<string>IMMO BURUNDI</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,6 +22,21 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<!-- The app ships English, French and Swahili. Without this key iOS assumes
+	     only the development region, so the home-screen name never follows the
+	     system language and the App Store listing claims one language. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>fr</string>
+		<string>sw</string>
+	</array>
+	<!-- The profile photo is picked with image_picker. iOS requires a purpose
+	     string for reading the photo library, and without one the app is
+	     terminated by the privacy check the moment a user taps "choose a
+	     photo". It is required even where the picker runs through PHPicker. -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>IMMO BURUNDI needs access to your photos so you can set a profile picture that agents and other users can recognise.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

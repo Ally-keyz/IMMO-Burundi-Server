@@ -58,10 +58,29 @@ class ImmoTokens extends ThemeExtension<ImmoTokens> {
     brandTint: AppColors.brandTint,
     brandDeep: AppColors.brandDeep,
     tileNavy: AppColors.tileNavy,
-    cardTitle: AppTypography.w(13, weight: 500, height: 1.35, color: AppColors.lightText),
-    cardPrice: AppTypography.w(13, weight: 700, height: 1.35, color: AppColors.lightText),
-    cardLocation: AppTypography.w(12, height: 1.33, color: AppColors.lightText2),
-    cardAgent: AppTypography.w(13, weight: 500, height: 1.35, color: AppColors.lightText),
+    cardTitle: AppTypography.w(
+      13,
+      weight: 500,
+      height: 1.35,
+      color: AppColors.lightText,
+    ),
+    cardPrice: AppTypography.w(
+      13,
+      weight: 700,
+      height: 1.35,
+      color: AppColors.lightText,
+    ),
+    cardLocation: AppTypography.w(
+      12,
+      height: 1.33,
+      color: AppColors.lightText2,
+    ),
+    cardAgent: AppTypography.w(
+      13,
+      weight: 500,
+      height: 1.35,
+      color: AppColors.lightText,
+    ),
     meta: AppTypography.w(12, height: 1.33, color: AppColors.lightText2),
     sectionLabel: AppTypography.w(
       13,
@@ -70,7 +89,12 @@ class ImmoTokens extends ThemeExtension<ImmoTokens> {
       letterSpacing: 0.6,
       color: AppColors.lightText,
     ),
-    bigStat: AppTypography.w(36, weight: 700, height: 1.1, color: AppColors.lightText),
+    bigStat: AppTypography.w(
+      36,
+      weight: 700,
+      height: 1.1,
+      color: AppColors.lightText,
+    ),
   );
 
   static final ImmoTokens dark = ImmoTokens(
@@ -83,10 +107,25 @@ class ImmoTokens extends ThemeExtension<ImmoTokens> {
     brandTint: const Color(0xFF002A7D),
     brandDeep: AppColors.brandDeep,
     tileNavy: AppColors.tileNavy,
-    cardTitle: AppTypography.w(13, weight: 500, height: 1.35, color: AppColors.darkText),
-    cardPrice: AppTypography.w(13, weight: 700, height: 1.35, color: AppColors.darkText),
+    cardTitle: AppTypography.w(
+      13,
+      weight: 500,
+      height: 1.35,
+      color: AppColors.darkText,
+    ),
+    cardPrice: AppTypography.w(
+      13,
+      weight: 700,
+      height: 1.35,
+      color: AppColors.darkText,
+    ),
     cardLocation: AppTypography.w(12, height: 1.33, color: AppColors.darkText2),
-    cardAgent: AppTypography.w(13, weight: 500, height: 1.35, color: AppColors.darkText),
+    cardAgent: AppTypography.w(
+      13,
+      weight: 500,
+      height: 1.35,
+      color: AppColors.darkText,
+    ),
     meta: AppTypography.w(12, height: 1.33, color: AppColors.darkText2),
     sectionLabel: AppTypography.w(
       13,
@@ -95,7 +134,12 @@ class ImmoTokens extends ThemeExtension<ImmoTokens> {
       letterSpacing: 0.6,
       color: AppColors.darkText,
     ),
-    bigStat: AppTypography.w(36, weight: 700, height: 1.1, color: AppColors.darkText),
+    bigStat: AppTypography.w(
+      36,
+      weight: 700,
+      height: 1.1,
+      color: AppColors.darkText,
+    ),
   );
 
   @override

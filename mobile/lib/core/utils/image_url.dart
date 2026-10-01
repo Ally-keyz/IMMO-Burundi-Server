@@ -53,12 +53,7 @@ String _cloudinary(String url, int width, int quality) {
       '${parts.publicId}';
 }
 
-const Set<String> _unsplashTransformKeys = <String>{
-  'w',
-  'q',
-  'auto',
-  'fit',
-};
+const Set<String> _unsplashTransformKeys = <String>{'w', 'q', 'auto', 'fit'};
 
 String _unsplash(String url, int width, int quality, {bool stripOnly = false}) {
   final Uri uri = Uri.parse(url);
@@ -100,8 +95,12 @@ String sizedImageUrl(
   int quality = 80,
 }) {
   if (url.isEmpty || !url.startsWith('http')) return url;
-  if (url.contains('res.cloudinary.com')) return _cloudinary(url, width, quality);
-  if (url.contains('images.unsplash.com')) return _unsplash(url, width, quality);
+  if (url.contains('res.cloudinary.com')) {
+    return _cloudinary(url, width, quality);
+  }
+  if (url.contains('images.unsplash.com')) {
+    return _unsplash(url, width, quality);
+  }
   return url;
 }
 

@@ -65,10 +65,7 @@ class EnvelopeInterceptor extends Interceptor {
       );
       handleError(error);
       handler.reject(
-        err.copyWith(
-          type: DioExceptionType.badResponse,
-          error: error,
-        ),
+        err.copyWith(type: DioExceptionType.badResponse, error: error),
         true,
       );
       return;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Dark-mode launch window.
+
+  Both values/styles.xml and values-night/styles.xml point at
+  @drawable/launch_background, so without this directory the launch window is
+  white in dark mode too: the app opens on a white flash and then switches to
+  black. A resource qualifier is the only place that can differ per mode for a
+  drawable referenced by name.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/launch_background" />
+</layer-list>

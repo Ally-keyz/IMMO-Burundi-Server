@@ -209,11 +209,7 @@ class AppIconButton extends StatelessWidget {
             child: SizedBox(
               height: size,
               width: size,
-              child: Icon(
-                icon,
-                size: 20,
-                color: foreground ?? p.text,
-              ),
+              child: Icon(icon, size: 20, color: foreground ?? p.text),
             ),
           ),
         ),

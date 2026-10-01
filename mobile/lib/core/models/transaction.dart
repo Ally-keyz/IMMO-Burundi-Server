@@ -91,7 +91,7 @@ class VisitBooking {
     id: idOf(json) ?? '',
     visitSessionId: asStringOrNull(json is Map ? json['visitSessionId'] : null),
     propertyId: asString(json is Map ? json['propertyId'] : null),
-    property: asMap(child(json, 'property')) == null
+    property: asMap(field(json, 'property')) == null
         ? null
         : PropertySummary.fromJson(child(json, 'property')),
     preferredDate: asStringOrNull(json is Map ? json['preferredDate'] : null),
@@ -122,7 +122,8 @@ class VisitBooking {
   final DateTime? createdAt;
 
   bool get canCancel =>
-      status == VisitBookingStatus.pending || status == VisitBookingStatus.confirmed;
+      status == VisitBookingStatus.pending ||
+      status == VisitBookingStatus.confirmed;
 }
 
 /// `POST /api/enquiries`.
@@ -143,12 +144,14 @@ class Enquiry {
   factory Enquiry.fromJson(Object? json) => Enquiry(
     id: idOf(json) ?? '',
     propertyId: asString(json is Map ? json['propertyId'] : null),
-    property: asMap(child(json, 'property')) == null
+    property: asMap(field(json, 'property')) == null
         ? null
         : PropertySummary.fromJson(child(json, 'property')),
     subject: asString(json is Map ? json['subject'] : null),
     message: asString(json is Map ? json['message'] : null),
-    status: EnquiryStatus.parse(asStringOrNull(json is Map ? json['status'] : null)),
+    status: EnquiryStatus.parse(
+      asStringOrNull(json is Map ? json['status'] : null),
+    ),
     response: asStringOrNull(json is Map ? json['response'] : null),
     respondedAt: asDate(json is Map ? json['respondedAt'] : null),
     createdAt: asDate(json is Map ? json['createdAt'] : null),
@@ -189,7 +192,7 @@ class RentalApplication {
   factory RentalApplication.fromJson(Object? json) => RentalApplication(
     id: idOf(json) ?? '',
     propertyId: asString(json is Map ? json['propertyId'] : null),
-    property: asMap(child(json, 'property')) == null
+    property: asMap(field(json, 'property')) == null
         ? null
         : PropertySummary.fromJson(child(json, 'property')),
     fullName: asString(json is Map ? json['fullName'] : null),
@@ -296,7 +299,9 @@ class PaymentLink {
     amount: asDouble(json is Map ? json['amount'] : null) ?? 0,
     currency: asString(json is Map ? json['currency'] : null, 'BIF'),
     note: asStringOrNull(json is Map ? json['note'] : null),
-    status: PaymentLinkStatus.parse(asStringOrNull(json is Map ? json['status'] : null)),
+    status: PaymentLinkStatus.parse(
+      asStringOrNull(json is Map ? json['status'] : null),
+    ),
     payeeName: asString(json is Map ? json['payeeName'] : null),
     propertyId: asString(json is Map ? json['propertyId'] : null),
     propertyTitle: asString(json is Map ? json['propertyTitle'] : null),
@@ -325,7 +330,9 @@ class PaymentLink {
   final DateTime? expiresAt;
 
   bool get isExpired =>
-      expiresAt != null && DateTime.now().isAfter(expiresAt!) && status.isTerminal == false;
+      expiresAt != null &&
+      DateTime.now().isAfter(expiresAt!) &&
+      status.isTerminal == false;
 }
 
 /// The result of `POST /api/payment-links/r/:token/pay`.
@@ -340,7 +347,9 @@ class PaymentResult {
 
   factory PaymentResult.fromJson(Object? json) => PaymentResult(
     paymentReference: asString(json is Map ? json['paymentReference'] : null),
-    status: PaymentLinkStatus.parse(asStringOrNull(json is Map ? json['status'] : null)),
+    status: PaymentLinkStatus.parse(
+      asStringOrNull(json is Map ? json['status'] : null),
+    ),
     paidAt: asDate(json is Map ? json['paidAt'] : null),
     propertyMarkedSold: asBool(json is Map ? json['propertyMarkedSold'] : null),
   );

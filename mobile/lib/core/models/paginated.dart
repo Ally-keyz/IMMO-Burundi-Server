@@ -11,10 +11,10 @@ class PaginationMeta {
   });
 
   factory PaginationMeta.fromJson(Object? json) => PaginationMeta(
-    page: asInt(child(json, 'page')) ?? 1,
-    pageSize: asInt(child(json, 'pageSize')) ?? 20,
-    total: asInt(child(json, 'total')) ?? 0,
-    totalPages: asInt(child(json, 'totalPages')) ?? 1,
+    page: asInt(field(json, 'page')) ?? 1,
+    pageSize: asInt(field(json, 'pageSize')) ?? 20,
+    total: asInt(field(json, 'total')) ?? 0,
+    totalPages: asInt(field(json, 'totalPages')) ?? 1,
   );
 
   final int page;

@@ -539,6 +539,14 @@ one is a deviation from "never invent features", so it is gated behind
 persisted in `immo_seen_onboarding`. It introduces *navigation only* — no claims
 about features the site does not have.
 
+> **Status: not implemented, and the `ONBOARDING` define has been deleted.**
+> The flag below was removed rather than left at `false`, because a switch that
+> routes nowhere is a trap: it documented a feature the app does not have, and
+> turning it on produced a redirect to a route that was never registered. If
+> onboarding is ever wanted, build the screen *and* the route first, then
+> reintroduce the flag. The two rows above that mention `/onboarding` and
+> `immo_seen_onboarding` are likewise stale; `/` resolves the session directly.
+
 ---
 
 ## 14. Accessibility & responsiveness

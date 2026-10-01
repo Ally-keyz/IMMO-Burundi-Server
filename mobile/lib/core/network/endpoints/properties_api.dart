@@ -87,29 +87,28 @@ class PropertyQuery {
     'pageSize': pageSize,
   };
 
-  static Map<String, String> _sortParams(SortOption sort) =>
-      switch (sort) {
-        SortOption.newest => <String, String>{
-          'sortBy': 'publishedAt',
-          'sortOrder': 'desc',
-        },
-        SortOption.priceAsc => <String, String>{
-          'sortBy': 'price',
-          'sortOrder': 'asc',
-        },
-        SortOption.priceDesc => <String, String>{
-          'sortBy': 'price',
-          'sortOrder': 'desc',
-        },
-        SortOption.views => <String, String>{
-          'sortBy': 'views',
-          'sortOrder': 'desc',
-        },
-        SortOption.featured => <String, String>{
-          'sortBy': 'featured',
-          'sortOrder': 'desc',
-        },
-      };
+  static Map<String, String> _sortParams(SortOption sort) => switch (sort) {
+    SortOption.newest => <String, String>{
+      'sortBy': 'publishedAt',
+      'sortOrder': 'desc',
+    },
+    SortOption.priceAsc => <String, String>{
+      'sortBy': 'price',
+      'sortOrder': 'asc',
+    },
+    SortOption.priceDesc => <String, String>{
+      'sortBy': 'price',
+      'sortOrder': 'desc',
+    },
+    SortOption.views => <String, String>{
+      'sortBy': 'views',
+      'sortOrder': 'desc',
+    },
+    SortOption.featured => <String, String>{
+      'sortBy': 'featured',
+      'sortOrder': 'desc',
+    },
+  };
 
   PropertyQuery copyWith({
     String? search,
@@ -132,8 +131,12 @@ class PropertyQuery {
     int? pageSize,
   }) => PropertyQuery(
     search: search ?? this.search,
-    provinceId: identical(provinceId, _sentinel) ? this.provinceId : provinceId as String?,
-    communeId: identical(communeId, _sentinel) ? this.communeId : communeId as String?,
+    provinceId: identical(provinceId, _sentinel)
+        ? this.provinceId
+        : provinceId as String?,
+    communeId: identical(communeId, _sentinel)
+        ? this.communeId
+        : communeId as String?,
     zoneId: identical(zoneId, _sentinel) ? this.zoneId : zoneId as String?,
     propertyType: identical(propertyType, _sentinel)
         ? this.propertyType
@@ -227,9 +230,9 @@ class PropertiesApi {
       '/properties/$id/related',
       options: _browse,
     );
-    return _objects(res.data)
-        .map(PropertySummary.fromJson)
-        .toList(growable: false);
+    return _objects(
+      res.data,
+    ).map(PropertySummary.fromJson).toList(growable: false);
   }
 
   Future<List<PropertySummary>> featured({int limit = 12}) =>
@@ -248,7 +251,9 @@ class PropertiesApi {
       '/properties/popular-locations',
       options: _browse,
     );
-    return _objects(res.data).map(LocationCount.fromJson).toList(growable: false);
+    return _objects(
+      res.data,
+    ).map(LocationCount.fromJson).toList(growable: false);
   }
 
   Future<List<PropertySummary>> _shelf(String path, int limit) async {
@@ -257,9 +262,9 @@ class PropertiesApi {
       queryParameters: <String, dynamic>{'limit': limit},
       options: _browse,
     );
-    return _objects(res.data)
-        .map(PropertySummary.fromJson)
-        .toList(growable: false);
+    return _objects(
+      res.data,
+    ).map(PropertySummary.fromJson).toList(growable: false);
   }
 }
 
@@ -269,7 +274,10 @@ class FavoritesApi {
 
   final Dio _dio;
 
-  Future<Paginated<PropertySummary>> list({int page = 1, int pageSize = 20}) async {
+  Future<Paginated<PropertySummary>> list({
+    int page = 1,
+    int pageSize = 20,
+  }) async {
     final Response<dynamic> res = await _dio.get<List<dynamic>>(
       '/favorites',
       queryParameters: <String, dynamic>{'page': page, 'pageSize': pageSize},
@@ -282,8 +290,10 @@ class FavoritesApi {
   }
 
   /// Idempotent — the API upserts, so tapping Save twice is harmless.
-  Future<void> add(String propertyId) =>
-      _dio.post<void>('/favorites', data: <String, dynamic>{'propertyId': propertyId});
+  Future<void> add(String propertyId) => _dio.post<void>(
+    '/favorites',
+    data: <String, dynamic>{'propertyId': propertyId},
+  );
 
   Future<void> remove(String propertyId) =>
       _dio.delete<void>('/favorites/$propertyId');

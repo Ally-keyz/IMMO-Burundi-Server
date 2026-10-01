@@ -7,6 +7,7 @@ import '../../models/paginated.dart';
 import '../../models/property.dart';
 import '../../models/transaction.dart';
 import '../../models/user.dart';
+import '../api_exception.dart';
 import '../interceptors/envelope_interceptor.dart';
 
 /// Decoded list of objects. Non-object entries are dropped rather than throwing,
@@ -49,11 +50,14 @@ class AgentsApi {
     );
   }
 
-  Future<AgentDetail> detail(String id) async {
+  /// The public channel page. `getAgent()` returns the same `shapeAgent()`
+  /// payload as the directory list — it carries no listings — so the agent's
+  /// properties come from `GET /properties?agentId=…` instead.
+  Future<AgentSummary> detail(String id) async {
     final Response<dynamic> res = await _dio.get<Map<String, dynamic>>(
       '/agents/$id',
     );
-    return AgentDetail.fromJson(res.data);
+    return AgentSummary.fromJson(res.data);
   }
 
   Future<AgentSummary> me() async {
@@ -118,23 +122,34 @@ class UsersApi {
       '/users/me/recent-views',
       queryParameters: <String, dynamic>{'limit': limit},
     );
-    return objectsOf(res.data)
-        .map(PropertySummary.fromJson)
-        .toList(growable: false);
+    return objectsOf(
+      res.data,
+    ).map(PropertySummary.fromJson).toList(growable: false);
   }
 
-  /// Partial update. `photoUrl` is forwarded even when empty, because an empty
-  /// string is how the website removes a profile photo.
+  /// Partial update.
+  ///
+  /// Mirrors `EDITABLE_FIELDS` in `apps/api/src/modules/users/users.service.ts`:
+  /// anything outside that list — `address`, `role`, `status` — is silently
+  /// dropped by the server, so it is not offered here either. `photoUrl` is
+  /// forwarded even when empty, because an empty string is how the website
+  /// removes a profile photo.
+  ///
+  /// A password change needs `currentPassword`: a non-admin cannot set one
+  /// without it. Both failures are 400s from the server — `CURRENT_PASSWORD_
+  /// REQUIRED` and `WRONG_PASSWORD` — not 401s, so they must not end the
+  /// session.
   Future<AppUser> update(
     String id, {
     String? firstName,
     String? lastName,
     String? email,
     String? phone,
-    String? address,
     String? photoUrl,
     String? preferredLanguage,
     String? preferredCurrency,
+    String? password,
+    String? currentPassword,
   }) async {
     final Response<dynamic> res = await _dio.patch<Map<String, dynamic>>(
       '/users/$id',
@@ -143,10 +158,11 @@ class UsersApi {
         'lastName': ?lastName,
         'email': ?email,
         'phone': ?phone,
-        'address': ?address,
         'photoUrl': ?photoUrl,
         'preferredLanguage': ?preferredLanguage,
         'preferredCurrency': ?preferredCurrency,
+        'password': ?password,
+        'currentPassword': ?currentPassword,
       },
     );
     return AppUser.fromJson(res.data);
@@ -219,17 +235,21 @@ class ReportsApi {
 
 /// `POST /api/files/upload`, multipart. Returns the stored URL, which the
 /// caller then saves on the profile with `PATCH /api/users/:id`.
+///
+/// The API reads one part named `file` and answers `{url, uuid, mimeType,
+/// size}`; anything else in the form is ignored, so no `folder` is sent. It
+/// keeps the file server-side under `/uploads/<uuid>.<ext>`, accepts JPEG, PNG,
+/// WEBP and GIF only, and caps the body at 5 MB (`files.service.ts`).
 class FilesApi {
   const FilesApi(this._dio);
 
   final Dio _dio;
 
-  Future<String> upload({
-    required String filePath,
-    String folder = 'avatars',
-  }) async {
+  /// Throws [ApiException] on the server's own 400/413 codes
+  /// (`UNSUPPORTED_FILE_TYPE`, `EMPTY_FILE`, `FILE_TOO_LARGE`) so the screen can
+  /// show the message instead of guessing.
+  Future<String> upload({required String filePath}) async {
     final FormData form = FormData.fromMap(<String, dynamic>{
-      'folder': folder,
       'file': await MultipartFile.fromFile(filePath),
     });
     final Response<dynamic> res = await _dio.post<Map<String, dynamic>>(
@@ -240,6 +260,13 @@ class FilesApi {
     final Map<String, dynamic> body =
         res.data as Map<String, dynamic>? ?? const <String, dynamic>{};
     final Object? url = body['url'] ?? body['fileUrl'] ?? body['secureUrl'];
-    return url is String ? url : '';
+    if (url is! String || url.isEmpty) {
+      throw ApiException(
+        code: 'UPLOAD_NO_URL',
+        message: 'The upload response carried no file URL.',
+        statusCode: res.statusCode,
+      );
+    }
+    return url;
   }
 }

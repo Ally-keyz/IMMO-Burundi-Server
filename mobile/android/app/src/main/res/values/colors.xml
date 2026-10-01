@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      --immo-brand from docs/youtube_design_notes.md. The same value as
+      AppColors.brand in lib/app/theme/app_colors.dart; keep the two in step.
+      Note that the website's favicon.svg uses #0B5FFF, which is the only
+      disagreement with the design system in the repository.
+    -->
+    <color name="ic_launcher_background">#0057FF</color>
+
+    <!-- AppColors.lightBg: the launch window's colour in light mode. -->
+    <color name="launch_background">#FFFFFF</color>
+</resources>

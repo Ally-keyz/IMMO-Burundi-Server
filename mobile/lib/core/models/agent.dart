@@ -44,7 +44,7 @@ class AgentSummary {
     totalProperties: asInt(json is Map ? json['totalProperties'] : null) ?? 0,
     totalSales: asInt(json is Map ? json['totalSales'] : null),
     totalDeals: asInt(json is Map ? json['totalDeals'] : null),
-    province: asMap(child(json, 'province')) == null
+    province: asMap(field(json, 'province')) == null
         ? null
         : GeoRef.fromJson(child(json, 'province')),
     licenseNumber: asStringOrNull(json is Map ? json['licenseNumber'] : null),
@@ -76,9 +76,10 @@ class AgentSummary {
   final int? totalRentals;
 
   String get fullName {
-    final String name = <String>[firstName, lastName]
-        .where((String p) => p.trim().isNotEmpty)
-        .join(' ');
+    final String name = <String>[
+      firstName,
+      lastName,
+    ].where((String p) => p.trim().isNotEmpty).join(' ');
     return name.trim();
   }
 
@@ -95,29 +96,4 @@ class AgentSummary {
     if (digits.startsWith('0')) digits = digits.substring(1);
     return digits.isEmpty ? null : digits;
   }
-}
-
-/// The agent profile payload from `GET /api/agents/:id`, which adds the agent's
-/// sold listings alongside their live ones.
-@immutable
-class AgentDetail {
-  const AgentDetail({
-    required this.agent,
-    this.soldProperties = const <AgentSummary>[],
-    this.properties = const <AgentSummary>[],
-  });
-
-  factory AgentDetail.fromJson(Object? json) => AgentDetail(
-    agent: AgentSummary.fromJson(json),
-    soldProperties: childList(json, 'soldProperties')
-        .map(AgentSummary.fromJson)
-        .toList(growable: false),
-    properties: childList(json, 'properties')
-        .map(AgentSummary.fromJson)
-        .toList(growable: false),
-  );
-
-  final AgentSummary agent;
-  final List<AgentSummary> soldProperties;
-  final List<AgentSummary> properties;
 }

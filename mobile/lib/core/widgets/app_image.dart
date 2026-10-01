@@ -83,7 +83,11 @@ class AppImage extends StatelessWidget {
   Widget _failed(AppPalette p) => ColoredBox(
     color: p.field,
     child: Center(
-      child: Icon(Icons.broken_image_outlined, size: 20, color: p.textSecondary),
+      child: Icon(
+        Icons.broken_image_outlined,
+        size: 20,
+        color: p.textSecondary,
+      ),
     ),
   );
 }
@@ -119,12 +123,7 @@ class AppCardImage extends StatelessWidget {
 
 /// Full-width shimmer block, used while a list or detail body loads.
 class ShimmerBox extends StatelessWidget {
-  const ShimmerBox({
-    super.key,
-    this.width,
-    this.height = 16,
-    this.radius = 8,
-  });
+  const ShimmerBox({super.key, this.width, this.height = 16, this.radius = 8});
 
   final double? width;
   final double height;
@@ -303,7 +302,7 @@ class AppErrorState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              errorText(e),
+              l10n.describeError(e),
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
@@ -325,9 +324,14 @@ class AppErrorState extends StatelessWidget {
 
 /// Turns any thrown object into a sentence worth showing a user. Unknown errors
 /// are deliberately generic — a raw `Exception: null` is not an explanation.
-String errorText(Object error) {
-  if (error is ApiException) return error.message;
-  return 'Something went wrong. Please try again.';
+///
+/// It lives on the localizations object rather than taking one as an argument so
+/// the fallback is translated like every other user-facing string.
+extension ApiErrorText on AppLocalizations {
+  String describeError(Object error) {
+    if (error is ApiException) return error.message;
+    return errorGeneric;
+  }
 }
 
 /// Runs an async loader and shows a skeleton, an error state with retry, or the

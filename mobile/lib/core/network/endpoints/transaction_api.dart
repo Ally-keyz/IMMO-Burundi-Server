@@ -24,7 +24,9 @@ class VisitsApi {
     final Response<dynamic> res = await _dio.get<List<dynamic>>(
       '/visits/sessions/property/$propertyId',
     );
-    return _objects(res.data).map(VisitSession.fromJson).toList(growable: false);
+    return _objects(
+      res.data,
+    ).map(VisitSession.fromJson).toList(growable: false);
   }
 
   /// Books a scheduled session.
@@ -182,7 +184,9 @@ class RentalApplicationsApi {
   Future<RentalApplication> withdraw(String id) async {
     final Response<dynamic> res = await _dio.patch<Map<String, dynamic>>(
       '/rental-applications/$id',
-      data: <String, dynamic>{'status': RentalApplicationStatus.withdrawn.apiValue},
+      data: <String, dynamic>{
+        'status': RentalApplicationStatus.withdrawn.apiValue,
+      },
     );
     return RentalApplication.fromJson(res.data);
   }

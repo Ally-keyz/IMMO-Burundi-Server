@@ -66,10 +66,19 @@ List<String> asStringList(Object? value) {
   return value.map((Object? e) => '$e').toList(growable: false);
 }
 
+/// Reads a scalar field, e.g. `field(json, 'bedrooms')`.
+///
+/// Unlike [child] this does not assume the value is a nested object, so it is
+/// what the `as*` coercions need for `price.amount`, `location.latitude`,
+/// `meta.totalPages` and friends. Passing a map to `asInt` yields `null` and
+/// silently falls back to the default, which is how pagination used to think
+/// every page was the last one.
+Object? field(Object? source, String key) =>
+    (asMap(source) ?? const <String, dynamic>{})[key];
+
 /// Reads a nested object, e.g. `_map(json, 'price')` then `.amount`.
 Map<String, dynamic> child(Object? source, String key) =>
-    asMap((asMap(source) ?? const <String, dynamic>{})[key]) ??
-    const <String, dynamic>{};
+    asMap(field(source, key)) ?? const <String, dynamic>{};
 
 /// Reads a nested list of objects.
 List<Map<String, dynamic>> childList(Object? source, String key) =>

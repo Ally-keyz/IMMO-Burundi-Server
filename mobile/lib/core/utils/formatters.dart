@@ -41,14 +41,25 @@ class Formatters {
   ///
   /// BIF → USD divides by the live rate; USD → BIF multiplies. Anything the
   /// rate does not cover is returned untouched rather than guessed at.
-  String price(num amount, String listingCurrency, AppCurrency target, double usdToBif) {
+  String price(
+    num amount,
+    String listingCurrency,
+    AppCurrency target,
+    double usdToBif,
+  ) {
     final AppCurrency from = AppCurrency.parse(listingCurrency);
     if (from == target) return priceInCurrency(amount, from.code);
 
     final double rate = usdToBif <= 0 ? AppConfig.fallbackUsdToBif : usdToBif;
     return switch ((from, target)) {
-      (AppCurrency.bif, AppCurrency.usd) => priceInCurrency(amount / rate, 'USD'),
-      (AppCurrency.usd, AppCurrency.bif) => priceInCurrency(amount * rate, 'BIF'),
+      (AppCurrency.bif, AppCurrency.usd) => priceInCurrency(
+        amount / rate,
+        'USD',
+      ),
+      (AppCurrency.usd, AppCurrency.bif) => priceInCurrency(
+        amount * rate,
+        'BIF',
+      ),
       _ => priceInCurrency(amount, from.code),
     };
   }
@@ -69,16 +80,11 @@ class Formatters {
     return DateFormat.Hm(_code).format(value.toLocal());
   }
 
-  /// "il y a 3 h" / "3 h ago" / "muda saa 3 iliyopita".
+  /// Relative time in the past.
   ///
-  /// The website hardcodes English here; routing it through the locale is one of
-  /// the deliberate fixes documented in the research notes.
-  /// "il y a 3 heures" / "3 hours ago" / "muda wa saa 3 uliopita".
-  ///
-  /// The website hardcodes English here; routing it through the locale is one of
-  /// the deliberate fixes documented in the research notes. The connector
-  /// ("il y a", "ago") comes from ARB, so callers that want just the elapsed
-  /// part can use [elapsed] instead.
+  /// French and Swahili mark the plural on the noun rather than the number, so
+  /// this returns "3 heures" and "saa 3". The surrounding wording ("il y a",
+  /// "muda wa … uliopita") is supplied by ARB at the call site.
   String elapsed(DateTime? value) {
     if (value == null) return '';
     final Duration diff = DateTime.now().difference(value.toLocal());

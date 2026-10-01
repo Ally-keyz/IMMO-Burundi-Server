@@ -49,16 +49,14 @@ abstract final class AppConfig {
     defaultValue: false,
   );
 
-  /// The 3-slide first-run intro. Off by default: the website has no onboarding,
-  /// so shipping it would be inventing a feature. See docs/app_architecture.md §13.
-  static const bool onboardingEnabled = bool.fromEnvironment(
-    'ONBOARDING',
-    defaultValue: false,
-  );
-
   /// Fallback used when `GET /geo/exchange-rates` is unreachable. Same constant
   /// the website ships (`DEFAULT_EXCHANGE_RATE_USD_BIF`).
   static const double fallbackUsdToBif = 2850;
+
+  /// Shown on the settings screen. Kept in step with `pubspec.yaml` by hand:
+  /// the value is informational, so a plugin to read it at runtime would be more
+  /// machinery than it is worth.
+  static const String appVersion = '1.0.0';
 
   /// Standard immersive-mode flags. The app is portrait-first, like every
   /// property app in this category and like YouTube's browse experience.

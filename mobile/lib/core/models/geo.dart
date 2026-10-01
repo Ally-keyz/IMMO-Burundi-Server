@@ -10,8 +10,8 @@ class GeoRef {
 
   factory GeoRef.fromJson(Object? json) => GeoRef(
     id: idOf(json) ?? '',
-    code: asString(child(json, 'code')),
-    name: asString(child(json, 'name')),
+    code: asString(field(json, 'code')),
+    name: asString(field(json, 'name')),
   );
 
   final String id;
@@ -22,7 +22,10 @@ class GeoRef {
 
   @override
   bool operator ==(Object other) =>
-      other is GeoRef && other.id == id && other.code == code && other.name == name;
+      other is GeoRef &&
+      other.id == id &&
+      other.code == code &&
+      other.name == name;
 
   @override
   int get hashCode => Object.hash(id, code, name);
@@ -44,10 +47,10 @@ class Province {
 
   factory Province.fromJson(Object? json) => Province(
     id: idOf(json) ?? '',
-    name: asString(child(json, 'name')),
-    code: asString(child(json, 'code')),
-    slug: asString(child(json, 'slug')),
-    communeCount: asInt(child(json, 'communeCount')) ?? 0,
+    name: asString(field(json, 'name')),
+    code: asString(field(json, 'code')),
+    slug: asString(field(json, 'slug')),
+    communeCount: asInt(field(json, 'communeCount')) ?? 0,
   );
 
   final String id;
@@ -70,12 +73,10 @@ class Commune {
 
   factory Commune.fromJson(Object? json) => Commune(
     id: idOf(json) ?? '',
-    name: asString(child(json, 'name')),
-    code: asString(child(json, 'code')),
-    provinceId: asString(child(json, 'provinceId')),
-    zones: childList(json, 'zones')
-        .map(Zone.fromJson)
-        .toList(growable: false),
+    name: asString(field(json, 'name')),
+    code: asString(field(json, 'code')),
+    provinceId: asString(field(json, 'provinceId')),
+    zones: childList(json, 'zones').map(Zone.fromJson).toList(growable: false),
   );
 
   final String id;
@@ -99,8 +100,8 @@ class Zone {
 
   factory Zone.fromJson(Object? json) => Zone(
     id: idOf(json) ?? '',
-    name: asString(child(json, 'name')),
-    code: asString(child(json, 'code')),
+    name: asString(field(json, 'name')),
+    code: asString(field(json, 'code')),
   );
 
   final String id;
@@ -121,7 +122,7 @@ class LocationCount {
 
   factory LocationCount.fromJson(Object? json) => LocationCount(
     province: GeoRef.fromJson(child(json, 'province')),
-    commune: asMap(child(json, 'commune')) == null
+    commune: asMap(field(json, 'commune')) == null
         ? null
         : GeoRef.fromJson(child(json, 'commune')),
     count: asInt(json is Map ? json['count'] : null) ?? 0,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The house from apps/web/public/favicon.svg, rebuilt in the 108x108dp viewport
+  an adaptive icon foreground uses.
+
+  The original path lives in a 64-unit viewBox, so it is scaled by 1.45 and
+  re-centred on (54,54) here rather than wrapped in a <group> transform: the
+  order in which Android composes a group's scale, rotation and translation is
+  easy to get wrong, and baking the numbers in makes the geometry checkable by
+  reading the coordinates. The result spans 25..83 horizontally, which leaves a
+  7dp margin inside the 18..90 safe zone that every launcher mask respects.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54.00,29.35 L83.00,54.00 L74.30,54.00 L74.30,78.65 L59.80,78.65 L59.80,63.42 L48.20,63.42 L48.20,78.65 L33.70,78.65 L33.70,54.00 L25.00,54.00 Z" />
+</vector>

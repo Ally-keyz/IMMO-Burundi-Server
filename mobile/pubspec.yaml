@@ -35,7 +35,9 @@ dependencies:
   lottie: ^3.1.3
   connectivity_plus: ^6.1.0
   image_picker: ^1.1.2
-  permission_handler: ^11.3.1
+  # No permission_handler: the app only ever reads the gallery through
+  # image_picker's system photo picker, which asks for nothing up front, so a
+  # permission plugin would be a dependency with no call site.
   url_launcher: ^6.3.1
   share_plus: ^10.1.2
   intl: ^0.20.2
@@ -56,6 +58,7 @@ flutter:
   generate: true
 
   assets:
+    - assets/legal/
     - assets/lottie/
     - assets/images/
 

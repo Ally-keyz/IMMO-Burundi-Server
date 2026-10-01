@@ -16,7 +16,8 @@ import 'interceptors/refresh_interceptor.dart';
 /// Opened once during bootstrap in `main()`, before the app is built.
 final Provider<SecureTokenStore> secureTokenStoreProvider =
     Provider<SecureTokenStore>(
-      (Ref ref) => throw UnimplementedError('secureTokenStoreProvider not overridden'),
+      (Ref ref) =>
+          throw UnimplementedError('secureTokenStoreProvider not overridden'),
     );
 
 final Provider<PrefsStore> prefsStoreProvider = Provider<PrefsStore>(
@@ -46,12 +47,16 @@ class SessionBridge {
 // Dio
 // ---------------------------------------------------------------------------
 
-/// A bare client with no interceptors.
+/// A bare client: no `Authorization` header, no refresh recursion — but the
+/// envelope is still unwrapped, because `POST /auth/refresh` is answered by
+/// `ok(res, result)` and so arrives as `{success, data}`. Leaving it wrapped
+/// would make [AuthResult.fromJson] read a missing `accessToken`, and the
+/// controller would then persist an empty pair over a perfectly good session.
 ///
-/// Used for `POST /auth/refresh` — it must not carry an `Authorization` header
-/// and must not recurse back into the refresh interceptor.
+/// [EnvelopeInterceptor.onError] only rewrites the error object and leaves the
+/// status code alone, so `RefreshInterceptor` still sees the raw 401 it needs.
 final Provider<Dio> bareDioProvider = Provider<Dio>((Ref ref) {
-  return Dio(
+  final Dio dio = Dio(
     BaseOptions(
       baseUrl: AppConfig.apiBaseUrl,
       connectTimeout: const Duration(seconds: 15),
@@ -60,6 +65,8 @@ final Provider<Dio> bareDioProvider = Provider<Dio>((Ref ref) {
       headers: const <String, String>{'Accept': 'application/json'},
     ),
   );
+  dio.interceptors.add(EnvelopeInterceptor(handleError: (Object _) {}));
+  return dio;
 });
 
 final Provider<SessionBridge> sessionBridgeProvider = Provider<SessionBridge>(
@@ -98,7 +105,9 @@ final Provider<Dio> dioProvider = Provider<Dio>((Ref ref) {
     AuthInterceptor(readAccessToken: () async => tokens.accessToken),
     RefreshInterceptor(
       refresher: () => ref.read(bareDioProvider),
-      refresh: () => bridge.refresh?.call() ?? Future<RefreshOutcome>.value(RefreshOutcome.failure),
+      refresh: () =>
+          bridge.refresh?.call() ??
+          Future<RefreshOutcome>.value(RefreshOutcome.failure),
       onSignOut: () => bridge.signOut?.call() ?? Future<void>.value(),
     ),
     EnvelopeInterceptor(

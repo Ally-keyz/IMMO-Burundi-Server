@@ -122,4 +122,4 @@ class AppPalette {
     ink: AppColors.darkInk,
     inkOn: AppColors.darkInkOn,
   );
-}
+}

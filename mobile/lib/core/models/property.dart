@@ -25,12 +25,12 @@ class MediaItem {
 
   factory MediaItem.fromJson(Object? json) => MediaItem(
     id: idOf(json) ?? '',
-    url: asString(child(json, 'url')),
-    thumbUrl: asStringOrNull(child(json, 'thumbUrl')),
-    caption: asStringOrNull(child(json, 'caption')),
-    isPrimary: asBool(child(json, 'isPrimary')),
-    mediaType: asString(child(json, 'mediaType'), 'IMAGE'),
-    sortOrder: asInt(child(json, 'sortOrder')) ?? 0,
+    url: asString(field(json, 'url')),
+    thumbUrl: asStringOrNull(field(json, 'thumbUrl')),
+    caption: asStringOrNull(field(json, 'caption')),
+    isPrimary: asBool(field(json, 'isPrimary')),
+    mediaType: asString(field(json, 'mediaType'), 'IMAGE'),
+    sortOrder: asInt(field(json, 'sortOrder')) ?? 0,
   );
 
   final String id;
@@ -49,8 +49,8 @@ class PropertyPrice {
   const PropertyPrice({this.amount = 0, this.currency = 'BIF'});
 
   factory PropertyPrice.fromJson(Object? json) => PropertyPrice(
-    amount: asDouble(child(json, 'amount')) ?? 0,
-    currency: asString(child(json, 'currency'), 'BIF'),
+    amount: asDouble(field(json, 'amount')) ?? 0,
+    currency: asString(field(json, 'currency'), 'BIF'),
   );
 
   final double amount;
@@ -71,14 +71,14 @@ class PropertyFeatures {
   });
 
   factory PropertyFeatures.fromJson(Object? json) => PropertyFeatures(
-    surfaceArea: asDouble(child(json, 'surfaceArea')),
-    bedrooms: asInt(child(json, 'bedrooms')),
-    bathrooms: asInt(child(json, 'bathrooms')),
-    rooms: asInt(child(json, 'rooms')),
-    floors: asInt(child(json, 'floors')),
-    parkingSpaces: asInt(child(json, 'parkingSpaces')),
-    yearBuilt: asInt(child(json, 'yearBuilt')),
-    isNegotiable: asBool(child(json, 'isNegotiable')),
+    surfaceArea: asDouble(field(json, 'surfaceArea')),
+    bedrooms: asInt(field(json, 'bedrooms')),
+    bathrooms: asInt(field(json, 'bathrooms')),
+    rooms: asInt(field(json, 'rooms')),
+    floors: asInt(field(json, 'floors')),
+    parkingSpaces: asInt(field(json, 'parkingSpaces')),
+    yearBuilt: asInt(field(json, 'yearBuilt')),
+    isNegotiable: asBool(field(json, 'isNegotiable')),
   );
 
   final double? surfaceArea;
@@ -106,14 +106,14 @@ class PropertyLocation {
   factory PropertyLocation.fromJson(Object? json) => PropertyLocation(
     province: GeoRef.fromJson(child(json, 'province')),
     commune: GeoRef.fromJson(child(json, 'commune')),
-    zone: asMap(child(json, 'zone')) == null
+    zone: asMap(field(json, 'zone')) == null
         ? null
         : GeoRef.fromJson(child(json, 'zone')),
-    address: asStringOrNull(child(json, 'address')),
-    latitude: asDouble(child(json, 'latitude')),
-    longitude: asDouble(child(json, 'longitude')),
+    address: asStringOrNull(field(json, 'address')),
+    latitude: asDouble(field(json, 'latitude')),
+    longitude: asDouble(field(json, 'longitude')),
     locationPrecision: LocationPrecision.parse(
-      asStringOrNull(child(json, 'locationPrecision')),
+      asStringOrNull(field(json, 'locationPrecision')),
     ),
   );
 
@@ -153,12 +153,12 @@ class PropertyVerification {
   });
 
   factory PropertyVerification.fromJson(Object? json) => PropertyVerification(
-    status: VerificationStatus.parse(asStringOrNull(child(json, 'status'))),
-    level: asStringOrNull(child(json, 'level')),
-    code: asStringOrNull(child(json, 'code')),
-    verifiedAt: asDate(child(json, 'verifiedAt')),
-    verificationResult: asStringOrNull(child(json, 'verificationResult')),
-    disclaimerVersion: asStringOrNull(child(json, 'disclaimerVersion')),
+    status: VerificationStatus.parse(asStringOrNull(field(json, 'status'))),
+    level: asStringOrNull(field(json, 'level')),
+    code: asStringOrNull(field(json, 'code')),
+    verifiedAt: asDate(field(json, 'verifiedAt')),
+    verificationResult: asStringOrNull(field(json, 'verificationResult')),
+    disclaimerVersion: asStringOrNull(field(json, 'disclaimerVersion')),
   );
 
   final VerificationStatus status;
@@ -174,9 +174,9 @@ class PropertyStats {
   const PropertyStats({this.views = 0, this.favorites = 0, this.shares = 0});
 
   factory PropertyStats.fromJson(Object? json) => PropertyStats(
-    views: asInt(child(json, 'views')) ?? 0,
-    favorites: asInt(child(json, 'favorites')) ?? 0,
-    shares: asInt(child(json, 'shares')) ?? 0,
+    views: asInt(field(json, 'views')) ?? 0,
+    favorites: asInt(field(json, 'favorites')) ?? 0,
+    shares: asInt(field(json, 'shares')) ?? 0,
   );
 
   final int views;
@@ -186,12 +186,16 @@ class PropertyStats {
 
 @immutable
 class PropertyBadges {
-  const PropertyBadges({this.featured = false, this.isNew = true, this.isPromoted = false});
+  const PropertyBadges({
+    this.featured = false,
+    this.isNew = true,
+    this.isPromoted = false,
+  });
 
   factory PropertyBadges.fromJson(Object? json) => PropertyBadges(
-    featured: asBool(child(json, 'featured')),
-    isNew: asBool(child(json, 'isNew'), true),
-    isPromoted: asBool(child(child(json, 'badges'), 'isPromoted')),
+    featured: asBool(field(json, 'featured')),
+    isNew: asBool(field(json, 'isNew'), true),
+    isPromoted: asBool(field(json, 'isPromoted')),
   );
 
   final bool featured;
@@ -227,7 +231,10 @@ class PropertySummary {
   });
 
   factory PropertySummary.fromJson(Object? json) => PropertySummary(
-    id: idOf(json) ?? asStringOrNull(json is Map ? json['propertyId'] : null) ?? '',
+    id:
+        idOf(json) ??
+        asStringOrNull(json is Map ? json['propertyId'] : null) ??
+        '',
     propertyId: asStringOrNull(json is Map ? json['propertyId'] : null),
     title: asString(json is Map ? json['title'] : null),
     titleFr: asStringOrNull(json is Map ? json['titleFr'] : null),
@@ -246,13 +253,16 @@ class PropertySummary {
     price: PropertyPrice.fromJson(child(json, 'price')),
     location: PropertyLocation.fromJson(child(json, 'location')),
     features: PropertyFeatures.fromJson(child(json, 'features')),
-    media: childList(json, 'media').map(MediaItem.fromJson).toList(growable: false),
-    agent: asMap(child(json, 'agent')) == null
+    media: childList(
+      json,
+      'media',
+    ).map(MediaItem.fromJson).toList(growable: false),
+    agent: asMap(field(json, 'agent')) == null
         ? null
         : AgentSummary.fromJson(child(json, 'agent')),
     verification: PropertyVerification.fromJson(child(json, 'verification')),
     stats: PropertyStats.fromJson(child(json, 'stats')),
-    badges: PropertyBadges.fromJson(json),
+    badges: PropertyBadges.fromJson(child(json, 'badges')),
     publishedAt: asDate(json is Map ? json['publishedAt'] : null),
     createdAt: asDate(json is Map ? json['createdAt'] : null),
     isFavorite: asBool(json is Map ? json['isFavorite'] : null),
@@ -282,7 +292,8 @@ class PropertySummary {
 
   /// Only images. `mediaType == 'VIDEO'` entries are dropped: the app ships no
   /// video playback of any kind.
-  List<MediaItem> get images => media.where((MediaItem m) => m.isImage).toList(growable: false);
+  List<MediaItem> get images =>
+      media.where((MediaItem m) => m.isImage).toList(growable: false);
 
   /// Cover for a card. Mirrors the API's own `agentPortfolio` logic
   /// (`apps/api/src/modules/verification/verification.service.ts`), which
@@ -365,13 +376,16 @@ class PropertyDetail extends PropertySummary {
     price: PropertyPrice.fromJson(child(json, 'price')),
     location: PropertyLocation.fromJson(child(json, 'location')),
     features: PropertyFeatures.fromJson(child(json, 'features')),
-    media: childList(json, 'media').map(MediaItem.fromJson).toList(growable: false),
-    agent: asMap(child(json, 'agent')) == null
+    media: childList(
+      json,
+      'media',
+    ).map(MediaItem.fromJson).toList(growable: false),
+    agent: asMap(field(json, 'agent')) == null
         ? null
         : AgentSummary.fromJson(child(json, 'agent')),
     verification: PropertyVerification.fromJson(child(json, 'verification')),
     stats: PropertyStats.fromJson(child(json, 'stats')),
-    badges: PropertyBadges.fromJson(json),
+    badges: PropertyBadges.fromJson(child(json, 'badges')),
     publishedAt: asDate(json is Map ? json['publishedAt'] : null),
     createdAt: asDate(json is Map ? json['createdAt'] : null),
     isFavorite: asBool(json is Map ? json['isFavorite'] : null),

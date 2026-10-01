@@ -35,7 +35,8 @@ class PrefsStore {
   static const String _langKey = 'immo_lang';
   String? readLanguage() => preferences.getString(_langKey);
 
-  Future<void> writeLanguage(String code) => preferences.setString(_langKey, code);
+  Future<void> writeLanguage(String code) =>
+      preferences.setString(_langKey, code);
 
   // ---- currency ----------------------------------------------------------
   static const String _currencyKey = 'immo_currency';
@@ -51,10 +52,11 @@ class PrefsStore {
   List<String> readSearchHistory() =>
       preferences.getStringList(_searchHistoryKey) ?? <String>[];
 
-  Future<void> writeSearchHistory(List<String> terms) => preferences.setStringList(
-    _searchHistoryKey,
-    terms.take(maxSearchHistory).toList(growable: false),
-  );
+  Future<void> writeSearchHistory(List<String> terms) =>
+      preferences.setStringList(
+        _searchHistoryKey,
+        terms.take(maxSearchHistory).toList(growable: false),
+      );
 
   /// Mirrors the website's `immo_searched` gate on the Recommended feed
   /// section: it stays hidden until the user has searched at least once.
@@ -63,7 +65,8 @@ class PrefsStore {
   Future<void> markSearched() => preferences.setBool(_searchedKey, true);
 
   // ---- onboarding --------------------------------------------------------
-  static const String _onboardingKey = 'immo_seen_onboarding';
-  bool get hasSeenOnboarding => preferences.getBool(_onboardingKey) ?? false;
-  Future<void> markOnboardingSeen() => preferences.setBool(_onboardingKey, true);
+  // The website has no first-run intro, so there is no `immo_seen_onboarding`
+  // flag to read. A stored "seen" bit that nothing consults is dead state that
+  // later gets mistaken for a feature; the screen, the route and the flag have
+  // to arrive together.
 }

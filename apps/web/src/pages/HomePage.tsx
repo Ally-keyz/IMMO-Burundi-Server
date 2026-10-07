@@ -148,8 +148,8 @@ export default function HomePage(): JSX.Element {
       />
       <span className="sr-only">{t('home.tagline')}</span>
 
-      {/* ── Hero: image card with headline + existing search/filter ── */}
-      <HeroSection onFilterClick={() => setAdvancedOpen(true)} />
+      {/* ── Hero: video card with headline ── */}
+      <HeroSection />
 
       {/* ── Category tiles (32px below the hero) ── */}
       <section className="container-page mt-8" aria-label={t('tiles.explore')}>

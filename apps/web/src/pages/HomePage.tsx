@@ -32,7 +32,7 @@ import { formatNumber } from '../lib/format';
 
 import { MEDIA_PLACEHOLDER_COLORS } from '../lib/constants';
 
-const GRID = 'grid grid-cols-1 gap-6 md:grid-cols-2 desktop:grid-cols-4';
+const GRID = 'grid grid-cols-1 gap-6 md:grid-cols-2 desktop:grid-cols-3';
 
 function primaryImage(p: PropertySummaryDTO): string {
   const primary = p.media?.find((m) => m.isPrimary) ?? p.media?.[0];

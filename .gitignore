@@ -8,18 +8,21 @@ build/
 *.tsbuildinfo
 .turbo/
 
-# env / secrets
+# env / secrets — never commit
 .env
 .env.local
 .env.*.local
 !.env.example
 
-# misc
-.DS_Store
+# logs
 *.log
-coverage/
+*.log.err
+
+# uploaded media (local storage driver)
+data/
+
+# OS / editor
+.DS_Store
 .vscode/
 .idea/
-
-# mongo local data (if run outside docker)
-data/
+coverage/

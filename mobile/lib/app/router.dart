@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import '../../core/deep_links/deep_link_resolver.dart';
 import '../../core/widgets/app_image.dart';
 import '../../features/agent/views/agent_detail_screen.dart';
+import '../../features/enquiry/views/my_applications_screen.dart';
+import '../../features/enquiry/views/my_enquiries_screen.dart';
+import '../../features/enquiry/views/rental_application_screen.dart';
 import '../../features/legal/views/about_screen.dart';
 import '../../l10n/generated/app_localizations.dart';
 
@@ -43,6 +46,17 @@ String? _redirectAwayFromAuth(Ref ref, String location) {
   final bool isAuthRoute = location.startsWith('/auth');
   if (isAuthRoute && auth.isSignedIn) return '/home';
   return null;
+}
+
+/// Sends a signed-out visitor to sign-in, remembering where they were going.
+///
+/// Sending an enquiry is a write, so it needs a session — but bouncing to
+/// `/auth/sign-in` loses the property, and the user's only way back is to find
+/// the flat again. `?from=` carries it across.
+String? _redirectToSignIn(Ref ref, String location) {
+  final AuthState auth = ref.read(authControllerProvider);
+  if (auth.isSignedIn || !auth.isResolved) return null;
+  return '/auth/sign-in?from=${Uri.encodeQueryComponent(location)}';
 }
 
 /// Browsing routes an agent must not land on.
@@ -112,13 +126,15 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
       ),
       GoRoute(
         path: '/auth/sign-in',
-        builder: (_, _) => const SignInScreen(),
+        builder: (_, GoRouterState state) =>
+            SignInScreen(from: state.uri.queryParameters['from']),
         redirect: (_, GoRouterState state) =>
             _redirectAwayFromAuth(ref, state.matchedLocation),
       ),
       GoRoute(
         path: '/auth/sign-up',
-        builder: (_, _) => const SignUpScreen(),
+        builder: (_, GoRouterState state) =>
+            SignUpScreen(from: state.uri.queryParameters['from']),
         redirect: (_, GoRouterState state) =>
             _redirectAwayFromAuth(ref, state.matchedLocation),
       ),
@@ -240,6 +256,14 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
                     path: 'visits',
                     builder: (_, _) => const MyVisitsScreen(),
                   ),
+                  GoRoute(
+                    path: 'enquiries',
+                    builder: (_, _) => const MyEnquiriesScreen(),
+                  ),
+                  GoRoute(
+                    path: 'applications',
+                    builder: (_, _) => const MyApplicationsScreen(),
+                  ),
                 ],
               ),
             ],
@@ -257,6 +281,16 @@ final Provider<GoRouter> routerProvider = Provider<GoRouter>((Ref ref) {
         path: '/agent/:id',
         builder: (_, GoRouterState state) =>
             AgentDetailScreen(id: state.pathParameters['id']!),
+      ),
+      // A rental application is nine fields, so it is a screen rather than the
+      // bottom sheet the enquiry uses. It needs a session: sending one is a
+      // write, and the applicant's details have to survive the sign-in.
+      GoRoute(
+        path: '/property/:id/apply',
+        builder: (_, GoRouterState state) =>
+            RentalApplicationScreen(propertyId: state.pathParameters['id']!),
+        redirect: (_, GoRouterState state) =>
+            _redirectToSignIn(ref, state.matchedLocation),
       ),
       GoRoute(
         path: '/pay/:token',

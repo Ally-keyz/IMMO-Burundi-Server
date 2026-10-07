@@ -233,6 +233,7 @@ class AppChip extends StatelessWidget {
     super.key,
     this.icon,
     this.count,
+    this.selectedColor,
   });
 
   final String label;
@@ -241,11 +242,19 @@ class AppChip extends StatelessWidget {
   final IconData? icon;
   final int? count;
 
+  /// Fill for the selected state.
+  ///
+  /// Defaults to the brand colour. A mobile-money operator needs to be
+  /// recognised by its own colour, so the payment screen passes the operator's
+  /// brand instead of showing every option in the app's red.
+  final Color? selectedColor;
+
   @override
   Widget build(BuildContext context) {
     final AppPalette p = AppPalette.of(context);
+    final Color fill = selectedColor ?? AppColors.brand;
     return Material(
-      color: selected ? AppColors.brand : p.field,
+      color: selected ? fill : p.field,
       borderRadius: AppRadii.brPill,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -262,7 +271,7 @@ class AppChip extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: AppRadii.brPill,
-            border: Border.all(color: selected ? AppColors.brand : p.border),
+            border: Border.all(color: selected ? fill : p.border),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

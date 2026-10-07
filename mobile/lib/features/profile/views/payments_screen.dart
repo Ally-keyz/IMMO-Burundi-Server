@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/enums.dart';
 import '../../../core/models/paginated.dart';
 import '../../../core/models/transaction.dart';
@@ -89,12 +90,14 @@ class _Enquiries extends ConsumerWidget {
             icon: Icons.forum_outlined,
           );
         }
-        return ListView.separated(
-          padding: AppSpacing.page,
-          itemCount: page.items.length,
-          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
-          itemBuilder: (BuildContext context, int i) =>
-              _EnquiryTile(enquiry: page.items[i]),
+        return ResponsiveCenter(
+          child: ListView.separated(
+            padding: AppSpacing.page,
+            itemCount: page.items.length,
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
+            itemBuilder: (BuildContext context, int i) =>
+                _EnquiryTile(enquiry: page.items[i]),
+          ),
         );
       },
     );
@@ -113,6 +116,7 @@ class _EnquiryTile extends ConsumerWidget {
     final Formatters f = Formatters(l10n.localeName);
 
     final (String label, String colour) = switch (enquiry.status) {
+      EnquiryStatus.fresh => (l10n.enquiryStatusNEW, 'neutral'),
       EnquiryStatus.open => (l10n.enquiryLabelOpen, 'partial'),
       EnquiryStatus.inProgress => (l10n.enquiryLabelInProgress, 'partial'),
       EnquiryStatus.responded => (l10n.enquiryLabelResponded, 'verified'),

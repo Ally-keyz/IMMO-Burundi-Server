@@ -187,6 +187,13 @@ enum VisitBookingStatus {
 }
 
 enum EnquiryStatus {
+  /// The API's `NEW`: created but not yet picked up by an agent.
+  ///
+  /// Named `fresh` rather than `new` because `new` is a reserved word, and the
+  /// enum value is what `parse` keys on: without a member for `NEW` the status
+  /// silently folded into `open`, so an untouched enquiry showed "Open" and the
+  /// user could not tell whether anyone had seen it.
+  fresh('NEW'),
   open('OPEN'),
   inProgress('IN_PROGRESS'),
   responded('RESPONDED'),

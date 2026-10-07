@@ -60,6 +60,9 @@ String? deepLinkLocation(Uri uri) {
     'notifications' => '/you/settings/notifications',
     'language' => '/you/settings/language',
     'search' => '/home/search',
+    // The website has category pages under the same path, so a shared category
+    // link would otherwise hit the 404 screen even though the route exists.
+    'category' => _withId(segments, '/category'),
     _ => _legacyWebPath(uri),
   };
 }

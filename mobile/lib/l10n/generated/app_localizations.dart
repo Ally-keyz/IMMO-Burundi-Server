@@ -418,6 +418,18 @@ abstract class AppLocalizations {
   /// **'Could not update your saved properties'**
   String get savedUpdateFailed;
 
+  /// No description provided for @savedAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this property'**
+  String get savedAdd;
+
+  /// No description provided for @savedRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from saved'**
+  String get savedRemove;
+
   /// No description provided for @propertyOverview.
   ///
   /// In en, this message translates to:
@@ -2109,6 +2121,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'m²'**
   String get propertySurface;
+
+  /// No description provided for @propertyBedroomsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bedroom'**
+  String propertyBedroomsShort(String count);
+
+  /// No description provided for @propertyBedroomsShortPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bedrooms'**
+  String propertyBedroomsShortPlural(String count);
+
+  /// No description provided for @propertyBathroomsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bathroom'**
+  String propertyBathroomsShort(String count);
+
+  /// No description provided for @propertyBathroomsShortPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} bathrooms'**
+  String propertyBathroomsShortPlural(String count);
 
   /// No description provided for @propertyFloors.
   ///
@@ -4743,6 +4779,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'View property'**
   String get applicationsViewProperty;
+
+  /// No description provided for @requestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My requests'**
+  String get requestsTitle;
+
+  /// No description provided for @enquiriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My enquiries'**
+  String get enquiriesTitle;
+
+  /// No description provided for @enquiriesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No enquiries yet'**
+  String get enquiriesEmpty;
+
+  /// No description provided for @enquiriesEmptyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enquiries you send about a property will appear here.'**
+  String get enquiriesEmptyDesc;
+
+  /// No description provided for @applicationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My applications'**
+  String get applicationsTitle;
+
+  /// No description provided for @applicationsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No applications yet'**
+  String get applicationsEmpty;
+
+  /// No description provided for @applicationsEmptyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental applications you send will appear here.'**
+  String get applicationsEmptyDesc;
+
+  /// No description provided for @applyNotARental.
+  ///
+  /// In en, this message translates to:
+  /// **'This property is not available for rent, so an application cannot be sent.'**
+  String get applyNotARental;
+
+  /// No description provided for @validationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get validationRequired;
+
+  /// No description provided for @validationNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a whole number'**
+  String get validationNumber;
+
+  /// No description provided for @commonError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get commonError;
+
+  /// No description provided for @applyFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get applyFullName;
+
+  /// No description provided for @applyPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get applyPhone;
+
+  /// No description provided for @applyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get applyEmail;
+
+  /// No description provided for @applyAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Current address'**
+  String get applyAddress;
+
+  /// No description provided for @applyOccupants.
+  ///
+  /// In en, this message translates to:
+  /// **'People in total'**
+  String get applyOccupants;
+
+  /// No description provided for @applyChildren.
+  ///
+  /// In en, this message translates to:
+  /// **'Children'**
+  String get applyChildren;
+
+  /// No description provided for @applyOccupation.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupation'**
+  String get applyOccupation;
+
+  /// No description provided for @applyMoveInDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Move-in date'**
+  String get applyMoveInDate;
+
+  /// No description provided for @applyMoveInPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date'**
+  String get applyMoveInPick;
+
+  /// No description provided for @applyMoveInRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a move-in date'**
+  String get applyMoveInRequired;
+
+  /// No description provided for @applyAdvanceAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'I can pay the advance'**
+  String get applyAdvanceAvailable;
+
+  /// No description provided for @applyAdvanceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Most landlords ask for one or more months up front.'**
+  String get applyAdvanceHint;
+
+  /// No description provided for @applyAdvanceYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance available'**
+  String get applyAdvanceYes;
+
+  /// No description provided for @applyAdvanceNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No advance available'**
+  String get applyAdvanceNo;
+
+  /// No description provided for @applyReviewNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Agent\'\'\'\'s note'**
+  String get applyReviewNotes;
+
+  /// No description provided for @applyWithdraw.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get applyWithdraw;
+
+  /// No description provided for @applyWithdrawTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw this application?'**
+  String get applyWithdrawTitle;
+
+  /// No description provided for @applyWithdrawBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The agent will no longer see it. You can apply again later.'**
+  String get applyWithdrawBody;
+
+  /// No description provided for @applyWithdrawConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get applyWithdrawConfirm;
+
+  /// No description provided for @applyWithdrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Application withdrawn'**
+  String get applyWithdrawn;
+
+  /// No description provided for @applyStatusSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get applyStatusSubmitted;
+
+  /// No description provided for @applyStatusUnderReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get applyStatusUnderReview;
+
+  /// No description provided for @applyStatusShortlisted.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortlisted'**
+  String get applyStatusShortlisted;
+
+  /// No description provided for @applyStatusAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get applyStatusAccepted;
+
+  /// No description provided for @applyStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not accepted'**
+  String get applyStatusRejected;
+
+  /// No description provided for @applyStatusWithdrawn.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn'**
+  String get applyStatusWithdrawn;
 
   /// No description provided for @emptyNoRecentViews.
   ///

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/enums.dart';
 import '../../../core/models/geo.dart';
 import '../../../core/models/paginated.dart';
@@ -280,13 +281,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
       );
     }
 
-    return ListView.separated(
-      padding: const EdgeInsets.only(bottom: AppSpacing.huge),
-      itemCount: _results.length + 1,
-      separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
-      itemBuilder: (BuildContext context, int index) {
-        if (index == 0) {
-          return Padding(
+    final int columns = Breakpoints.feedColumns(context);
+
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Padding(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.pageMargin,
               AppSpacing.md,
@@ -299,15 +299,40 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 context,
               ).textTheme.bodySmall?.copyWith(color: p.textSecondary),
             ),
-          );
-        }
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.pageMargin,
           ),
-          child: PropertyCard(property: _results[index - 1]),
-        );
-      },
+        ),
+        if (columns <= 1)
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.huge),
+            sliver: SliverList.separated(
+              itemCount: _results.length,
+              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
+              itemBuilder: (BuildContext context, int index) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.pageMargin,
+                ),
+                child: PropertyCard(property: _results[index]),
+              ),
+            ),
+          )
+        else
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.huge),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: columns,
+                mainAxisSpacing: AppSpacing.md,
+                crossAxisSpacing: AppSpacing.md,
+                mainAxisExtent: ResponsiveCenter.propertyCardHeight,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) =>
+                    PropertyCard(property: _results[index]),
+                childCount: _results.length,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/network/api_exception.dart';
 import '../../../core/utils/msisdn.dart';
 import '../../../core/widgets/app_buttons.dart';
 import '../../../core/widgets/app_fields.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../data/auth_controller.dart';
+import '../data/auth_return_path.dart';
 
 /// Sign in.
 ///
@@ -17,7 +19,10 @@ import '../data/auth_controller.dart';
 /// the website behaves the same way. Two tabs would mean the same endpoint
 /// called two different ways for no gain.
 class SignInScreen extends ConsumerStatefulWidget {
-  const SignInScreen({super.key});
+  const SignInScreen({super.key, this.from});
+
+  /// Location to return to after signing in, from `?from=`.
+  final String? from;
 
   @override
   ConsumerState<SignInScreen> createState() => _SignInScreenState();
@@ -84,7 +89,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 : identifierText,
             password: _password.text,
           );
-      if (mounted) context.go('/home');
+      if (mounted) context.go(authReturnPath(widget.from) ?? '/home');
     } on ApiException catch (e) {
       if (!mounted) return;
       setState(() => _formError = e.message);
@@ -104,9 +109,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: ResponsiveScrollView(
           children: <Widget>[
             Text(l10n.authWelcomeBack, style: theme.textTheme.headlineSmall),
             const SizedBox(height: AppSpacing.sm),
@@ -146,12 +149,29 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               onPressed: _submit,
             ),
             const SizedBox(height: AppSpacing.xl),
+            // Flexible on the text so a long translation wraps instead of pushing the
+            // link off the edge; the row is only as wide as it needs to be, so
+            // it centres as a pair.
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(l10n.authNoAccount, style: theme.textTheme.bodyMedium),
+                Flexible(
+                  child: Text(
+                    l10n.authNoAccount,
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ),
                 TextButton(
-                  onPressed: () => context.push('/auth/sign-up'),
+                  // Registration has to end up in the same place sign-in does,
+                  // or the applicant loses the form they were sent here for.
+                  onPressed: () {
+                    final String? from = authReturnPath(widget.from);
+                    context.push(
+                      from == null
+                          ? '/auth/sign-up'
+                          : '/auth/sign-up?from=${Uri.encodeQueryComponent(from)}',
+                    );
+                  },
                   child: Text(l10n.authRegister),
                 ),
               ],

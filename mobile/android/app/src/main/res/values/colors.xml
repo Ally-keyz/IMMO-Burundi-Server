@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--
-      --immo-brand from docs/youtube_design_notes.md. The same value as
+      Brand colour from docs/youtube_design_notes.md. The same value as
       AppColors.brand in lib/app/theme/app_colors.dart; keep the two in step.
       Note that the website's favicon.svg uses #0B5FFF, which is the only
       disagreement with the design system in the repository.

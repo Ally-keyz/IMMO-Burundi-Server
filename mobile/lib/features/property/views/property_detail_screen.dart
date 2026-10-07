@@ -61,6 +61,10 @@ class PropertyDetailScreen extends ConsumerWidget {
       ),
       data: (PropertyDetail property) => _ActionScope(
         id: id,
+        // The API rejects an application for a non-rental listing with
+        // NOT_A_RENTAL, so the button that sends one is only offered where the
+        // server would accept it.
+        isRental: property.listingType.isRental,
         child: _Content(property: property),
       ),
     );
@@ -812,12 +816,35 @@ class _BottomBar extends ConsumerWidget {
         ),
         child: SafeArea(
           top: false,
-          child: AppButton.primary(
-            label: l10n.propertyEnquire,
-            onPressed: signedIn
-                ? () => _enquire(context, ref, id)
-                : () => context.push('/auth/sign-in'),
-          ),
+          // A rental offers the application first — that is the site's primary
+          // action on a RENT listing — with the enquiry kept one tap away for
+          // anyone who would rather ask a question first.
+          child: _ActionScope.isRentalOf(context)
+              ? Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: AppButton.secondary(
+                        label: l10n.propertyEnquire,
+                        onPressed: signedIn
+                            ? () => _enquire(context, ref, id)
+                            : () => context.push('/auth/sign-in'),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: AppButton.primary(
+                        label: l10n.applicationsRentApplication,
+                        onPressed: () => context.push('/property/$id/apply'),
+                      ),
+                    ),
+                  ],
+                )
+              : AppButton.primary(
+                  label: l10n.propertyEnquire,
+                  onPressed: signedIn
+                      ? () => _enquire(context, ref, id)
+                      : () => context.push('/auth/sign-in'),
+                ),
         ),
       ),
     );
@@ -838,15 +865,26 @@ class _BottomBar extends ConsumerWidget {
 }
 
 class _ActionScope extends InheritedWidget {
-  const _ActionScope({required this.id, required super.child});
+  const _ActionScope({
+    required this.id,
+    required this.isRental,
+    required super.child,
+  });
 
   final String id;
+  final bool isRental;
 
-  static String of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_ActionScope>()?.id ?? '';
+  static _ActionScope? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_ActionScope>();
+
+  static String of(BuildContext context) => maybeOf(context)?.id ?? '';
+
+  static bool isRentalOf(BuildContext context) =>
+      maybeOf(context)?.isRental ?? false;
 
   @override
-  bool updateShouldNotify(_ActionScope oldWidget) => oldWidget.id != id;
+  bool updateShouldNotify(_ActionScope oldWidget) =>
+      oldWidget.id != id || oldWidget.isRental != isRental;
 }
 
 class _SectionTitle extends StatelessWidget {

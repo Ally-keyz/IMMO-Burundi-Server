@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../core/models/enums.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/paginated.dart';
 import '../../../core/models/transaction.dart';
 import '../../../core/network/api_client.dart';
@@ -87,12 +88,15 @@ class MyVisitsScreen extends ConsumerWidget {
           }
           return RefreshIndicator(
             onRefresh: () async => ref.invalidate(myVisitsProvider),
-            child: ListView.separated(
-              padding: AppSpacing.page,
-              itemCount: page.items.length,
-              separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
-              itemBuilder: (BuildContext context, int i) =>
-                  _VisitTile(booking: page.items[i]),
+            child: ResponsiveCenter(
+              child: ListView.separated(
+                padding: AppSpacing.page,
+                itemCount: page.items.length,
+                separatorBuilder: (_, _) =>
+                    const SizedBox(height: AppSpacing.md),
+                itemBuilder: (BuildContext context, int i) =>
+                    _VisitTile(booking: page.items[i]),
+              ),
             ),
           );
         },

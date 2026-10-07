@@ -8,6 +8,14 @@
 
 Status legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
+> **Progress note (2026-10-01).** The checklist below was extracted from the
+> website as a *specification*. It is not a live status board: sections are only
+> ticked off once the mobile behaviour is implemented and covered by a test.
+> Sections 7 (E1–E5), 8 (P1–P9) and 15/16 are reconciled with the code as of
+> this date, and G10/G11 were implemented and covered by tests in the same pass.
+> The remaining sections are still to be walked item by item against
+> `mobile/test`. Treat an unticked box as "not yet verified", not "not built".
+
 ---
 
 ## 1. Design tokens (extracted from the website)
@@ -253,40 +261,55 @@ Mirrors the YouTube watch page, images only.
 
 ## 7. Feature checklist — ENQUIRY / RENTAL APPLICATION
 
-- [ ] **E1** **Send an enquiry** — subject + message →
+- [x] **E1** **Send an enquiry** — subject + message →
       `POST /api/enquiries` (`propertyId`, auto-routes to owner/landlord/agent).
-- [ ] **E2** **My enquiries** — `GET /api/enquiries`, status chips
+- [x] **E2** **My enquiries** — `GET /api/enquiries`, status chips
       (`NEW, OPEN, IN_PROGRESS, RESPONDED, DEAL_AGREED, CLOSED`).
-- [ ] **E3** **Rental application** (RENT/LEASE only) → `POST
+- [x] **E3** **Rental application** (RENT/LEASE only) → `POST
       /api/rental-applications`: full name, phone, email, address,
       totalOccupants, numberOfChildren, occupation, advanceAvailable, moveInDate.
       Rejected client-side with `NOT_A_RENTAL` if the listing isn't a rental.
-- [ ] **E4** **My applications** — `GET /api/rental-applications/my`, status chips
+- [x] **E4** **My applications** — `GET /api/rental-applications/my`, status chips
       (`SUBMITTED, UNDER_REVIEW, SHORTLISTED, ACCEPTED, REJECTED, WITHDRAWN`).
-- [ ] **E5** **Withdraw** an application (applicant-only transition).
+- [x] **E5** **Withdraw** an application (applicant-only transition).
 
 > ⚠️ `enquiriesApi.inbox` and `setStatus` are **agent-side** → excluded.
+
+Notes: the enquiry is a bottom sheet on the property (`property_actions.dart`);
+the application is a full screen at `/property/:id/apply` because it is nine
+fields. Both list screens live under the **You** tab (`/you/enquiries`,
+`/you/applications`). The application button is only rendered for a RENT/LEASE
+listing, and a `NOT_A_RENTAL` rejection from the server is surfaced as readable
+copy. Name, phone and email are pre-filled from the session but stay editable —
+the API wants the applicant's details, not the account holder's.
 
 ---
 
 ## 8. Feature checklist — PAYMENT LINK (post-agreement)
 
-- [ ] **P1** Deep link `immo://pay/<token>` and route `/pay/:token`.
-- [ ] **P2** **Resolve** the link — `GET /api/payment-links/r/:token`.
+- [x] **P1** Deep link `immo://pay/<token>` and route `/pay/:token`.
+- [x] **P2** **Resolve** the link — `GET /api/payment-links/r/:token`.
       Renders: property (title, id, listing type, thumbnail, price), payee name,
       amount, currency, note, expiry.
-- [ ] **P3** Status handling for all 6 states — `CREATED`, `SENT`, `OPENED`,
+- [x] **P3** Status handling for all 6 states — `CREATED`, `SENT`, `OPENED`,
       `PAID`, `CANCELLED`, `EXPIRED`.
-- [ ] **P4** **Mobile-money provider selection** — `LUMICASH` (Lumitel/Viettel,
+- [x] **P4** **Mobile-money provider selection** — `LUMICASH` (Lumitel/Viettel,
       `*226#`), `ECOCASH` (Econet Leo, `*722#`), `IHELA` (iHela CU, `*434#`).
       Brand colors: `#EE0033`, `#FFCC00`, `#0F766E`.
-- [ ] **P5** **MSISDN input** with live `79 11 10 01` formatting and
+- [x] **P5** **MSISDN input** with live `79 11 10 01` formatting and
       `^[267]\d{7}$` validation.
-- [ ] **P6** **Pay** — `POST /api/payment-links/r/:token/pay` →
+- [x] **P6** **Pay** — `POST /api/payment-links/r/:token/pay` →
       `paymentReference`, `status`, `paidAt`, `propertyMarkedSold`.
-- [ ] **P7** Success screen — reference, amount, date. Snackbar + haptic.
-- [ ] **P8** Failure/expired/cancelled states with a clear next action.
-- [ ] **P9** Reachable **without authentication** (matches the site).
+- [x] **P7** Success screen — reference, amount, date. Snackbar + haptic.
+- [x] **P8** Failure/expired/cancelled states with a clear next action.
+- [x] **P9** Reachable **without authentication** (matches the site).
+
+Notes: `CREATED`, `SENT` and `OPENED` all render the same pay form — they differ
+only in who has seen the link, and the payer still has to act on all three.
+`PAID`, `CANCELLED` and `EXPIRED` are terminal and never show the form. Operator
+chips carry the brand colour and the localized name; the selected operator's
+dialling code and network are shown above the number so the payer can match it
+against their handset.
 
 ---
 
@@ -415,21 +438,36 @@ icons (filled when selected), small uppercase group headers.
 
 ## 15. Feature checklist — GLOBAL UX
 
-- [ ] **G1** Skeleton shimmer loaders everywhere
-- [ ] **G2** Empty states with illustration + one primary action
-- [ ] **G3** Error states with message + Retry
-- [ ] **G4** **Offline banner** (connectivity_plus)
-- [ ] **G5** Snackbars for save / share / book / pay / report
-- [ ] **G6** Pull-to-refresh everywhere
-- [ ] **G7** Haptic feedback on save, book, pay
-- [ ] **G8** Optimistic UI for save/unfavourite
-- [ ] **G9** Image placeholders + disk/memory cache + progressive loading
-- [ ] **G10** Accessibility — 48dp tap targets, contrast, font scaling, semantic labels
-- [ ] **G11** Responsive — phone single column; tablet (≥600dp) multi-column grid
-- [ ] **G12** Colors only from `ThemeData`/`ColorScheme` — **never hard-coded**
-- [ ] **G13** Strings only from ARB/l10n — **never hard-coded**
-- [ ] **G14** API base URL only from config — **never hard-coded**
-- [ ] **G15** Smooth tab transitions + push/pop page transitions
+- [x] **G1** Skeleton shimmer loaders everywhere
+- [x] **G2** Empty states with illustration + one primary action
+- [x] **G3** Error states with message + Retry
+- [x] **G4** **Offline banner** (connectivity_plus)
+- [x] **G5** Snackbars for save / share / book / pay / report
+- [x] **G6** Pull-to-refresh everywhere
+- [x] **G7** Haptic feedback on save, book, pay
+- [x] **G8** Optimistic UI for save/unfavourite
+- [x] **G9** Image placeholders + disk/memory cache + progressive loading
+- [x] **G10** Accessibility — 48dp tap targets, contrast, font scaling, semantic
+      labels. Tap targets are enforced by `AppSpacing.tapTarget` and a large-font
+      regression test. Semantics: every `AppButton` and `AppIconButton`, the
+      shell tabs, `PropertyCard` (one merged node labelled with title, price,
+      location and room counts — the save heart stays reachable on its own) and
+      the icon-only `SaveButton` (announced as "Save this property" /
+      "Remove from saved" rather than an unnamed button). Two semantics tests in
+      `test/features/screens_test.dart` walk the real tree and both fail if the
+      labels are removed.
+- [x] **G11** Responsive — phone single column; tablet (≥600dp) multi-column
+      grid. `Breakpoints.feedColumns` drives `PropertyFeed` (shared by search and
+      saved), the search results sliver grid and the Explore category/agent
+      grids: 1 column on a phone, 2 at ≥600dp, 3 at ≥840dp. `ResponsiveCenter`
+      caps single-column content (forms, settings, profile, row-style lists) at
+      640dp so it does not stretch across a tablet. Six tests in the
+      `tablet layout` group assert the column count from real card positions at
+      390/820/1280dp.
+- [x] **G12** Colors only from `ThemeData`/`ColorScheme` — **never hard-coded**
+- [x] **G13** Strings only from ARB/l10n — **never hard-coded**
+- [x] **G14** API base URL only from config — **never hard-coded**
+- [x] **G15** Smooth tab transitions + push/pop page transitions
 
 ---
 
@@ -448,6 +486,10 @@ icons (filled when selected), small uppercase group headers.
 | YouTube "Your videos" | **excluded** — agent-side only |
 
 **The only animation asset is the Lottie file** `apps/web/src/assets/lottie/home.json`.
+
+Verified as of 2026-10-01: no `video_player`, `better_player` or `chewie` in
+`pubspec.yaml`, and no video widget in any `.dart` file. `lottie` is present and
+used for the splash only.
 
 ---
 

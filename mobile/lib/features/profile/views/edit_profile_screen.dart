@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/user.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/network/api_exception.dart';
@@ -393,35 +394,42 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           padding: const EdgeInsets.only(bottom: AppSpacing.huge),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: <Widget>[
-            _PhotoSection(
-              photoUrl: auth.user.photoUrl,
-              pendingPath: _pendingPhotoPath,
-              busy: _busyPhoto,
-              error: _photoError,
-              onPick: _pickPhoto,
-              onSave: _savePhoto,
-              onDiscard: () => setState(() => _pendingPhotoPath = null),
-              onRemove: _removePhoto,
-            ),
-            _PersonalSection(
-              firstName: _firstName,
-              lastName: _lastName,
-              phone: _phone,
-              email: _email,
-              fieldError: _fieldError,
-              error: _personalError,
-              saving: _savingPersonal,
-              dirty: _personalDirty,
-              onChanged: _clearFieldError,
-              onSave: _savePersonal,
-            ),
-            _SecuritySection(
-              current: _currentPassword,
-              next: _newPassword,
-              confirm: _confirmPassword,
-              error: _passwordError,
-              saving: _savingPassword,
-              onSubmit: _changePassword,
+            ResponsiveCenter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  _PhotoSection(
+                    photoUrl: auth.user.photoUrl,
+                    pendingPath: _pendingPhotoPath,
+                    busy: _busyPhoto,
+                    error: _photoError,
+                    onPick: _pickPhoto,
+                    onSave: _savePhoto,
+                    onDiscard: () => setState(() => _pendingPhotoPath = null),
+                    onRemove: _removePhoto,
+                  ),
+                  _PersonalSection(
+                    firstName: _firstName,
+                    lastName: _lastName,
+                    phone: _phone,
+                    email: _email,
+                    fieldError: _fieldError,
+                    error: _personalError,
+                    saving: _savingPersonal,
+                    dirty: _personalDirty,
+                    onChanged: _clearFieldError,
+                    onSave: _savePersonal,
+                  ),
+                  _SecuritySection(
+                    current: _currentPassword,
+                    next: _newPassword,
+                    confirm: _confirmPassword,
+                    error: _passwordError,
+                    saving: _savingPassword,
+                    onSubmit: _changePassword,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -174,6 +174,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savedUpdateFailed => 'Could not update your saved properties';
 
   @override
+  String get savedAdd => 'Save this property';
+
+  @override
+  String get savedRemove => 'Remove from saved';
+
+  @override
   String get propertyOverview => 'Overview';
 
   @override
@@ -1031,6 +1037,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get propertySurface => 'm²';
+
+  @override
+  String propertyBedroomsShort(String count) {
+    return '$count bedroom';
+  }
+
+  @override
+  String propertyBedroomsShortPlural(String count) {
+    return '$count bedrooms';
+  }
+
+  @override
+  String propertyBathroomsShort(String count) {
+    return '$count bathroom';
+  }
+
+  @override
+  String propertyBathroomsShortPlural(String count) {
+    return '$count bathrooms';
+  }
 
   @override
   String get propertyFloors => 'floors';
@@ -2439,6 +2465,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get applicationsViewProperty => 'View property';
+
+  @override
+  String get requestsTitle => 'My requests';
+
+  @override
+  String get enquiriesTitle => 'My enquiries';
+
+  @override
+  String get enquiriesEmpty => 'No enquiries yet';
+
+  @override
+  String get enquiriesEmptyDesc =>
+      'Enquiries you send about a property will appear here.';
+
+  @override
+  String get applicationsTitle => 'My applications';
+
+  @override
+  String get applicationsEmpty => 'No applications yet';
+
+  @override
+  String get applicationsEmptyDesc =>
+      'Rental applications you send will appear here.';
+
+  @override
+  String get applyNotARental =>
+      'This property is not available for rent, so an application cannot be sent.';
+
+  @override
+  String get validationRequired => 'This field is required';
+
+  @override
+  String get validationNumber => 'Enter a whole number';
+
+  @override
+  String get commonError => 'Something went wrong';
+
+  @override
+  String get applyFullName => 'Full name';
+
+  @override
+  String get applyPhone => 'Phone number';
+
+  @override
+  String get applyEmail => 'Email';
+
+  @override
+  String get applyAddress => 'Current address';
+
+  @override
+  String get applyOccupants => 'People in total';
+
+  @override
+  String get applyChildren => 'Children';
+
+  @override
+  String get applyOccupation => 'Occupation';
+
+  @override
+  String get applyMoveInDate => 'Move-in date';
+
+  @override
+  String get applyMoveInPick => 'Choose a date';
+
+  @override
+  String get applyMoveInRequired => 'Choose a move-in date';
+
+  @override
+  String get applyAdvanceAvailable => 'I can pay the advance';
+
+  @override
+  String get applyAdvanceHint =>
+      'Most landlords ask for one or more months up front.';
+
+  @override
+  String get applyAdvanceYes => 'Advance available';
+
+  @override
+  String get applyAdvanceNo => 'No advance available';
+
+  @override
+  String get applyReviewNotes => 'Agent\'\'s note';
+
+  @override
+  String get applyWithdraw => 'Withdraw';
+
+  @override
+  String get applyWithdrawTitle => 'Withdraw this application?';
+
+  @override
+  String get applyWithdrawBody =>
+      'The agent will no longer see it. You can apply again later.';
+
+  @override
+  String get applyWithdrawConfirm => 'Withdraw';
+
+  @override
+  String get applyWithdrawn => 'Application withdrawn';
+
+  @override
+  String get applyStatusSubmitted => 'Submitted';
+
+  @override
+  String get applyStatusUnderReview => 'Under review';
+
+  @override
+  String get applyStatusShortlisted => 'Shortlisted';
+
+  @override
+  String get applyStatusAccepted => 'Accepted';
+
+  @override
+  String get applyStatusRejected => 'Not accepted';
+
+  @override
+  String get applyStatusWithdrawn => 'Withdrawn';
 
   @override
   String get emptyNoRecentViews => 'No recent views';

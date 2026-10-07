@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/user.dart';
 import '../../../core/network/api_exception.dart';
 import '../../../core/widgets/app_buttons.dart';
@@ -125,9 +126,7 @@ class _SetupAccountScreenState extends ConsumerState<SetupAccountScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.authCreateAccount)),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: ResponsiveScrollView(
           children: <Widget>[
             if (_name != null && _name!.isNotEmpty) ...<Widget>[
               Text(_name!, style: theme.textTheme.titleLarge),

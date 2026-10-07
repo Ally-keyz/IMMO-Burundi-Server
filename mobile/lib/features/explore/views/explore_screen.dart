@@ -100,7 +100,11 @@ class ExploreScreen extends ConsumerWidget {
             ),
           ),
           GridView.count(
-            crossAxisCount: 2,
+            // Categories are square-ish tiles, so they can carry more columns
+            // than a property card before they become unreadably narrow.
+            crossAxisCount: Breakpoints.isTablet(context)
+                ? (Breakpoints.isDesktop(context) ? 4 : 3)
+                : 2,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             padding: AppSpacing.page,
@@ -241,8 +245,10 @@ class _AgentGrid extends ConsumerWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           padding: AppSpacing.page,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // Agent rows are wide and short; three of them fit across a tablet
+            // without the name and agency starting to collide.
+            crossAxisCount: Breakpoints.feedColumns(context),
             mainAxisSpacing: AppSpacing.md,
             crossAxisSpacing: AppSpacing.md,
             childAspectRatio: 2.4,

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/config/app_config.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/enums.dart';
 import '../../../core/models/property.dart';
 import '../../../core/utils/formatters.dart';
@@ -45,116 +46,201 @@ class PropertyCard extends ConsumerWidget {
 
     return SizedBox(
       width: width,
-      child: Material(
-        color: p.surface,
-        borderRadius: AppRadii.brLg,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap ?? () => context.push('/property/${property.id}'),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: AppRadii.brLg,
-              border: Border.all(color: p.border),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    AppCardImage(
-                      url: property.coverUrl,
-                      height: 160,
-                      width: double.infinity,
-                    ),
-                    Positioned(
-                      top: AppSpacing.sm,
-                      left: AppSpacing.sm,
-                      child: _TopBadges(property: property),
-                    ),
-                    if (showSaveButton)
-                      Positioned(
-                        top: AppSpacing.xs,
-                        right: AppSpacing.xs,
-                        child: SaveButton(
-                          propertyId: property.id,
-                          isFavorite: property.isFavorite,
-                        ),
-                      ),
-                  ],
-                ),
-                Padding(
-                  padding: AppSpacing.card,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      // One node for the whole card rather than a dozen.
+      //
+      // Untouched, a screen reader walks the card's innards: the image, each
+      // badge, the price, the title, then a "place" icon before the location and
+      // a "bed" icon before the bedroom count. That is a dozen swipes to learn
+      // what one sentence could say, and the icons are decoration being read
+      // aloud. Merging collapses the card to a single button whose label is the
+      // same facts in a readable order.
+      child: Semantics(
+        container: true,
+        button: true,
+        label: _semanticLabel(l10n, f, prefs, rate),
+        child: Material(
+          color: p.surface,
+          borderRadius: AppRadii.brLg,
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: onTap ?? () => context.push('/property/${property.id}'),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: AppRadii.brLg,
+                border: Border.all(color: p.border),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Stack(
                     children: <Widget>[
-                      Text(
-                        f.price(
-                          property.price.amount,
-                          property.price.currency,
-                          prefs.currency,
-                          rate,
+                      // The card's own label already carries the listing's facts, so
+                      // announcing the photo, badges and every text run as well
+                      // would read the same content twice. The save heart is left
+                      // out of this on purpose: it is its own button, and hiding it
+                      // here would make the card impossible to unsave by keyboard.
+                      ExcludeSemantics(
+                        child: Stack(
+                          children: <Widget>[
+                            AppCardImage(
+                              url: property.coverUrl,
+                              height: 160,
+                              width: double.infinity,
+                            ),
+                            Positioned(
+                              top: AppSpacing.sm,
+                              left: AppSpacing.sm,
+                              child: _TopBadges(property: property),
+                            ),
+                          ],
                         ),
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w700),
                       ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        property.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.place_outlined,
-                            size: 14,
-                            color: p.textSecondary,
+                      if (showSaveButton)
+                        Positioned(
+                          top: AppSpacing.xs,
+                          right: AppSpacing.xs,
+                          child: SaveButton(
+                            propertyId: property.id,
+                            isFavorite: property.isFavorite,
                           ),
-                          const SizedBox(width: 3),
-                          Expanded(
-                            child: Text(
-                              property.location.formatted,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: p.textSecondary),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.md),
-                      Wrap(
-                        spacing: AppSpacing.md,
-                        runSpacing: AppSpacing.xs,
-                        children: <Widget>[
-                          if (property.features.bedrooms != null)
-                            _Fact(
-                              icon: Icons.bed_outlined,
-                              value: f.count(property.features.bedrooms!),
-                            ),
-                          if (property.features.bathrooms != null)
-                            _Fact(
-                              icon: Icons.bathtub_outlined,
-                              value: f.count(property.features.bathrooms!),
-                            ),
-                          if (property.features.surfaceArea != null)
-                            _Fact(
-                              icon: Icons.square_foot_rounded,
-                              value: f.surface(property.features.surfaceArea),
-                            ),
-                        ],
-                      ),
+                        ),
                     ],
                   ),
-                ),
-              ],
+                  ExcludeSemantics(
+                    child: Padding(
+                      padding: AppSpacing.card,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            f.price(
+                              property.price.amount,
+                              property.price.currency,
+                              prefs.currency,
+                              rate,
+                            ),
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            property.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.place_outlined,
+                                size: 14,
+                                color: p.textSecondary,
+                              ),
+                              const SizedBox(width: 3),
+                              Expanded(
+                                child: Text(
+                                  property.location.formatted,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(color: p.textSecondary),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          Wrap(
+                            spacing: AppSpacing.md,
+                            runSpacing: AppSpacing.xs,
+                            children: <Widget>[
+                              if (property.features.bedrooms != null)
+                                _Fact(
+                                  icon: Icons.bed_outlined,
+                                  value: f.count(property.features.bedrooms!),
+                                ),
+                              if (property.features.bathrooms != null)
+                                _Fact(
+                                  icon: Icons.bathtub_outlined,
+                                  value: f.count(property.features.bathrooms!),
+                                ),
+                              if (property.features.surfaceArea != null)
+                                _Fact(
+                                  icon: Icons.square_foot_rounded,
+                                  value: f.surface(
+                                    property.features.surfaceArea,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  /// What a screen reader says for one card.
+  ///
+  /// Only the facts a buyer would actually use to decide whether to open the
+  /// listing. The badges are deliberately left out: they are visual shorthand,
+  /// and "verified" is conveyed by the site's own trust signals on the detail
+  /// page where there is room to explain it.
+  String _semanticLabel(
+    AppLocalizations l10n,
+    Formatters f,
+    PreferencesState prefs,
+    double rate,
+  ) {
+    final List<String> parts = <String>[
+      property.title,
+      f.price(
+        property.price.amount,
+        property.price.currency,
+        prefs.currency,
+        rate,
+      ),
+      property.location.formatted,
+    ];
+
+    final List<String> facts = <String>[
+      if (property.features.bedrooms != null)
+        _rooms(
+          property.features.bedrooms!,
+          l10n.propertyBedroomsShort,
+          l10n.propertyBedroomsShortPlural,
+          f,
+        ),
+      if (property.features.bathrooms != null)
+        _rooms(
+          property.features.bathrooms!,
+          l10n.propertyBathroomsShort,
+          l10n.propertyBathroomsShortPlural,
+          f,
+        ),
+      if (property.features.surfaceArea != null)
+        f.surface(property.features.surfaceArea),
+    ];
+    if (facts.isNotEmpty) parts.add(facts.join(', '));
+
+    return parts.join('. ');
+  }
+
+  /// "1 bedroom" but "3 bedrooms" — said aloud, a bare "3 bed" is ambiguous.
+  static String _rooms(
+    int count,
+    String Function(String) one,
+    String Function(String) many,
+    Formatters f,
+  ) {
+    final String n = f.count(count);
+    return count == 1 ? one(n) : many(n);
   }
 }
 
@@ -324,11 +410,12 @@ class _PropertyFeedState extends ConsumerState<PropertyFeed> {
 
     return RefreshIndicator(
       onRefresh: () => _load(1),
-      child: ListView.separated(
+      child: _ResponsiveFeedList(
         controller: _scroll,
         padding: widget.padding,
+        // One more when a page is in flight, so the spinner has a cell to sit in
+        // rather than changing the grid's item count mid-layout.
         itemCount: _items.length + (_loading ? 1 : 0),
-        separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
         itemBuilder: (BuildContext context, int index) {
           if (index >= _items.length) {
             return const Padding(
@@ -339,6 +426,60 @@ class _PropertyFeedState extends ConsumerState<PropertyFeed> {
           return PropertyCard(property: _items[index]);
         },
       ),
+    );
+  }
+}
+
+/// The feed's list or grid, depending on how wide the window is.
+///
+/// One property card per row on a phone, and two or three on a tablet. A single
+/// 700dp-wide card on a tablet is the problem this solves: it is mostly image
+/// with a caption floating in the middle of a large empty row, and it forces the
+/// eye to travel the full width for every property.
+///
+/// The same widget and the same paging logic serve both, so there is no second
+/// implementation to keep in step.
+class _ResponsiveFeedList extends StatelessWidget {
+  const _ResponsiveFeedList({
+    required this.controller,
+    required this.padding,
+    required this.itemCount,
+    required this.itemBuilder,
+  });
+
+  final ScrollController controller;
+  final EdgeInsetsGeometry padding;
+  final int itemCount;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    final int columns = Breakpoints.feedColumns(context);
+
+    if (columns <= 1) {
+      return ListView.separated(
+        controller: controller,
+        padding: padding,
+        itemCount: itemCount,
+        separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
+        itemBuilder: itemBuilder,
+      );
+    }
+
+    const double cardHeight = ResponsiveCenter.propertyCardHeight;
+    return GridView.builder(
+      controller: controller,
+      padding: padding,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: itemCount,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: columns,
+        mainAxisSpacing: AppSpacing.md,
+        crossAxisSpacing: AppSpacing.md,
+        mainAxisExtent: cardHeight,
+      ),
+      itemBuilder: (BuildContext context, int index) =>
+          SizedBox(height: cardHeight, child: itemBuilder(context, index)),
     );
   }
 }

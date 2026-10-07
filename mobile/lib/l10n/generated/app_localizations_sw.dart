@@ -174,6 +174,12 @@ class AppLocalizationsSw extends AppLocalizations {
       'Imesasishwa hawezi kusasisha mali uliyohifadhi';
 
   @override
+  String get savedAdd => 'Hifadhi mali hii';
+
+  @override
+  String get savedRemove => 'Ondoa kwenye zilizohifadhiwa';
+
+  @override
   String get propertyOverview => 'Muhtasari';
 
   @override
@@ -1030,6 +1036,26 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get propertySurface => 'm²';
+
+  @override
+  String propertyBedroomsShort(String count) {
+    return 'Vyumba $count';
+  }
+
+  @override
+  String propertyBedroomsShortPlural(String count) {
+    return 'Vyumba $count';
+  }
+
+  @override
+  String propertyBathroomsShort(String count) {
+    return 'Bafu $count';
+  }
+
+  @override
+  String propertyBathroomsShortPlural(String count) {
+    return 'Bafu $count';
+  }
 
   @override
   String get propertyFloors => 'floors';
@@ -2441,6 +2467,122 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get applicationsViewProperty => 'Angalia mali';
+
+  @override
+  String get requestsTitle => 'Maombi yangu';
+
+  @override
+  String get enquiriesTitle => 'Maswali yangu';
+
+  @override
+  String get enquiriesEmpty => 'Hakuna maswali bado';
+
+  @override
+  String get enquiriesEmptyDesc =>
+      'Maswali unayotuma kuhusu nyumba yataonekana hapa.';
+
+  @override
+  String get applicationsTitle => 'Maombi yangu ya kukodisha';
+
+  @override
+  String get applicationsEmpty => 'Hakuna maombi ya kukodisha bado';
+
+  @override
+  String get applicationsEmptyDesc =>
+      'Maombi ya kukodisha unayotuma yataonekana hapa.';
+
+  @override
+  String get applyNotARental =>
+      'Nyumba hii haipatikani kwa kukodisha, kwa hivyo ombi haliwezi kutuma.';
+
+  @override
+  String get validationRequired => 'Sehemu hii inahitajikwa';
+
+  @override
+  String get validationNumber => 'Weka namba kamili';
+
+  @override
+  String get commonError => 'Hitilafu imetokea';
+
+  @override
+  String get applyFullName => 'Jina kamili';
+
+  @override
+  String get applyPhone => 'Namba ya simu';
+
+  @override
+  String get applyEmail => 'Barua pepe';
+
+  @override
+  String get applyAddress => 'Anwani ya sasa';
+
+  @override
+  String get applyOccupants => 'Watu kwa jumla';
+
+  @override
+  String get applyChildren => 'Watoto';
+
+  @override
+  String get applyOccupation => 'Umoja';
+
+  @override
+  String get applyMoveInDate => 'Tarehe ya kuhamia';
+
+  @override
+  String get applyMoveInPick => 'Chagua tarehe';
+
+  @override
+  String get applyMoveInRequired => 'Chagua tarehe ya kuhamia';
+
+  @override
+  String get applyAdvanceAvailable => 'Naweza kulipa amana';
+
+  @override
+  String get applyAdvanceHint =>
+      'Wamiliki wengi hupota mwezi mmoja au zaidi mapema.';
+
+  @override
+  String get applyAdvanceYes => 'Amana inapatikana';
+
+  @override
+  String get applyAdvanceNo => 'Hakuna amana';
+
+  @override
+  String get applyReviewNotes => 'Doa la wakala';
+
+  @override
+  String get applyWithdraw => 'Ondoa';
+
+  @override
+  String get applyWithdrawTitle => 'Ondoa ombi hili?';
+
+  @override
+  String get applyWithdrawBody =>
+      'Wakala hatazaona. Unaweza kuomba tena baadaye.';
+
+  @override
+  String get applyWithdrawConfirm => 'Ondoa';
+
+  @override
+  String get applyWithdrawn => 'Ombi umeondolewa';
+
+  @override
+  String get applyStatusSubmitted => 'Umewasilisha';
+
+  @override
+  String get applyStatusUnderReview => 'Inapitiwa';
+
+  @override
+  String get applyStatusShortlisted => 'Umechaguliwa awali';
+
+  @override
+  String get applyStatusAccepted => 'Umekubaliwa';
+
+  @override
+  String get applyStatusRejected => 'Haujachaguliwa';
+
+  @override
+  String get applyStatusWithdrawn => 'Umeondoa';
 
   @override
   String get emptyNoRecentViews => 'No recent views';

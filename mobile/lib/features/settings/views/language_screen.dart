@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme/app_colors.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../app/theme/app_spacing.dart';
 import '../../../core/widgets/app_buttons.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -37,20 +38,27 @@ class LanguageScreen extends ConsumerWidget {
         child: ListView(
           padding: AppSpacing.page,
           children: <Widget>[
-            for (final ({String code, String endonym}) language in _languages)
-              RadioListTile<String>(
-                value: language.code,
-                // The endonym is how a speaker of that language writes its own
-                // name, so it is never translated - a French speaker looking for
-                // Kiswahili would not find it under "Swahili".
-                title: Text(language.endonym),
-                secondary: Text(
-                  language.code.toUpperCase(),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.labelMedium?.copyWith(color: AppColors.brand),
-                ),
+            ResponsiveCenter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  for (final ({String code, String endonym}) language
+                      in _languages)
+                    RadioListTile<String>(
+                      value: language.code,
+                      // The endonym is how a speaker of that language writes its own
+                      // name, so it is never translated - a French speaker looking for
+                      // Kiswahili would not find it under "Swahili".
+                      title: Text(language.endonym),
+                      secondary: Text(
+                        language.code.toUpperCase(),
+                        style: Theme.of(context).textTheme.labelMedium
+                            ?.copyWith(color: AppColors.brand),
+                      ),
+                    ),
+                ],
               ),
+            ),
           ],
         ),
       ),

@@ -41,11 +41,13 @@ class _EnquiryForm extends ConsumerStatefulWidget {
 
 class _EnquiryFormState extends ConsumerState<_EnquiryForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _subject = TextEditingController();
   final TextEditingController _message = TextEditingController();
   bool _busy = false;
 
   @override
   void dispose() {
+    _subject.dispose();
     _message.dispose();
     super.dispose();
   }
@@ -61,7 +63,7 @@ class _EnquiryFormState extends ConsumerState<_EnquiryForm> {
           .enquiries
           .create(
             propertyId: widget.property.id,
-            subject: widget.property.title,
+            subject: _subject.text.trim(),
             message: _message.text.trim(),
           );
       if (mounted) Navigator.of(context).pop(true);
@@ -97,6 +99,18 @@ class _EnquiryFormState extends ConsumerState<_EnquiryForm> {
             ),
             const SizedBox(height: AppSpacing.md),
             AppTextField(
+              controller: _subject,
+              label: l10n.enquirySubject,
+              hint: l10n.enquirySubject,
+              textInputAction: TextInputAction.next,
+              maxLength: 140,
+              validator: (String? value) =>
+                  (value == null || value.trim().isEmpty)
+                  ? l10n.validationRequired
+                  : null,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AppTextField(
               controller: _message,
               label: l10n.enquiryMessage,
               hint: l10n.enquiryMessage,
@@ -106,7 +120,7 @@ class _EnquiryFormState extends ConsumerState<_EnquiryForm> {
               textCapitalization: TextCapitalization.sentences,
               validator: (String? value) =>
                   (value == null || value.trim().isEmpty)
-                  ? l10n.enquiryMessage
+                  ? l10n.validationRequired
                   : null,
             ),
             const SizedBox(height: AppSpacing.md),

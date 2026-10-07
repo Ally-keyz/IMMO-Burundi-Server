@@ -176,6 +176,12 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible de mettre à jour vos biens enregistrés';
 
   @override
+  String get savedAdd => 'Enregistrer ce bien';
+
+  @override
+  String get savedRemove => 'Retirer des enregistrés';
+
+  @override
   String get propertyOverview => 'Aperçu';
 
   @override
@@ -1041,6 +1047,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get propertySurface => 'm²';
+
+  @override
+  String propertyBedroomsShort(String count) {
+    return '$count chambre';
+  }
+
+  @override
+  String propertyBedroomsShortPlural(String count) {
+    return '$count chambres';
+  }
+
+  @override
+  String propertyBathroomsShort(String count) {
+    return '$count salle de bain';
+  }
+
+  @override
+  String propertyBathroomsShortPlural(String count) {
+    return '$count salles de bain';
+  }
 
   @override
   String get propertyFloors => 'étages';
@@ -2452,6 +2478,122 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get applicationsViewProperty => 'Voir le bien';
+
+  @override
+  String get requestsTitle => 'Mes demandes';
+
+  @override
+  String get enquiriesTitle => 'Mes demandes d\'information';
+
+  @override
+  String get enquiriesEmpty => 'Aucune demande d\'information';
+
+  @override
+  String get enquiriesEmptyDesc =>
+      'Les demandes que vous envoyez sur un bien apparaîtront ici.';
+
+  @override
+  String get applicationsTitle => 'Mes candidatures';
+
+  @override
+  String get applicationsEmpty => 'Aucune candidature';
+
+  @override
+  String get applicationsEmptyDesc =>
+      'Les candidatures de location que vous envoyez apparaîtront ici.';
+
+  @override
+  String get applyNotARental =>
+      'Ce bien n\'est pas disponible à la location, la candidature ne peut pas être envoyée.';
+
+  @override
+  String get validationRequired => 'Ce champ est obligatoire';
+
+  @override
+  String get validationNumber => 'Saisissez un nombre entier';
+
+  @override
+  String get commonError => 'Une erreur est survenue';
+
+  @override
+  String get applyFullName => 'Nom complet';
+
+  @override
+  String get applyPhone => 'Numéro de téléphone';
+
+  @override
+  String get applyEmail => 'Adresse e-mail';
+
+  @override
+  String get applyAddress => 'Adresse actuelle';
+
+  @override
+  String get applyOccupants => 'Personnes au total';
+
+  @override
+  String get applyChildren => 'Enfants';
+
+  @override
+  String get applyOccupation => 'Profession';
+
+  @override
+  String get applyMoveInDate => 'Date d\'entrée';
+
+  @override
+  String get applyMoveInPick => 'Choisir une date';
+
+  @override
+  String get applyMoveInRequired => 'Choisissez une date d\'entrée';
+
+  @override
+  String get applyAdvanceAvailable => 'Je peux payer l\'avance';
+
+  @override
+  String get applyAdvanceHint =>
+      'La plupart desPropriétaires demandent un ou plusieurs mois d\'avance.';
+
+  @override
+  String get applyAdvanceYes => 'Avance disponible';
+
+  @override
+  String get applyAdvanceNo => 'Aucune avance disponible';
+
+  @override
+  String get applyReviewNotes => 'Note de l\'\'agent';
+
+  @override
+  String get applyWithdraw => 'Retirer';
+
+  @override
+  String get applyWithdrawTitle => 'Retirer cette demande ?';
+
+  @override
+  String get applyWithdrawBody =>
+      'L\'\'agent ne la verra plus. Vous pourrez postuler à nouveau plus tard.';
+
+  @override
+  String get applyWithdrawConfirm => 'Retirer';
+
+  @override
+  String get applyWithdrawn => 'Demande retirée';
+
+  @override
+  String get applyStatusSubmitted => 'Envoyée';
+
+  @override
+  String get applyStatusUnderReview => 'En cours d\'\'examen';
+
+  @override
+  String get applyStatusShortlisted => 'Présélectionnée';
+
+  @override
+  String get applyStatusAccepted => 'Acceptée';
+
+  @override
+  String get applyStatusRejected => 'Non retenue';
+
+  @override
+  String get applyStatusWithdrawn => 'Retirée';
 
   @override
   String get emptyNoRecentViews => 'Aucune vue récente';

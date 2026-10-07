@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/network/api_exception.dart';
 import '../../../core/utils/msisdn.dart';
 import '../../../core/widgets/app_buttons.dart';
 import '../../../core/widgets/app_fields.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../data/auth_controller.dart';
+import '../data/auth_return_path.dart';
 import 'sign_in_screen.dart';
 
 /// Create an account.
@@ -18,7 +20,10 @@ import 'sign_in_screen.dart';
 /// (`POST /auth/register`). Name is split on the first space so a single field
 /// still produces the two the API wants.
 class SignUpScreen extends ConsumerStatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({super.key, this.from});
+
+  /// Location to return to after registering, from `?from=`.
+  final String? from;
 
   @override
   ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
@@ -109,7 +114,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             email: email,
             password: _password.text,
           );
-      if (mounted) context.go('/home');
+      if (mounted) context.go(authReturnPath(widget.from) ?? '/home');
     } on ApiException catch (e) {
       if (!mounted) return;
       setState(() => _formError = e.message);
@@ -129,9 +134,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: ResponsiveScrollView(
           children: <Widget>[
             Text(l10n.authSignUpTitle, style: theme.textTheme.headlineSmall),
             const SizedBox(height: AppSpacing.sm),

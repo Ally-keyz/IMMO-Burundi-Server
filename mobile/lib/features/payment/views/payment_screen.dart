@@ -212,15 +212,26 @@ class _PayFormState extends ConsumerState<_PayForm> {
             const SizedBox(height: AppSpacing.sm),
             Wrap(
               spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: <Widget>[
                 for (final MobileMoneyProvider provider
                     in MobileMoneyProvider.values)
                   AppChip(
-                    label: provider.name.toUpperCase(),
+                    // The API value is an enum name; the user should read
+                    // "Lumicash" and see it in Lumicash's own red.
+                    label: _providerLabel(l10n, provider),
+                    selectedColor: _providerColor(provider),
                     selected: _provider == provider,
                     onTap: () => setState(() => _provider = provider),
                   ),
               ],
+            ),
+            // The dialling code and the network are what a payer actually looks
+            // for when matching a screenshot from their handset to the operator
+            // they are paying through.
+            _Field(
+              label: l10n.paymentMethod,
+              value: '${_provider.ussd} · ${_provider.network}',
             ),
             const SizedBox(height: AppSpacing.lg),
             PhoneField(
@@ -254,6 +265,21 @@ class _PayFormState extends ConsumerState<_PayForm> {
     );
   }
 }
+
+/// Localized operator name.
+String _providerLabel(AppLocalizations l10n, MobileMoneyProvider provider) =>
+    switch (provider) {
+      MobileMoneyProvider.lumicash => l10n.payProviderLUMICASH,
+      MobileMoneyProvider.ecocash => l10n.payProviderECOCASH,
+      MobileMoneyProvider.ihela => l10n.payProviderIHELA,
+    };
+
+/// The operator's own brand colour.
+Color _providerColor(MobileMoneyProvider provider) => switch (provider) {
+  MobileMoneyProvider.lumicash => AppColors.lumicash,
+  MobileMoneyProvider.ecocash => AppColors.ecocash,
+  MobileMoneyProvider.ihela => AppColors.ihela,
+};
 
 class _Settled extends ConsumerWidget {
   const _Settled({required this.link, this.result});

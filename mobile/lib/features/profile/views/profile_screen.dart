@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/user.dart';
 import '../../../core/widgets/app_buttons.dart';
 import '../../../core/widgets/app_image.dart';
@@ -47,130 +48,150 @@ class ProfileScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.only(bottom: AppSpacing.huge),
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.pageMargin,
-                AppSpacing.lg,
-                AppSpacing.pageMargin,
-                AppSpacing.xl,
-              ),
-              child: Row(
+            ResponsiveCenter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  AppImage(
-                    url: user.photoUrl,
-                    height: 64,
-                    width: 64,
-                    borderRadius: AppRadii.brPill,
-                  ),
-                  const SizedBox(width: AppSpacing.md),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.pageMargin,
+                      AppSpacing.lg,
+                      AppSpacing.pageMargin,
+                      AppSpacing.xl,
+                    ),
+                    child: Row(
                       children: <Widget>[
-                        Text(
-                          user.fullName,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        AppImage(
+                          url: user.photoUrl,
+                          height: 64,
+                          width: 64,
+                          borderRadius: AppRadii.brPill,
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          user.email.isNotEmpty ? user.email : user.phone,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: p.textSecondary),
-                        ),
-                        if (user.needsAccountSetup) ...<Widget>[
-                          const SizedBox(height: AppSpacing.xs),
-                          AppBadge.semantic(
-                            'partial',
-                            label: l10n.authSetupRemaining,
+                        const SizedBox(width: AppSpacing.md),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                user.fullName,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                user.email.isNotEmpty ? user.email : user.phone,
+                                style: Theme.of(context).textTheme.bodySmall
+                                    ?.copyWith(color: p.textSecondary),
+                              ),
+                              if (user.needsAccountSetup) ...<Widget>[
+                                const SizedBox(height: AppSpacing.xs),
+                                AppBadge.semantic(
+                                  'partial',
+                                  label: l10n.authSetupRemaining,
+                                ),
+                              ],
+                            ],
                           ),
-                        ],
+                        ),
+                        AppIconButton(
+                          icon: Icons.edit_outlined,
+                          tooltip: l10n.youEditProfile,
+                          onPressed: () => context.push('/you/edit'),
+                        ),
                       ],
                     ),
                   ),
-                  AppIconButton(
-                    icon: Icons.edit_outlined,
-                    tooltip: l10n.youEditProfile,
-                    onPressed: () => context.push('/you/edit'),
+                  const _AccountCounters(),
+                  _Group(
+                    children: <_Row>[
+                      _Row(
+                        icon: Icons.favorite_border_rounded,
+                        label: l10n.tabSaved,
+                        onTap: () => context.go('/saved'),
+                      ),
+                      _Row(
+                        icon: Icons.calendar_month_outlined,
+                        label: l10n.youMyVisits,
+                        onTap: () => context.push('/you/visits'),
+                      ),
+                      _Row(
+                        icon: Icons.account_balance_wallet_outlined,
+                        label: l10n.youMyPayments,
+                        onTap: () => context.push('/you/payments'),
+                      ),
+                      _Row(
+                        icon: Icons.forum_outlined,
+                        label: l10n.enquiriesTitle,
+                        onTap: () => context.push('/you/enquiries'),
+                      ),
+                      _Row(
+                        icon: Icons.description_outlined,
+                        label: l10n.applicationsTitle,
+                        onTap: () => context.push('/you/applications'),
+                      ),
+                    ],
+                  ),
+                  _Group(
+                    children: <_Row>[
+                      _Row(
+                        icon: Icons.settings_outlined,
+                        label: l10n.settingsTitle,
+                        onTap: () => context.push('/you/settings'),
+                      ),
+                      _Row(
+                        icon: Icons.notifications_none_rounded,
+                        label: l10n.settingsNotifications,
+                        onTap: () =>
+                            context.push('/you/settings/notifications'),
+                      ),
+                      _Row(
+                        icon: Icons.language_rounded,
+                        label: l10n.settingsLanguage,
+                        onTap: () => context.push('/you/settings/language'),
+                      ),
+                    ],
+                  ),
+                  _Group(
+                    children: <_Row>[
+                      _Row(
+                        icon: Icons.info_outline_rounded,
+                        label: l10n.aboutTitle,
+                        onTap: () => context.push('/about'),
+                      ),
+                      _Row(
+                        icon: Icons.gavel_rounded,
+                        label: l10n.settingsTerms,
+                        onTap: () => context.push('/legal/terms'),
+                      ),
+                      _Row(
+                        icon: Icons.privacy_tip_outlined,
+                        label: l10n.settingsPrivacy,
+                        onTap: () => context.push('/legal/privacy'),
+                      ),
+                      _Row(
+                        icon: Icons.cookie_outlined,
+                        label: l10n.legalCookiesTitle,
+                        onTap: () => context.push('/legal/cookies'),
+                      ),
+                      _Row(
+                        icon: Icons.verified_outlined,
+                        label: l10n.legalVerificationTitle,
+                        onTap: () => context.push('/legal/verification'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () =>
+                          ref.read(authControllerProvider.notifier).signOut(),
+                      icon: const Icon(Icons.logout_rounded, size: 18),
+                      label: Text(l10n.settingsSignOut),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.danger,
+                      ),
+                    ),
                   ),
                 ],
-              ),
-            ),
-            const _AccountCounters(),
-            _Group(
-              children: <_Row>[
-                _Row(
-                  icon: Icons.favorite_border_rounded,
-                  label: l10n.tabSaved,
-                  onTap: () => context.go('/saved'),
-                ),
-                _Row(
-                  icon: Icons.calendar_month_outlined,
-                  label: l10n.youMyVisits,
-                  onTap: () => context.push('/you/visits'),
-                ),
-                _Row(
-                  icon: Icons.account_balance_wallet_outlined,
-                  label: l10n.youMyPayments,
-                  onTap: () => context.push('/you/payments'),
-                ),
-              ],
-            ),
-            _Group(
-              children: <_Row>[
-                _Row(
-                  icon: Icons.settings_outlined,
-                  label: l10n.settingsTitle,
-                  onTap: () => context.push('/you/settings'),
-                ),
-                _Row(
-                  icon: Icons.notifications_none_rounded,
-                  label: l10n.settingsNotifications,
-                  onTap: () => context.push('/you/settings/notifications'),
-                ),
-                _Row(
-                  icon: Icons.language_rounded,
-                  label: l10n.settingsLanguage,
-                  onTap: () => context.push('/you/settings/language'),
-                ),
-              ],
-            ),
-            _Group(
-              children: <_Row>[
-                _Row(
-                  icon: Icons.info_outline_rounded,
-                  label: l10n.aboutTitle,
-                  onTap: () => context.push('/about'),
-                ),
-                _Row(
-                  icon: Icons.gavel_rounded,
-                  label: l10n.settingsTerms,
-                  onTap: () => context.push('/legal/terms'),
-                ),
-                _Row(
-                  icon: Icons.privacy_tip_outlined,
-                  label: l10n.settingsPrivacy,
-                  onTap: () => context.push('/legal/privacy'),
-                ),
-                _Row(
-                  icon: Icons.cookie_outlined,
-                  label: l10n.legalCookiesTitle,
-                  onTap: () => context.push('/legal/cookies'),
-                ),
-                _Row(
-                  icon: Icons.verified_outlined,
-                  label: l10n.legalVerificationTitle,
-                  onTap: () => context.push('/legal/verification'),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            Center(
-              child: TextButton.icon(
-                onPressed: () =>
-                    ref.read(authControllerProvider.notifier).signOut(),
-                icon: const Icon(Icons.logout_rounded, size: 18),
-                label: Text(l10n.settingsSignOut),
-                style: TextButton.styleFrom(foregroundColor: AppColors.danger),
               ),
             ),
           ],

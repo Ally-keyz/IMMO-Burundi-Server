@@ -199,6 +199,7 @@ class EmailField extends StatelessWidget {
     this.onChanged,
     this.onSubmitted,
     this.errorText,
+    this.validator,
     this.enabled = true,
   });
 
@@ -211,6 +212,11 @@ class EmailField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final String? errorText;
+
+  /// Same reason [PhoneField.validator] exists: without it a `Form` validates
+  /// nothing here and reports success on an empty or malformed address.
+  final String? Function(String? value)? validator;
+
   final bool enabled;
 
   @override
@@ -223,6 +229,7 @@ class EmailField extends StatelessWidget {
     prefixIcon: Icons.mail_outline_rounded,
     enabled: enabled,
     errorText: errorText,
+    validator: validator,
     onChanged: onChanged,
     onSubmitted: onSubmitted,
   );

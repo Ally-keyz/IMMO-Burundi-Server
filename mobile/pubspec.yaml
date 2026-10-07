@@ -44,6 +44,7 @@ dependencies:
   json_annotation: ^4.9.0
 
   cupertino_icons: ^1.0.8
+  app_links: ^7.0.0
 
 dev_dependencies:
   flutter_test:

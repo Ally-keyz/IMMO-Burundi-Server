@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../app/config/app_config.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
+import '../../../app/theme/responsive.dart';
 import '../../../core/models/enums.dart';
 import '../../../core/utils/app_cache.dart';
 import '../../../core/widgets/app_buttons.dart';
@@ -33,113 +34,120 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.only(bottom: AppSpacing.huge),
         children: <Widget>[
-          if (signedIn) ...<Widget>[
-            _Header(l10n.settingsAccount),
-            _Tile(
-              icon: Icons.person_outline_rounded,
-              label: l10n.youEditProfile,
-              onTap: () => context.push('/you/edit'),
-            ),
-          ],
-          _Header(l10n.settingsAppearance),
-          _ThemePicker(
-            value: state.themeMode,
-            onChanged: (ThemeMode mode) =>
-                ref.read(preferencesProvider.notifier).setThemeMode(mode),
-          ),
-          _Header(l10n.settingsGeneral),
-          _Tile(
-            icon: Icons.language_rounded,
-            label: l10n.settingsLanguage,
-            value: state.languageCode.toUpperCase(),
-            onTap: () => context.push('/you/settings/language'),
-          ),
-          _Tile(
-            icon: Icons.payments_outlined,
-            label: l10n.settingsCurrency,
-            value: state.currency.code,
-            onTap: () => _pickCurrency(context, ref),
-          ),
-          _Tile(
-            icon: Icons.notifications_none_rounded,
-            label: l10n.settingsNotifications,
-            onTap: () => context.push('/you/settings/notifications'),
-          ),
-          _Header(l10n.settingsAbout),
-          _Tile(
-            icon: Icons.info_outline_rounded,
-            label: l10n.aboutTitle,
-            onTap: () => context.push('/about'),
-          ),
-          _Tile(
-            icon: Icons.gavel_rounded,
-            label: l10n.settingsTerms,
-            onTap: () => context.push('/you/settings/terms'),
-          ),
-          _Tile(
-            icon: Icons.privacy_tip_outlined,
-            label: l10n.settingsPrivacy,
-            onTap: () => context.push('/you/settings/privacy'),
-          ),
-          _Tile(
-            icon: Icons.cookie_outlined,
-            label: l10n.legalCookiesTitle,
-            onTap: () => context.push('/you/settings/cookies'),
-          ),
-          _Tile(
-            icon: Icons.verified_outlined,
-            label: l10n.legalVerificationTitle,
-            onTap: () => context.push('/you/settings/verification'),
-          ),
-          _Header(l10n.settingsStorage),
-          _Tile(
-            icon: Icons.cleaning_services_outlined,
-            label: l10n.settingsClearCache,
-            onTap: () => _clearCache(context, ref),
-          ),
-          _Header(l10n.settingsHelp),
-          _Tile(
-            icon: Icons.phone_outlined,
-            label: l10n.contactPhoneLabel,
-            value: AppConfig.contactPhone,
-            onTap: () => _launch(
-              context,
-              Uri(scheme: 'tel', path: AppConfig.contactPhone),
-            ),
-          ),
-          _Tile(
-            icon: Icons.mail_outline_rounded,
-            label: l10n.contactEmailLabel,
-            value: AppConfig.contactEmail,
-            onTap: () => _launch(
-              context,
-              Uri(scheme: 'mailto', path: AppConfig.contactEmail),
-            ),
-          ),
-          _Tile(
-            icon: Icons.public_rounded,
-            label: l10n.aboutWebsite,
-            value: Uri.parse(AppConfig.siteUrl).host,
-            onTap: () => _launch(context, AppConfig.sitePath('')),
-          ),
-          if (signedIn) ...<Widget>[
-            const SizedBox(height: AppSpacing.xl),
-            Padding(
-              padding: AppSpacing.page,
-              child: OutlinedButton(
-                onPressed: () => _confirmSignOut(context, ref),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.danger,
-                  side: const BorderSide(color: AppColors.danger),
-                  minimumSize: const Size(0, AppSpacing.tapTarget),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.brMd,
+          ResponsiveCenter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                if (signedIn) ...<Widget>[
+                  _Header(l10n.settingsAccount),
+                  _Tile(
+                    icon: Icons.person_outline_rounded,
+                    label: l10n.youEditProfile,
+                    onTap: () => context.push('/you/edit'),
+                  ),
+                ],
+                _Header(l10n.settingsAppearance),
+                _ThemePicker(
+                  value: state.themeMode,
+                  onChanged: (ThemeMode mode) =>
+                      ref.read(preferencesProvider.notifier).setThemeMode(mode),
+                ),
+                _Header(l10n.settingsGeneral),
+                _Tile(
+                  icon: Icons.language_rounded,
+                  label: l10n.settingsLanguage,
+                  value: state.languageCode.toUpperCase(),
+                  onTap: () => context.push('/you/settings/language'),
+                ),
+                _Tile(
+                  icon: Icons.payments_outlined,
+                  label: l10n.settingsCurrency,
+                  value: state.currency.code,
+                  onTap: () => _pickCurrency(context, ref),
+                ),
+                _Tile(
+                  icon: Icons.notifications_none_rounded,
+                  label: l10n.settingsNotifications,
+                  onTap: () => context.push('/you/settings/notifications'),
+                ),
+                _Header(l10n.settingsAbout),
+                _Tile(
+                  icon: Icons.info_outline_rounded,
+                  label: l10n.aboutTitle,
+                  onTap: () => context.push('/about'),
+                ),
+                _Tile(
+                  icon: Icons.gavel_rounded,
+                  label: l10n.settingsTerms,
+                  onTap: () => context.push('/you/settings/terms'),
+                ),
+                _Tile(
+                  icon: Icons.privacy_tip_outlined,
+                  label: l10n.settingsPrivacy,
+                  onTap: () => context.push('/you/settings/privacy'),
+                ),
+                _Tile(
+                  icon: Icons.cookie_outlined,
+                  label: l10n.legalCookiesTitle,
+                  onTap: () => context.push('/you/settings/cookies'),
+                ),
+                _Tile(
+                  icon: Icons.verified_outlined,
+                  label: l10n.legalVerificationTitle,
+                  onTap: () => context.push('/you/settings/verification'),
+                ),
+                _Header(l10n.settingsStorage),
+                _Tile(
+                  icon: Icons.cleaning_services_outlined,
+                  label: l10n.settingsClearCache,
+                  onTap: () => _clearCache(context, ref),
+                ),
+                _Header(l10n.settingsHelp),
+                _Tile(
+                  icon: Icons.phone_outlined,
+                  label: l10n.contactPhoneLabel,
+                  value: AppConfig.contactPhone,
+                  onTap: () => _launch(
+                    context,
+                    Uri(scheme: 'tel', path: AppConfig.contactPhone),
                   ),
                 ),
-                child: Text(l10n.settingsSignOut),
-              ),
+                _Tile(
+                  icon: Icons.mail_outline_rounded,
+                  label: l10n.contactEmailLabel,
+                  value: AppConfig.contactEmail,
+                  onTap: () => _launch(
+                    context,
+                    Uri(scheme: 'mailto', path: AppConfig.contactEmail),
+                  ),
+                ),
+                _Tile(
+                  icon: Icons.public_rounded,
+                  label: l10n.aboutWebsite,
+                  value: Uri.parse(AppConfig.siteUrl).host,
+                  onTap: () => _launch(context, AppConfig.sitePath('')),
+                ),
+                if (signedIn) ...<Widget>[
+                  const SizedBox(height: AppSpacing.xl),
+                  Padding(
+                    padding: AppSpacing.page,
+                    child: OutlinedButton(
+                      onPressed: () => _confirmSignOut(context, ref),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.danger,
+                        side: const BorderSide(color: AppColors.danger),
+                        minimumSize: const Size(0, AppSpacing.tapTarget),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: AppRadii.brMd,
+                        ),
+                      ),
+                      child: Text(l10n.settingsSignOut),
+                    ),
+                  ),
+                ],
+              ],
             ),
-          ],
+          ),
         ],
       ),
     );

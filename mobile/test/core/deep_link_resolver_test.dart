@@ -62,6 +62,29 @@ void main() {
   });
 
   group('website paths the app spells differently', () {
+    // The website serves category pages at the same path the app uses. Before
+    // `category` was mapped, a shared category link resolved to null and landed
+    // on the 404 screen even though /category/<type> exists.
+    test('keeps a category path that the app already serves', () {
+      expect(
+        deepLinkLocation(
+          Uri.parse('https://www.immoburundi.bi/category/apartments'),
+        ),
+        '/category/apartments',
+      );
+      expect(
+        deepLinkLocation(Uri.parse('immo://category/villas')),
+        '/category/villas',
+      );
+    });
+
+    test('a category path with no type is not a route', () {
+      expect(
+        deepLinkLocation(Uri.parse('https://www.immoburundi.bi/category')),
+        isNull,
+      );
+    });
+
     test('maps setup-account to the app route', () {
       // The website serves /setup-account/<token>; the app serves
       // /auth/setup/<token>. Passing the website path through unchanged would

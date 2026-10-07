@@ -18,7 +18,7 @@
  * pages are simply skipped and the build still succeeds.
  *
  * Config:
- *   VITE_SITE_URL   canonical origin (defaults to https://www.immoburundi.bi)
+ *   VITE_SITE_URL   canonical origin (defaults to https://immoburundi.netlify.app)
  *   SEO_API_BASE    API origin used to enrich the sitemap (default /api -> same origin)
  *   SEO_FETCH_API   set to 1 to prerender property pages from a running API
  */
@@ -29,10 +29,27 @@ import { fileURLToPath } from 'node:url';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const appDir = path.resolve(scriptDir, '..');
-const repoRoot = path.resolve(appDir, '..', '..');
+
+/**
+ * Walk up to the nearest directory containing .git so a repo-root .env is
+ * picked up. A fixed '../..' would escape the repository entirely once the
+ * app is deployed as its own repo (this repo has the app at its root).
+ */
+function findRepoRoot(start) {
+  let dir = start;
+  for (let i = 0; i < 6; i += 1) {
+    if (fs.existsSync(path.join(dir, '.git'))) return dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return start;
+}
+
+const repoRoot = findRepoRoot(appDir);
 const distDir = path.join(appDir, 'dist');
 
-const DEFAULT_SITE_URL = 'https://www.immoburundi.bi';
+const DEFAULT_SITE_URL = 'https://immoburundi.netlify.app';
 const log = (...args) => console.log('[seo]', ...args);
 
 /* ── minimal .env reader (avoids a dotenv dependency) ─────────────── */

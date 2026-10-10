@@ -172,7 +172,7 @@ export async function listAgentInbox(req: Request, query: any) {
   }));
 }
 
-/** Agent marks an enquiry deal-agreed (enables "Send payment link"). */
+/** Agent marks an enquiry deal-agreed (enables "Mark as paid"). */
 export async function setEnquiryStatus(id: string, status: string, req: Request) {
   const enquiry: any = await Enquiry.findById(id);
   if (!enquiry) throw new AppError(404, 'ENQUIRY_NOT_FOUND', 'Enquiry not found.');

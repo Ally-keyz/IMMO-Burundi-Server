@@ -772,7 +772,7 @@ async function notifyPropertyLifecycle(property: any, action: string, actorUserI
  *
  * Deliberately not routed through transitionProperty(): that enforces the
  * PUBLISHED→SOLD transition and the request-scoped actor permissions, neither of
- * which apply when the trigger is a payment link settlement.
+ * which apply when the trigger is a payment settlement.
  */
 export async function markPropertySoldFromPayment(opts: {
   propertyId: string;

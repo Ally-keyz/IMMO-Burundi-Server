@@ -26,7 +26,7 @@ import reportRoutes from './modules/reports/reports.routes.js';
 import auditRoutes from './modules/auditLogs/auditLogs.routes.js';
 import verificationRoutes from './modules/verification/verification.routes.js';
 import agentRoutes from './modules/agents/agents.routes.js';
-import paymentLinkRoutes from './modules/paymentLinks/paymentLinks.routes.js';
+import dealsRoutes from './modules/deals/deals.routes.js';
 import fileRoutes from './modules/files/files.routes.js';
 import adminRoutes from './modules/admin/admin.routes.js';
 
@@ -81,7 +81,7 @@ async function bootstrap(): Promise<void> {
   app.use('/api/audit-logs', auditRoutes);
   app.use('/api/verification', verificationRoutes);
   app.use('/api/agents', agentRoutes);
-  app.use('/api/payment-links', paymentLinkRoutes);
+  app.use('/api/deals', dealsRoutes);
   app.use('/api/files', fileRoutes);
   app.use('/api/admin', adminRoutes);
 

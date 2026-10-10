@@ -11,6 +11,8 @@ export const enquirySchema = new Schema(
     subject: { type: String, index: true },
     status: { type: String, enum: [...ENQUIRY_STATUSES], default: 'NEW', index: true },
     closedAt: { type: Date },
+    paidAt: { type: Date },
+    paymentId: { type: Schema.Types.ObjectId, ref: 'Payment' },
   },
   { timestamps: true },
 );

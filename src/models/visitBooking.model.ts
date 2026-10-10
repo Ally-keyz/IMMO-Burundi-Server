@@ -14,6 +14,8 @@ export const visitBookingSchema = new Schema(
     status: { type: String, enum: [...VISIT_BOOKING_STATUSES], default: 'PENDING', index: true },
     confirmedAt: { type: Date },
     cancelledAt: { type: Date },
+    paidAt: { type: Date },
+    paymentId: { type: Schema.Types.ObjectId, ref: 'Payment' },
   },
   { timestamps: true },
 );
